@@ -11,7 +11,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |   86461    |    Lívio Costa          |   livio.cos@gmail.com                   |    LivioCosta      |   20  |
 |   86426    |    Gabriel Figueira     |   gabriel.figueira@tecnico.ulisboa.pt   |    Grabiel14       |   20  |
 |   86451    |    Joao Margaco         |   joao.margaco@tecnico.ulisboa.pt       |    JoaoPmargaco    |   20  |
-|            |                         |                                         |                    |   20  |
+|   87650    |    Diogo Eusébio        |   deusebio98@outlook.pt                 |    DiogoEusebio    |   20  |
 |            |                         |                                         |                    |   20  |
 |            |                         |                                         |                    |   20  |
 |            |                         |                                         |                    |   20  |
