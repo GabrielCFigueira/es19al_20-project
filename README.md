@@ -8,12 +8,12 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 |   Number   |          Name           |            Email        |   GitHub Username  | Group |
 | ---------- | ----------------------- | ----------------------- | -------------------| ----- |
-|            |                         |                         |                    |   1   |
-|            |                         |                         |                    |   1   |
-|            |                         |                         |                    |   1   |
-|            |                         |                         |                    |   2   |
-|            |                         |                         |                    |   2   |
-|            |                         |                         |                    |   2   |
+|   86461    |       Lívio Costa       |   livio.cos@gmail.com   |    LivioCosta      |   20  |
+|            |                         |                         |                    |   20  |
+|            |                         |                         |                    |   20  |
+|            |                         |                         |                    |   20  |
+|            |                         |                         |                    |   20  |
+|            |                         |                         |                    |   20  |
 
 - **Group 1:**
 - **Group 2:**
