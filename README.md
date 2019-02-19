@@ -13,7 +13,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |   86451    |    Joao Margaco         |   joao.margaco@tecnico.ulisboa.pt          |    JoaoPmargaco    |   20  |
 |   87650    |    Diogo Eusébio        |   deusebio98@outlook.pt                    |    DiogoEusebio    |   20  |
 |   86431    |    Henrique Silva       |   henrique.fs.1998@gmail.com               |   HenriqueFSilva   |   20  |
-|   86499    |    Pedro Carvalho       |   pedro.matias.carvalho@tecnico.ulisboa.pt |                    |   20  |
+|   86499    |    Pedro Carvalho       |   pedro.matias.carvalho@tecnico.ulisboa.pt |   PedroMatias98    |   20  |
 |            |                         |                                            |                    |   20  |
 
 - **Group 1:**
