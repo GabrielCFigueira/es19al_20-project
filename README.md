@@ -13,7 +13,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |            |                         |                         |                    |   20  |
 |            |                         |                         |                    |   20  |
 |            |                         |                         |                    |   20  |
-|            |                         |                         |                    |   20  |
+|  86451     |   Joao Margaco          |joao.margaco@tecnico.ulisboa.pt|JoaoPmargaco  |   20   |
 
 - **Group 1:**
 - **Group 2:**
