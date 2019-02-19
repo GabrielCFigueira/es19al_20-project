@@ -6,14 +6,15 @@ To run tests execute: mvn clean install
 To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 
-|   Number   |          Name           |            Email        |   GitHub Username  | Group |
-| ---------- | ----------------------- | ----------------------- | -------------------| ----- |
-|            |                         |                         |                    |  20   |
-|            |                         |                         |                    |  20   |
-|            |                         |                         |                    |  20   |
-|            |                         |                         |                    |  20   |
-|     86431  |    Henrique Silva       |henrique.fs.1998@gmail.com| HenriqueFSilva    |  20   |
-|            |                         |                         |                    |  20   |
+|   Number   |          Name           |                    Email                |   GitHub Username  | Group |
+| ---------- | ----------------------- | --------------------------------------- | -------------------| ----- |
+|   86461    |    Lívio Costa          |   livio.cos@gmail.com                   |    LivioCosta      |   20  |
+|   86426    |    Gabriel Figueira     |   gabriel.figueira@tecnico.ulisboa.pt   |    Grabiel14       |   20  |
+|   86451    |    Joao Margaco         |   joao.margaco@tecnico.ulisboa.pt       |    JoaoPmargaco    |   20  |
+|   87650    |    Diogo Eusébio        |   deusebio98@outlook.pt                 |    DiogoEusebio    |   20  |
+|   86431    |    Henrique Silva       |   henrique.fs.1998@gmail.com            |   HenriqueFSilva   |   20  |
+|            |                         |                                         |                    |   20  |
+|            |                         |                                         |                    |   20  |
 
 - **Group 1:**
 - **Group 2:**
