@@ -20,12 +20,12 @@ class AccountWithdrawMethodSpockTest extends SpockRollbackTestAbstractClass {
 		def operation = bank.getOperation(reference)
 		
 		then:
-		assert 60 == account.getBalance()
+		60 == account.getBalance()
 		
-		assert null != operation
-		assert Operation.Type.WITHDRAW == operation.getType()
-		assert account == operation.getAccount()
-		assert 40 == operation.getValue()
+		null != operation
+		Operation.Type.WITHDRAW == operation.getType()
+		account == operation.getAccount()
+		40 == operation.getValue()
 	}
 	
 	def 'negativeAmount'() {
@@ -49,7 +49,7 @@ class AccountWithdrawMethodSpockTest extends SpockRollbackTestAbstractClass {
 		account.withdraw(1)
 		
 		then:
-		assert 99 == this.account.getBalance()
+		99 == this.account.getBalance()
 	}
 	
 	def 'equalToBalance'() {
@@ -57,7 +57,7 @@ class AccountWithdrawMethodSpockTest extends SpockRollbackTestAbstractClass {
 		account.withdraw(100)
 		
 		then:
-		assert 0 == this.account.getBalance()
+		0 == this.account.getBalance()
 	}
 	
 	def 'equalToBalancePlusOne'() {

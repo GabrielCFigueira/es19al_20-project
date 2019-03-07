@@ -20,9 +20,9 @@ public class ClientContructorMethodSpockTest extends SpockRollbackTestAbstractCl
 		def client = new Client(bank, CLIENT_NAME)
 		
 		then:
-		assert CLIENT_NAME == client.getName()
-		assert client.getID().length() >= 1
-		assert true == bank.getClientSet().contains(client)
+		CLIENT_NAME == client.getName()
+		client.getID().length() >= 1
+		true == bank.getClientSet().contains(client)
 	}
 	
 	@Unroll('Client: #cbank | #cname')
