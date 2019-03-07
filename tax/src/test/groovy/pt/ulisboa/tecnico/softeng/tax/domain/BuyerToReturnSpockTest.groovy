@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.tax.domain
 import org.joda.time.LocalDate
 
 import spock.lang.Shared
+import spock.lang.Unroll
 
 import pt.ulisboa.tecnico.softeng.tax.domain.Buyer
 import pt.ulisboa.tecnico.softeng.tax.domain.IRS
@@ -30,24 +31,19 @@ class BuyerToReturnSpockTest extends SpockRollbackTestAbstractClass {
 		itemType = new ItemType(irs, FOOD, TAX) 
 	}
 
-	def 'success'() {
+	@Unroll('Invoices: #value1, #value2, #value3, #year, #taxValue')
+	def 'invoices'() {
         when: 'creating invoices'
-            new Invoice(100, date, itemType, seller, buyer) 
-            new Invoice(100, date, itemType, seller, buyer) 
-            new Invoice(50, date, itemType, seller, buyer) 
-            def value = buyer.taxReturn(2018) 
-        then: 'checking value of tax'
-		    1.25 == value 
-	}
-
-	def 'yearWithoutInvoices'() {
-		when: 'creating invoices'
-			new Invoice(100, date, itemType, seller, buyer) 
-			new Invoice(100, date, itemType, seller, buyer) 
-			new Invoice(50, date, itemType, seller, buyer) 
-			def value = buyer.taxReturn(2017) 
-		then: 'checking value of tax'
-			value == 0.0 
+            new Invoice(value1, date, itemType, seller, buyer) 
+            new Invoice(value2, date, itemType, seller, buyer) 
+            new Invoice(value3, date, itemType, seller, buyer) 
+            def value = buyer.taxReturn(year) 
+        then: 'checking value of tax' 
+		    value == taxValue 
+		where:
+			value1 | value2 | value3 | year | taxValue
+			   100 |  100   |   50   | 2018 |  1.25
+			   100 |  100   |   50   | 2017 |  0.0
 	}
 
 	def 'noInvoices'() {
