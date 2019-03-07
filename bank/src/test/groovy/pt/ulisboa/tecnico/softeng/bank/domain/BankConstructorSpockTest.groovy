@@ -7,15 +7,15 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class BankConstructorTest extends SpockRollbackTestAbstractClass {
-    @Shared String BANK_CODE = "BK01";
-	@Shared String BANK_NAME = "Money";
+    @Shared String BANK_CODE = "BK01"
+	@Shared String BANK_NAME = "Money"
 
 	@Override
 	def populate4Test() { }
 
     def 'success'() {
         when: 'creating a new bank'
-        def bank = new Bank(BANK_NAME, BANK_CODE);
+        def bank = new Bank(BANK_NAME, BANK_CODE)
 
         then:'should succeed'
         bank.getName() == BANK_NAME
