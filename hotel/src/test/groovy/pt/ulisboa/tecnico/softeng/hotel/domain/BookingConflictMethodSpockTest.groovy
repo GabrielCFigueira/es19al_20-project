@@ -9,7 +9,7 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.BankInterface;
 import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface;
 
 
-class BookingConflictMethodTest extends SpockRollbackTestAbstractClass {
+class BookingConflictMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def private final arrival = new LocalDate(2016, 12, 19);
 	def private final departure = new LocalDate(2016, 12, 24);
 	def private booking;
