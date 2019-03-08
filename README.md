@@ -10,7 +10,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | ---------- | ----------------------- | ---------------------------------------    | -------------------| ----- |
 |   86461    |    Lívio Costa          |   livio.cos@gmail.com                      |    LivioCosta      |   20  |
 |   86426    |    Gabriel Figueira     |   gabriel.figueira@tecnico.ulisboa.pt      |  GabrielCFigueira  |   20  |
-|   86451    |    Joao Margaco         |   joao.margaco@tecnico.ulisboa.pt          |    JoaoPmargaco    |   20  |
+|   86451    |    João Margaço         |   joao.margaco@tecnico.ulisboa.pt          |    JoaoPmargaco    |   20  |
 |   87650    |    Diogo Eusébio        |   deusebio98@outlook.pt                    |    DiogoEusebio    |   20  |
 |   86431    |    Henrique Silva       |   henrique.fs.1998@gmail.com               |   HenriqueFSilva   |   20  |
 |   86499    |    Pedro Carvalho       |   pedro.matias.carvalho@tecnico.ulisboa.pt |    PedroMatias98   |   20  |
@@ -18,6 +18,73 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 - **Group 1:**
 - **Group 2:**
+
+**Sprint One**
+
+| Name/Number/GitHub Username   |                         Files                                       |
+| ----------------------------- | ------------------------------------------------------------------- |
+|                               | tax.domain.BuyerConstructorTest 			                          |
+|                               | tax.domain.SellerConstructorTest                                    |
+|  Lívio Costa                  | activity.domain.ActivityMatchAgeMethodTest		                  |
+|  86461                        | activity.domain.ActivityOfferMatchDateMethodTest	                  |
+|  LivioCosta                   | broker.domain.BrokerConstructorMethodTest		                      |
+|                               | bank.domain.AccountWithdrawMethodTest		                          |
+|                               | bank.domain.ClientContructorMethodTest		                      |
+|                               | tax.domain.RollbackTestAbstractClass                                |
+|###############################|################################################|
+|                               | hotel.domain.HotelGetPriceMethodTest 			                      |
+|                               | hotel.domain.RoomReserveMethodTest                                  |
+|  Gabriel Figueira             | tax.domain.IRSGetItemTypeByNameTest		                          |
+|  86426                        | tax.domain.TaxPayerGetInvoiceByReferenceTest	                      |
+|  GabrielCFigueira             | activity.domain.ActivityConstructorMethodTest		                  |
+|                               | activity.domain.ActivityProviderFindOfferMethodTest	              |
+|                               | bank.domain.BankPersistentTest		                              |
+|                               | bank.services.local.BankInterfaceCancelPaymentTest                  |
+|###############################|################################################|
+|                               | hotel.domain.BookingConstructorTest		                          |
+|                               | hotel.domain.RoomConstructorMethodTest                              |
+|  João Margaço                 | tax.domain.BuyerToReturnTest              		                  |
+|  86451                        | tax.domain.SellerToPayTest                    	                  |
+|  JoaoPmargaco                 | activity.domain.ActivityPersistenceTest		                      |
+|                               | broker.domain.BrokerPersistenceTest		                          |
+|                               | bank.domain.OperationRevertMethodTest 		                      |
+|                               | hotel.domain.RollbackTestAbstractClass                              |
+|###############################|################################################|
+|                               | hotel.domain.HotelPersistenceTest 			                      |
+|                               | hotel.services.local.HotelInterfaceReserveRoomMethodTest            |
+|  Diogo Eusébio                | tax.domain.ItemTypeConstructorTest		                          |
+|  87650                        | tax.domain.TaxPersistentTest                      	              |
+|  DiogoEusebio                 | activity.domain.ActivityOfferConstructorMethodTest		          |
+|                               | activity.domain.RollbackTestAbstractClass		                      |
+|                               | bank.domain.BankConstructorTest		                              |
+|                               | services.local.BankInterfaceProcessPaymentMethodTest                |
+|###############################|################################################|
+|                               | hotel.domain.HotelConstructorTest 			                      |
+|                               | hotel.domain.HotelHasVacancyMethodTest                              |
+|  Henrique Silva               | hotel.domain.RoomGetBookingMethodTest		                          |
+|  86431                        | tax.domain.InvoiceConstructorTest                 	              |
+|  HenriqueFSilva               | activity.domain.ActivityProviderConstructorMethodTest		          |
+|                               | broker.domain.ClientConstructorMethodTest		                      |
+|                               | bank.domain.BankGetAccountMethodTest                                |
+|###############################|################################################|
+|                               | hotel.domain.HotelSetPriceMethodTest		                          |
+|                               | tax.domain.TaxInterfaceSubmitInvoiceTest                            |
+|  Pedro Carvalho               | activity.domain.ActivityOfferGetBookingMethodTest		              |
+|  86499                        | services.local.ActivityIntefaceGetActivityReservationDataMethodTest |
+|  PedroMatias98                | broker.domain.AdventureConstructorMethodTest		                  |
+|                               | bank.domain.AccountDepositMethodTest		                          |
+|                               | bank.domain.OperationConstructorMethodTest		                  |
+|                               | bank.domain.RollbackTestAbstractClass                               |
+|###############################|################################################|
+|                               | hotel.domain.BookingConflictMethodTest		                      |
+|                               | services.local.HotelInterfaceGetRoomBookingDataMethodTest           |
+|  Diogo Faria Fernandes        | tax.domain.IRSGetTaxPayerByNIFTest            		              |
+|  86410                        | tax.domain.TaxPayerGetTaxesPerYearMethodsTest                       |
+|  DiogoFariaFernandes          | tax.services.local.IRSCancelInvoiceMethodTest		                  |
+|                               | activity.domain.BookingContructorMethodTest                         |
+|                               | bank.domain.AccountConstructorMethodTest	    	                  |
+|                               | bank.domain.BankInterfaceGetOperationDataMethodTest                 |
+
 
 ### Infrastructure
 
