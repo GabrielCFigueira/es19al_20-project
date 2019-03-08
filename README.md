@@ -36,7 +36,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |                               | hotel.domain.RoomReserveMethodTest                                  |
 |  Gabriel Figueira             | tax.domain.IRSGetItemTypeByNameTest		                          |
 |  86426                        | tax.domain.TaxPayerGetInvoiceByReferenceTest	                      |
-|  GabrielCFigueira             | activity.domain.ActivityConstructorMethodTest		                  |
+|  GabrielCFigueira/Grabiel14   | activity.domain.ActivityConstructorMethodTest		                  |
 |                               | activity.domain.ActivityProviderFindOfferMethodTest	              |
 |                               | bank.domain.BankPersistentTest		                              |
 |                               | bank.services.local.BankInterfaceCancelPaymentTest                  |
