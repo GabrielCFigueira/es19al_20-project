@@ -9,7 +9,7 @@ import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import mockit.FullVerifications;
 
 
-class BookingContructorMethodTest extends SpockRollbackTestAbstractClass {
+class BookingContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def private provider;
 	def private offer;
 	@Shared def private final AMOUNT = 30;
