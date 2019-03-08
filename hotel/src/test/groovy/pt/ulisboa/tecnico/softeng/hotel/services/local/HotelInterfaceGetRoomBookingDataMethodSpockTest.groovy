@@ -15,7 +15,7 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface;
 import pt.ulisboa.tecnico.softeng.hotel.services.remote.dataobjects.RestRoomBookingData;
 
 
-class HotelInterfaceGetRoomBookingDataMethodTest extends SpockRollbackTestAbstractClass {
+class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def private final arrival = new LocalDate(2016, 12, 19)
 	def private final departure = new LocalDate(2016, 12, 24)
 	def private hotel
