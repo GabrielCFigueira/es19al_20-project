@@ -34,7 +34,7 @@ public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbst
 	}
 
 	def 'success'() {
-		when: 'testing Porcess Payment Interface'
+		when: 'testing Process Payment Interface'
 		this.account.getIBAN();
 		def newReference = BankInterface
 				.processPayment(new BankOperationData(this.iban, 100, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))

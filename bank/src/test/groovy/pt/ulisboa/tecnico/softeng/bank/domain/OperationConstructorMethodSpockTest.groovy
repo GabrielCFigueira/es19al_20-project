@@ -6,18 +6,18 @@ import pt.ulisboa.tecnico.softeng.bank.domain.Operation.Type
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 
 class OperationConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
-	private Bank bank
-	@Shared private Account account
+	def bank
+	@Shared def account
 
 	def populate4Test() {
 		bank = new Bank("Money", "BK01")
-		Client client = new Client(bank, "António")
+		def client = new Client(bank, "António")
 		account = new Account(bank, client)
 	}
 
 	def 'success'() {
         when:	'creating a new operation'
-		    Operation operation = new Operation(Type.DEPOSIT, this.account, 1000);
+		    def operation = new Operation(Type.DEPOSIT, this.account, 1000);
 
         then:	'should succeed'
 		    operation.getReference().startsWith(this.bank.getCode()) == true
@@ -43,9 +43,9 @@ class OperationConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 			Type.WITHDRAW | account  | -1000
 	}
 
-	def 'oneAmount'() {
+	def 'one amount'() {
         when:	'creating a new operation'
-		    Operation operation = new Operation(Type.DEPOSIT, account, 1)
+		    def operation = new Operation(Type.DEPOSIT, account, 1)
         then:	'should succeed'
 		    operation == bank.getOperation(operation.getReference())
 	}
