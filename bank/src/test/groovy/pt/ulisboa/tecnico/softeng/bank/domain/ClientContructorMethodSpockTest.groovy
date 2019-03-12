@@ -8,9 +8,8 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 public class ClientContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def CLIENT_NAME = "António"
 
-	@Shared private Bank bank
-
-	@Override
+	@Shared def bank
+	
 	def populate4Test() {
 		bank = new Bank("Money", "BK01")
 	}
