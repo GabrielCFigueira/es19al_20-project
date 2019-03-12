@@ -5,23 +5,23 @@ import spock.lang.Shared
 import spock.lang.Unroll
 
 class AccountDepositMethodSpockTest extends SpockRollbackTestAbstractClass {
-	private Bank bank
-	private Account account
+	def bank
+	def account
 
 
 	def populate4Test() {
 		bank = new Bank("Money", "BK01")
-		Client client = new Client(bank, "António")
+		def client = new Client(bank, "António")
 		account = new Account(bank, client)
 	}
 
 	def 'success'() {
         when:	'creating a reference'
-		    String reference = this.account.deposit(50).getReference()
+		    def reference = this.account.deposit(50).getReference()
         
         then:	'should succeed'
             50 == account.getBalance()
-		    Operation operation = this.bank.getOperation(reference)
+		    def operation = this.bank.getOperation(reference)
 		    operation != null
 		    Operation.Type.DEPOSIT == operation.getType()
 		    account == operation.getAccount()
@@ -40,8 +40,8 @@ class AccountDepositMethodSpockTest extends SpockRollbackTestAbstractClass {
 			-100  | _
 	}
 
-	def 'oneAmount'() {
-		expect:
+	def 'one amount'() {
+		expect: "that the deposit is successful"
 			account.deposit(1);
 	}
 
