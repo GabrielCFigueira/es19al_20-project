@@ -2,7 +2,6 @@ package pt.ulisboa.tecnico.softeng.broker.domain
 
 import org.joda.time.LocalDate  
 import spock.lang.Shared
-import pt.ulisboa.tecnico.softeng.broker.domain.BaseTest
 
 import pt.ist.fenixframework.FenixFramework
 
