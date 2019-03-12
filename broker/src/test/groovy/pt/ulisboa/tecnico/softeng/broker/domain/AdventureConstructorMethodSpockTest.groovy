@@ -4,7 +4,7 @@ import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException
 import spock.lang.Shared
 import spock.lang.Unroll
 
-class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
+class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass implements SpockBaseTest {
 
     def populate4Test() {
 		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
@@ -43,9 +43,9 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 			broker | begin | begin.minusDays(1) | client | MARGIN
 	}
 
-	def 'successEqual18'() {
+	def 'success equals to 18'() {
         when:	'creating a new adventure with the minimum permitted age'
-		    Adventure adventure = new Adventure(broker, begin, end,
+		    def adventure = new Adventure(broker, begin, end,
 				new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE + "1", 18), MARGIN)
 
         then:	'should succeed'
@@ -62,18 +62,18 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 		    adventure.getRoomConfirmation() == null
 	}
 
-	def 'negativeAge'() {
+	def 'negative age'() {
         when:	'creating a new adventure with less than the minimum permitted age'
-		    Client c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE, 17)
+		    def c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE, 17)
 		    new Adventure(broker, begin, end, c, MARGIN)
         then:	'throws exceptions'
             thrown(BrokerException)
 	}
 
-	def 'successEqual100'() {
+	def 'success equals to 100'() {
         when:	'creating a new adventure with the maximum permitted age'
-		    Client c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE + "1", 100)
-		    Adventure adventure = new Adventure(broker, begin, end, c, MARGIN)
+		    def c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE + "1", 100)
+		    def adventure = new Adventure(broker, begin, end, c, MARGIN)
         then:	'should succeed'
 		    broker == adventure.getBroker()
 		    begin == adventure.getBegin()
@@ -88,24 +88,24 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 		    adventure.getRoomConfirmation() == null
 	}
 
-	def 'over100'() {
+	def 'over 100'() {
         when:	'creating a new adventure with more than the maximum permitted age'
-		    Client c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE, 101)
+		    def c = new Client(broker, CLIENT_IBAN, OTHER_NIF, DRIVING_LICENSE, 101)
 		    new Adventure(broker, begin, end, c, MARGIN)
         then:	'throws exceptions'
             thrown(BrokerException)
 	}
 
-	def 'negativeAmount'() {
+	def 'negative  amount'() {
         when:	'creating a new adventure with invalid amount'
 		    new Adventure(broker, begin, end, client, -100)
         then:	'throws exceptions'
             thrown(BrokerException)
 	}
 
-	def 'success1Amount'() {
+	def 'success 1 amount'() {
         when:	'creating an adventure with 1 as margin'
-		    Adventure adventure = new Adventure(broker, begin, end, client, 1)
+		    def adventure = new Adventure(broker, begin, end, client, 1)
         then:	'should succeed'
 		    broker == adventure.getBroker()
 		    begin == adventure.getBegin()
@@ -120,16 +120,16 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 		    adventure.getRoomConfirmation() == null
 	}
 
-	def 'zeroAmount'() {
+	def 'zero amount'() {
         when:	'creating an adventure with 0 as margin'
 		    new Adventure(broker, begin, end, client, 0)
         then:	'throws exceptions'
             thrown(BrokerException)
 	}
 
-	def 'successEqualDates'() {
+	def 'success equal dates'() {
         when:	'creating an adventure with equal dates'
-		    Adventure adventure = new Adventure(broker, begin, begin, client, MARGIN)
+		    def adventure = new Adventure(broker, begin, begin, client, MARGIN)
 
         then:	'should succeed'
 		    broker == adventure.getBroker()
