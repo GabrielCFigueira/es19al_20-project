@@ -14,7 +14,6 @@ class SellerConstructorSpockTest extends SpockRollbackTestAbstractClass {
 
 	def irs
 
-	@Override
 	def populate4Test() {
 		irs = IRS.getIRSInstance()
 	}
@@ -24,11 +23,11 @@ class SellerConstructorSpockTest extends SpockRollbackTestAbstractClass {
 		def seller = new Seller(irs, NIF, NAME, ADDRESS);
 		
 		then:
-		assert NIF == seller.getNif()
-		assert NAME == seller.getName()
-		assert ADDRESS == seller.getAddress()
+		NIF == seller.getNif()
+		NAME == seller.getName()
+		ADDRESS == seller.getAddress()
 
-		assert seller == IRS.getIRSInstance().getTaxPayerByNIF(NIF)
+		seller == IRS.getIRSInstance().getTaxPayerByNIF(NIF)
 	}
 	
 	def 'testing a unique NIF'() {
@@ -42,7 +41,7 @@ class SellerConstructorSpockTest extends SpockRollbackTestAbstractClass {
 		thrown(TaxException)
 		
 		and:
-		assert seller == IRS.getIRSInstance().getTaxPayerByNIF(NIF)
+		seller == IRS.getIRSInstance().getTaxPayerByNIF(NIF)
 	}
 	
 	@Unroll('Seller: irs | #snif | #sname | #saddress')
