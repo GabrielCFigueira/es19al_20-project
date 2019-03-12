@@ -5,8 +5,8 @@ import spock.lang.Unroll
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
 
 class HotelSetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
-	private Hotel hotel
-	@Shared private final double price = 25.0
+	def hotel
+	@Shared def price = 25.0
 
 
 	def populate4Test() {
