@@ -31,11 +31,15 @@ class ItemTypeConstructorSpockTest extends SpockRollbackTestAbstractClass {
     }
 
     def 'uniqueName'() {
+        given:
         def itemType = new ItemType(this.irs, CAR, TAX)
-        shouldFail TaxException, {
-            new ItemType(this.irs, CAR, TAX)
-        }
-        assert itemType == IRS.getIRSInstance().getItemTypeByName(CAR)
+        
+        when:
+        new ItemType(this.irs, CAR, TAX)
+        
+        then:
+        thrown(TaxException)
+        itemType == IRS.getIRSInstance().getItemTypeByName(CAR)
     }
 
     def 'zeroTax'() {
