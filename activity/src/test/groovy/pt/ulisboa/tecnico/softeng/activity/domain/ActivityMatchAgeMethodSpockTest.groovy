@@ -1,15 +1,12 @@
 package pt.ulisboa.tecnico.softeng.activity.domain
 
-import spock.lang.Shared
-
 class ActivityMatchAgeMethodSpockTest extends SpockRollbackTestAbstractClass {
-	@Shared def MIN_AGE = 25
-	@Shared def MAX_AGE = 80
-	@Shared def CAPACITY = 30
+	def MIN_AGE = 25
+	def MAX_AGE = 80
+	def CAPACITY = 30
 	
-	private Activity activity
+	def activity
 	
-	@Override
 	def populate4Test() {
 		def provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN")
 		activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY)

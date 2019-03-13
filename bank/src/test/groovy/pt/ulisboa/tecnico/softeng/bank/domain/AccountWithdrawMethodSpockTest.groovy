@@ -5,10 +5,9 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 import spock.lang.Unroll
 
 class AccountWithdrawMethodSpockTest extends SpockRollbackTestAbstractClass {
-	private Bank bank
-	private Account account
-
-	@Override
+	def bank
+	def account
+	
 	def populate4Test() {
 		bank = new Bank("Money", "BK01")
 		def client = new Client(bank, "António")

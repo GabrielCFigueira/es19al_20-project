@@ -58,7 +58,6 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
 		assert MARGIN == adventure.getMargin()  
 		assert 0.0 == adventure.getCurrentAmount()  
 		assert 1 == adventure.getClient().getAdventureSet().size()
-
 		assert Adventure.State.RESERVE_ACTIVITY == adventure.getState().getValue() 
 		assert 0 == adventure.getState().getNumOfRemoteErrors()
 

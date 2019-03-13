@@ -11,16 +11,16 @@ import pt.ulisboa.tecnico.softeng.tax.services.local.TaxInterface
 import pt.ulisboa.tecnico.softeng.tax.services.remote.dataobjects.RestInvoiceData
 
 class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass {
-	private static final String REFERENCE = "123456789"
-	private static final String SELLER_NIF = "123456789"
-	private static final String BUYER_NIF = "987654321"
-	private static final String FOOD = "FOOD"
-	private static final double VALUE = 160
-	private static final int TAX = 16
-	@Shared private final LocalDate date = new LocalDate(2018, 02, 13)
-	@Shared private final DateTime time = new DateTime(2018, 02, 13, 10, 10)
+	@Shared def REFERENCE = "123456789"
+	@Shared def SELLER_NIF = "123456789"
+	@Shared def BUYER_NIF = "987654321"
+	@Shared def FOOD = "FOOD"
+	@Shared def VALUE = 160
+	@Shared def TAX = 16
+	@Shared def date = new LocalDate(2018, 02, 13)
+	@Shared def time = new DateTime(2018, 02, 13, 10, 10)
 
-	private IRS irs
+	def irs
 
 
 	def populate4Test() {
@@ -32,11 +32,11 @@ class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass 
 
 	def 'success'() {
         when: 'creating and submitting an invoice'
-		    	RestInvoiceData invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE, date,
+		    	def invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE, date,
 					time);
-		    	String invoiceReference = TaxInterface.submitInvoice(invoiceData)
+		    	def invoiceReference = TaxInterface.submitInvoice(invoiceData)
 
-		    	Invoice invoice = irs.getTaxPayerByNIF(SELLER_NIF).getInvoiceByReference(invoiceReference)
+		    	def invoice = irs.getTaxPayerByNIF(SELLER_NIF).getInvoiceByReference(invoiceReference)
 
         then:	'checking the parameters'
 		    	invoiceReference == invoice.getReference()
@@ -49,11 +49,11 @@ class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass 
 
 	def 'submitTwice'() {
         when:	'creating and submitting two references with the same invoiceData'
-		    	RestInvoiceData invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE, date,
+		    	def invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE, date,
 					time)
-		   		String invoiceReference = TaxInterface.submitInvoice(invoiceData)
+		   		def invoiceReference = TaxInterface.submitInvoice(invoiceData)
 
-		    	String secondInvoiceReference = TaxInterface.submitInvoice(invoiceData)
+		    	def secondInvoiceReference = TaxInterface.submitInvoice(invoiceData)
 
         then:	'should succeed'
 		    	invoiceReference == secondInvoiceReference
@@ -62,7 +62,7 @@ class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass 
 	@Unroll('Invoice: #reference, #seller_nif, #buyer_nif, #food, #value ,#date ,#time')
 	def 'exceptions'() {
 		when:	'submitting multiple invoices with invalid data'
-		    RestInvoiceData invoiceData = new RestInvoiceData(reference, seller_nif, buyer_nif, food, value, _date, _time)
+		    def invoiceData = new RestInvoiceData(reference, seller_nif, buyer_nif, food, value, _date, _time)
             TaxInterface.submitInvoice(invoiceData)
 		then:	'throws an exception'
 			thrown(TaxException)
@@ -84,9 +84,9 @@ class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass 
 
 	}
 
-	def 'equal1970'() {
-        expect:
-		    RestInvoiceData invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE,
+	def 'equals to 1970'() {
+        expect: 'that the date is equal to 1970'
+		    def invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE,
 			new LocalDate(1970, 01, 01), new DateTime(1970, 01, 01, 10, 10))
 		    TaxInterface.submitInvoice(invoiceData)
 	}
