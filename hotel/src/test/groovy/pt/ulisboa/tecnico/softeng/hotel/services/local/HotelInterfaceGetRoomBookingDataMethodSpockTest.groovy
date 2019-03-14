@@ -41,7 +41,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
 	def 'success'() {
 		when: 'when getting room booking data'
 			def data = HotelInterface.getRoomBookingData(booking.getReference())
-		then:'asserts'
+		then:'should succeed'
 			booking.getReference() == data.getReference()
 			null == data.getCancellation()
 			null == data.getCancellationDate()
@@ -60,7 +60,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
 		when:'when cancelling the booking'
 			booking.cancel()
 			def data = HotelInterface.getRoomBookingData(booking.getCancellation())
-		then:'asserts'
+		then:'cancellation should succeed'
 			booking.getReference() == data.getReference()
 			booking.getCancellation() == data.getCancellation()
 			booking.getCancellationDate() == data.getCancellationDate()
