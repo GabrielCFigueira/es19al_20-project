@@ -10,16 +10,16 @@ import org.joda.time.LocalDate
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException
 
 class InvoiceConstructorSpockTest extends SpockRollbackTestAbstractClass {
-	@Shared def SELLER_NIF = "123456789"
-	@Shared def BUYER_NIF = "987654321"
-	@Shared def FOOD = "FOOD"
+	def SELLER_NIF = "123456789"
+	def BUYER_NIF = "987654321"
+	def FOOD = "FOOD"
+	def TAX = 23
 	@Shared def VALUE = 16
-	@Shared def TAX = 23
 	@Shared def date = new LocalDate(2018, 02, 13)
 
-	@Shared Seller seller
-	@Shared Buyer buyer
-	@Shared ItemType itemType
+	@Shared def seller
+	@Shared def buyer
+	@Shared def itemType
 
 	@Override
 	def populate4Test() {
