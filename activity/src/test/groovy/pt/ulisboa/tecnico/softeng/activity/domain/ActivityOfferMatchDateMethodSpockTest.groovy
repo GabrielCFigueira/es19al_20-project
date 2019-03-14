@@ -7,8 +7,8 @@ import org.joda.time.LocalDate
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException
 
 class ActivityOfferMatchDateMethodSpockTest extends SpockRollbackTestAbstractClass {
-	@Shared def LocalDate begin = new LocalDate(2016, 12, 19)
-	@Shared def LocalDate end = new LocalDate(2016, 12, 23)
+	@Shared def begin = new LocalDate(2016, 12, 19)
+	@Shared def end = new LocalDate(2016, 12, 23)
 	
 	def offer
 	
