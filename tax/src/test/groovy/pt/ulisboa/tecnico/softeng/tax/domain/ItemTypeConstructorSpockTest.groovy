@@ -1,10 +1,10 @@
 package pt.ulisboa.tecnico.softeng.tax.domain
 
+import pt.ulisboa.tecnico.softeng.tax.domain.IRS
+import pt.ulisboa.tecnico.softeng.tax.domain.ItemType
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException
 import spock.lang.Shared
 import spock.lang.Unroll
-
-import static org.junit.Assert.assertNotNull;
 
 class ItemTypeConstructorSpockTest extends SpockRollbackTestAbstractClass {
     @Shared def CAR = "CAR"
@@ -19,14 +19,14 @@ class ItemTypeConstructorSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'success'() {
         when: 'creating a new ItemType'
-        def IRS irs = IRS.getIRSInstance()
-        def itemType = new ItemType(irs, CAR, TAX)
+        def new_irs = IRS.getIRSInstance()
+        def itemType = new ItemType(new_irs, CAR, TAX)
 
         then: 'should succeed'
         itemType.getName() == CAR
         itemType.getTax() == TAX
         null != IRS.getIRSInstance().getItemTypeByName(CAR)
-        irs.getItemTypeByName(CAR) == itemType
+        new_irs.getItemTypeByName(CAR) == itemType
     }
 
     def 'uniqueName'() {
@@ -45,16 +45,16 @@ class ItemTypeConstructorSpockTest extends SpockRollbackTestAbstractClass {
         new ItemType(irs, CAR, 0)
     }
 
-    @Unroll('ItemType: #irs, #itemType, #tax')
+    @Unroll('ItemType: #_irs, #_itemType, #_tax')
     def 'exceptions'() {
         when:'creating an ItemType with invalid arguments'
-        new ItemType(irs, itemType, tax)
+        new ItemType(_irs, _itemType, _tax)
 
         then:
         thrown(TaxException)
 
         where: 'cases where some arguments are null or invalid'
-        irs | itemType | tax
+        _irs | _itemType | _tax
         irs | null     | TAX
         irs | ""       | TAX
         irs | CAR      | -34
