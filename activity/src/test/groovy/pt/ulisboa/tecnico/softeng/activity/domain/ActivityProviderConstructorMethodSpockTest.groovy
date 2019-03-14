@@ -49,40 +49,24 @@ class ActivityProviderConstructorMethodSpockTest extends SpockRollbackTestAbstra
 	}
 
 
-	def 'duplicated code'() {
+	@Unroll('ActivityProvider: #code, #name, #nif')
+	def 'duplications'() {
 		given: 'an activity provider'
 		new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME, NIF, IBAN)
 
-		when: 'creating another activity provider with the same code'
-		new ActivityProvider(PROVIDER_CODE, "Hello", NIF + "2", IBAN)
+		when: 'creating an activity provider with duplicated parameters'
+		new ActivityProvider(code, name, nif, IBAN)
 
-		then: 'throws an exception'
+		then: 'throws an exception and it only exists one provider'
 		thrown(ActivityException)
 		1 == FenixFramework.getDomainRoot().getActivityProviderSet().size()
-	}
 
-	def 'duplicated name'() {
-		given: 'an activity provider'
-		new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME, NIF, IBAN)
+		where:
+		code          | name          | nif
+		PROVIDER_CODE | "Hello"       | NIF + "2"
+		"123456"      | PROVIDER_NAME | NIF + "2"
+		"123456"      | "jdgdsk"      | NIF
 
-		when: 'creating another activity provider with the same name'
-		new ActivityProvider("123456", PROVIDER_NAME, NIF + "2", IBAN)
-
-		then: 'throws an exception'
-		thrown(ActivityException)
-		1 == FenixFramework.getDomainRoot().getActivityProviderSet().size()
-	}
-
-	def 'duplicated NIF'() {
-		given: 'an activity provider'
-		new ActivityProvider(PROVIDER_CODE, PROVIDER_NAME, NIF, IBAN)
-
-		when: 'creating another activity provider with the same NIF'
-		new ActivityProvider("123456", "jdgdsk", NIF, IBAN)
-
-		then: 'throws an exception'
-		thrown(ActivityException)
-		1 == FenixFramework.getDomainRoot().getActivityProviderSet().size()
 	}
 
 }
