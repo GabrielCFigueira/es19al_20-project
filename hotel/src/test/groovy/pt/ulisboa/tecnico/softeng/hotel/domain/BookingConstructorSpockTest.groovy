@@ -12,7 +12,7 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface
 public class BookingConstructorSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def ARRIVAL = new LocalDate(2016, 12, 19) 
 	@Shared def DEPARTURE = new LocalDate(2016, 12, 21) 
-	@Shared def ROOM_PRICE = 20.0 
+	def ROOM_PRICE = 20.0 
 	@Shared def NIF_BUYER = "123456789" 
 	@Shared def IBAN_BUYER = "IBAN_BUYER" 
 	@Shared def room 
