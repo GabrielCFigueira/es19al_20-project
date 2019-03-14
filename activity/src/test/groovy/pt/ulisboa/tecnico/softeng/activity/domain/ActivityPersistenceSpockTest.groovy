@@ -7,16 +7,16 @@ import pt.ist.fenixframework.FenixFramework
 
 
 class ActivityPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
-	@Shared def ADVENTURE_ID = "AdventureId" 
-	@Shared def ACTIVITY_NAME = "Activity_Name" 
-	@Shared def PROVIDER_NAME = "Wicket" 
-	@Shared def PROVIDER_CODE = "A12345" 
-	@Shared def IBAN = "IBAN" 
-	@Shared def NIF = "NIF" 
-	@Shared def BUYER_IBAN = "IBAN2" 
-	@Shared def BUYER_NIF = "NIF2" 
-	@Shared def CAPACITY = 25 
-	@Shared def AMOUNT = 30.0 
+	def ADVENTURE_ID = "AdventureId" 
+	def ACTIVITY_NAME = "Activity_Name" 
+	def PROVIDER_NAME = "Wicket" 
+	def PROVIDER_CODE = "A12345" 
+	def IBAN = "IBAN" 
+	def NIF = "NIF" 
+	def BUYER_IBAN = "IBAN2" 
+	def BUYER_NIF = "NIF2" 
+	def CAPACITY = 25 
+	def AMOUNT = 30.0 
 	def begin = LocalDate.parse("2017-04-01") 
 	def end = LocalDate.parse("2017-04-15") 
 
