@@ -6,9 +6,9 @@ import pt.ist.fenixframework.FenixFramework
 
 class BankPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
     
-    private static final BANK_NAME = "Money"
-	private static final BANK_CODE = "BK01"
-	private static final CLIENT_NAME = "João dos Anzóis"
+    def private static final BANK_NAME = "Money"
+	def private static final BANK_CODE = "BK01"
+	def private static final CLIENT_NAME = "João dos Anzóis"
 
 
     @Override
