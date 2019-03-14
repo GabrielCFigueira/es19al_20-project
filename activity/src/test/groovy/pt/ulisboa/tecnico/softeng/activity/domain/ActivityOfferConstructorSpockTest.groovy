@@ -1,32 +1,31 @@
 package pt.ulisboa.tecnico.softeng.activity.domain
 
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDate
 import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
 class ActivityOfferConstructorSpockTest extends SpockRollbackTestAbstractClass {
-    @Shared def CAPACITY = 25;
-    @Shared def MAX_AGE = 50;
-	@Shared def MIN_AGE = 25;
-	static def LocalDate BEGIN = new LocalDate(2016, 12, 19);
-	static def LocalDate END = new LocalDate(2016, 12, 21);
-    static def int AMOUNT = 30;
-	@Shared def Activity ACTIVITY;
+    def CAPACITY = 25
+    def MAX_AGE = 50
+	def MIN_AGE = 25
+	@Shared def BEGIN = new LocalDate(2016, 12, 19)
+	@Shared def END = new LocalDate(2016, 12, 21)
+    @Shared def AMOUNT = 30
+	@Shared def ACTIVITY
 
-    static def LocalDate endDateImmediatelyBeforeBeginDate = BEGIN.minusDays(1)
-    static def int amountIs0 = 0
+    @Shared def endDateImmediatelyBeforeBeginDate = BEGIN.minusDays(1)
+    @Shared def amountIs0 = 0
 
     @Override
 	def populate4Test() {
-		ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN");
-		ACTIVITY = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY);
+		ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN")
+		ACTIVITY = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY)
 	}
 
     def 'success' () {
         when: 'creating a new Activity Offer'
-        def offer = new ActivityOffer(this.ACTIVITY, BEGIN, END, AMOUNT)
+        def offer = new ActivityOffer(ACTIVITY, BEGIN, END, AMOUNT)
 
         then: 'should succeed'
         offer.getBegin() == BEGIN
@@ -54,7 +53,7 @@ class ActivityOfferConstructorSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'successBeginDateEqualEndDate'(){
         when: 'creating an ActivityOffer'
-        def offer = new ActivityOffer(this.ACTIVITY, BEGIN, BEGIN, 30)
+        def offer = new ActivityOffer(ACTIVITY, BEGIN, BEGIN, 30)
 
         then: 'that ends and starts on the same day'
         offer.getBegin() == BEGIN
