@@ -53,30 +53,7 @@ class BankInterfaceGetOperationDataMethodSpockTest extends SpockRollbackTestAbst
 		
 		
 	}
-	
-	
-/*
-		def 'nullReference'() {
-		when:
-		BankInterface.getOperationData(null);
-		then:
-		thrown(BankException);
-		}
-
-		def 'emptyReference'() {
-			when:
-			BankInterface.getOperationData("");
-			then:
-			thrown(BankException)
-		}
-		
-		def 'referenceNotExists'() {
-			when:
-			BankInterface.getOperationData("XPTO");
-			then:
-			thrown(BankException);
-		}*/
-		
+			
 }
 
 
