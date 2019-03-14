@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.hotel.domain
 
 import org.joda.time.LocalDate
 import spock.lang.Unroll
+import spock.lang.Shared
 
 
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
@@ -10,8 +11,8 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 
 class RoomReserveMethodSpockTest extends SpockRollbackTestAbstractClass {
 
-    def private final arrival = new LocalDate(2016, 12, 19)
-	def private final departure = new LocalDate(2016, 12, 24)
+    @Shared def private final arrival = new LocalDate(2016, 12, 19)
+	@Shared def private final departure = new LocalDate(2016, 12, 24)
 	def private room
 	def private final NIF_HOTEL = "123456700"
 	def private final NIF_BUYER = "123456789"
@@ -44,11 +45,11 @@ class RoomReserveMethodSpockTest extends SpockRollbackTestAbstractClass {
         thrown(HotelException)
 
         where:
-        _type       | _arrival     | _departure
-        Type.DOUBLE | this.arrival | this.departure
-        null        | this.arrival | this.departure
-        Type.SINGLE | null         | this.departure
-        Type.SINGLE | this.arrival | null
+        _type       | _arrival | _departure
+        Type.DOUBLE | arrival  | departure
+        null        | arrival  | departure
+        Type.SINGLE | null     | departure
+        Type.SINGLE | arrival  | null
 
     }
 

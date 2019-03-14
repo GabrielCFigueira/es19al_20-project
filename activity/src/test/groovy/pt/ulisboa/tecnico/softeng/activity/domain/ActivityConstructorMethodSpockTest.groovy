@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.activity.domain
 
 
 import spock.lang.Unroll
+import spock.lang.Shared
 
 
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
@@ -14,7 +15,7 @@ class ActivityConstructorMethodSpockTest extends SpockRollbackTestAbstractClass 
 	def private static final MIN_AGE = 25
 	def private static final MAX_AGE = 50
 	def private static final CAPACITY = 30
-	def private provider
+	@Shared def private provider
 
 
     @Override
@@ -55,15 +56,15 @@ class ActivityConstructorMethodSpockTest extends SpockRollbackTestAbstractClass 
         thrown(ActivityException)
 
         where:
-        _provider     | _name         | _min         | _max    | _capacity
-        null          | PROVIDER_NAME | MIN_AGE      | MAX_AGE | CAPACITY
-        this.provider | null          | MIN_AGE      | MAX_AGE | CAPACITY
-        this.provider | "    "        | MIN_AGE      | MAX_AGE | CAPACITY
-        this.provider | PROVIDER_NAME | 17           | MAX_AGE | CAPACITY
-        this.provider | PROVIDER_NAME | MIN_AGE      | 100     | CAPACITY
-        this.provider | PROVIDER_NAME | MAX_AGE + 10 | MAX_AGE | CAPACITY
-        this.provider | PROVIDER_NAME | MAX_AGE + 1  | MAX_AGE | CAPACITY
-        this.provider | PROVIDER_NAME | MIN_AGE      | MAX_AGE | 0
+        _provider | _name         | _min         | _max    | _capacity
+        null      | PROVIDER_NAME | MIN_AGE      | MAX_AGE | CAPACITY
+        provider  | null          | MIN_AGE      | MAX_AGE | CAPACITY
+        provider  | "    "        | MIN_AGE      | MAX_AGE | CAPACITY
+        provider  | PROVIDER_NAME | 17           | MAX_AGE | CAPACITY
+        provider  | PROVIDER_NAME | MIN_AGE      | 100     | CAPACITY
+        provider  | PROVIDER_NAME | MAX_AGE + 10 | MAX_AGE | CAPACITY
+        provider  | PROVIDER_NAME | MAX_AGE + 1  | MAX_AGE | CAPACITY
+        provider  | PROVIDER_NAME | MIN_AGE      | MAX_AGE | 0
     }
 
 }

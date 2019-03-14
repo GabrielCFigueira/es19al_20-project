@@ -11,7 +11,7 @@ import pt.ulisboa.tecnico.softeng.tax.domain.ItemType
 import pt.ulisboa.tecnico.softeng.tax.domain.Seller
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException
 import pt.ulisboa.tecnico.softeng.tax.services.local.TaxInterface
-import pt.ulisboa.tecnico.softeng.tax.domain.RollbackTestAbstractClass
+
 
 class IRSCancelInvoiceMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def SELLER_NIF = "123456789"
