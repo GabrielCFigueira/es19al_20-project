@@ -1,16 +1,14 @@
 package pt.ulisboa.tecnico.softeng.bank.domain
 
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.FenixFramework
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
 class BankConstructorTest extends SpockRollbackTestAbstractClass {
-    @Shared String BANK_CODE = "BK01"
-	@Shared String BANK_NAME = "Money"
+    @Shared def BANK_CODE = "BK01"
+	@Shared def BANK_NAME = "Money"
 
-	@Override
 	def populate4Test() { }
 
     def 'success'() {
@@ -24,12 +22,17 @@ class BankConstructorTest extends SpockRollbackTestAbstractClass {
         bank.getAccountSet().size() == 0
         bank.getClientSet().size() == 0
     }
+    
     def 'notUniqueCode'() {
+        given:
         new Bank(BANK_NAME, BANK_CODE)
-        shouldFail BankException, {
-            new Bank(BANK_NAME, BANK_CODE)
-        }
-        assert FenixFramework.getDomainRoot().getBankSet().size() == 1
+        
+        when:
+        new Bank(BANK_NAME, BANK_CODE)
+        
+        then:
+        thrown(BankException)
+        FenixFramework.getDomainRoot().getBankSet().size() == 1
     }
 
     @Unroll('Bank: #bank_name, #bank_code')
