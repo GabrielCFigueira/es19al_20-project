@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.softeng.broker.domain  
 
 import org.joda.time.LocalDate  
-import spock.lang.Shared
 
 import pt.ist.fenixframework.FenixFramework
 
