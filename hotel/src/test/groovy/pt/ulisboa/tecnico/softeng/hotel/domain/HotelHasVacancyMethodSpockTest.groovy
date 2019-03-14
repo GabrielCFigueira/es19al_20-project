@@ -15,9 +15,9 @@ class HotelHasVacancyMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def departure = new LocalDate(2016, 12, 21)
 	def hotel
 	def room
-	@Shared def NIF_HOTEL = "123456700"
-	@Shared def NIF_BUYER = "123456789"
-	@Shared def IBAN_BUYER = "IBAN_BUYER"
+	def NIF_HOTEL = "123456700"
+	def NIF_BUYER = "123456789"
+	def IBAN_BUYER = "IBAN_BUYER"
 
 
 	@Override
