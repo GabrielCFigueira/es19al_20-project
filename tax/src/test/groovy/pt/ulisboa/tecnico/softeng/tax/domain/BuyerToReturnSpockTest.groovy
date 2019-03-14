@@ -13,10 +13,10 @@ import pt.ulisboa.tecnico.softeng.tax.domain.Seller
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException
 
 class BuyerToReturnSpockTest extends SpockRollbackTestAbstractClass {
-	@Shared def SELLER_NIF = "123456789" 
-	@Shared def BUYER_NIF = "987654321" 
-	@Shared def FOOD = "FOOD" 
-	@Shared def TAX = 10 
+	def SELLER_NIF = "123456789" 
+	def BUYER_NIF = "987654321" 
+	def FOOD = "FOOD" 
+	def TAX = 10 
 	def date = LocalDate.parse("2018-02-13") 
 
 	def seller 
@@ -34,16 +34,16 @@ class BuyerToReturnSpockTest extends SpockRollbackTestAbstractClass {
 	@Unroll('Invoices: #value1, #value2, #value3, #year, #taxValue')
 	def 'invoices'() {
         when: 'creating invoices'
-            new Invoice(value1, date, itemType, seller, buyer) 
-            new Invoice(value2, date, itemType, seller, buyer) 
-            new Invoice(value3, date, itemType, seller, buyer) 
+            new Invoice(100, date, itemType, seller, buyer) 
+            new Invoice(100, date, itemType, seller, buyer) 
+            new Invoice(50, date, itemType, seller, buyer) 
             def value = buyer.taxReturn(year) 
         then: 'checking value of tax' 
 		    value == taxValue 
 		where:
-			value1 | value2 | value3 | year | taxValue
-			   100 |  100   |   50   | 2018 |  1.25
-			   100 |  100   |   50   | 2017 |  0.0
+			year | taxValue
+	 		2018 |  1.25
+	 		2017 |  0.0
 	}
 
 	def 'noInvoices'() {
