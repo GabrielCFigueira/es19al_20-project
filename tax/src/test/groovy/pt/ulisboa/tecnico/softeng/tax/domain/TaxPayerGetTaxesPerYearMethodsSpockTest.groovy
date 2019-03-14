@@ -39,7 +39,7 @@ public class TaxPayerGetTaxesPerYearMethodsSpockTest extends SpockRollbackTestAb
 			new Invoice(50, date, itemType, seller, buyer)
 			def toPay = seller.getToPayPerYear()
 			def  taxReturn = buyer.getTaxReturnPerYear()
-		then:'assert values'
+		then:'should succeed'
 			2 == toPay.keySet().size()
 			10.0d == toPay.get(2017)
 			25.0d == toPay.get(2018)
@@ -52,7 +52,7 @@ public class TaxPayerGetTaxesPerYearMethodsSpockTest extends SpockRollbackTestAb
 		when:'getters are called'
 			def toPay = seller.getToPayPerYear()
 			def taxReturn = buyer.getTaxReturnPerYear()
-		then:'assert 0'
+		then:'should succeed empty'
 			0 == toPay.keySet().size()
 			0 == taxReturn.keySet().size()
 	}
