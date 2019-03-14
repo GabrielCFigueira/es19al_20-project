@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.tax.domain
 import org.joda.time.LocalDate 
 
 import spock.lang.Shared
+import spock.lang.Unroll
 
 import pt.ulisboa.tecnico.softeng.tax.domain.Buyer 
 import pt.ulisboa.tecnico.softeng.tax.domain.IRS 
@@ -12,10 +13,10 @@ import pt.ulisboa.tecnico.softeng.tax.domain.Seller
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException 
 
 public class SellerToPaySpockTest extends SpockRollbackTestAbstractClass {
-	@Shared def SELLER_NIF = "123456789" 
-	@Shared def BUYER_NIF = "987654321" 
-	@Shared def FOOD = "FOOD" 
-	@Shared def TAX = 10 
+	def SELLER_NIF = "123456789" 
+	def BUYER_NIF = "987654321" 
+	def FOOD = "FOOD" 
+	def TAX = 10 
 	def date = LocalDate.parse("2018-02-13") 
 
 	def seller 
@@ -30,23 +31,18 @@ public class SellerToPaySpockTest extends SpockRollbackTestAbstractClass {
 		itemType = new ItemType(irs, FOOD, TAX) 
 	}
 
+	@Unroll('#Value,#year')
 	def 'success'() {
-        when: 'creating multiple invoices'
+		when: 'creating multiple invoices'
+			new Invoice(100, date, itemType, seller, buyer) 
             new Invoice(100, date, itemType, seller, buyer) 
-            new Invoice(100, date, itemType, seller, buyer) 
-            new Invoice(50, date, itemType, seller, buyer) 
-		    def value = seller.toPay(2018) 
-        then: 'checking value toPay in the known year'
-		    25.0 == value 
-	}
-
-	def 'yearWithoutInvoices'() {
-        when: 'creating multiple invoices'
-            new Invoice(100,  date,  itemType,  seller,  buyer) 
-            new Invoice(100,  date,  itemType,  seller,  buyer) 
-            new Invoice(50,  date,  itemType,  seller,  buyer) 
-        then: 'checking value toPay in a past year'
-		    0.0 == seller.toPay(2015) 
+            new Invoice(50, date, itemType, seller, buyer)
+		then: 'checking values'
+			value == seller.toPay(year)
+		where:
+			value  | year	
+			 25.0  | 2018
+			 0.0   | 2015
 	}
 
 	def 'noInvoices'() {
