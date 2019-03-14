@@ -38,7 +38,7 @@ public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbst
 		null != newReference
 		true == newReference.startsWith("BK01")
 
-		null != bank.getOperation(newReference))
+		null != bank.getOperation(newReference)
 		bank.getOperation(newReference).getType() == Operation.Type.WITHDRAW
 
 	}
@@ -46,16 +46,16 @@ public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbst
 		when: 'Testing 2 banks process 2 payments'
 		def otherBank = new Bank("Money", "BK02")
 		def otherClient = new Client(otherBank, "Manuel")
-		def otherAccount = new Account(otherBank, otherClient);
-		def otherIban = otherAccount.getIBAN();
-		otherAccount.deposit(1000);
+		def otherAccount = new Account(otherBank, otherClient)
+		def otherIban = otherAccount.getIBAN()
+		otherAccount.deposit(1000)
 
 		BankInterface.processPayment(new BankOperationData(otherIban, 100, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))
 		BankInterface.processPayment(new BankOperationData(iban, 100, TRANSACTION_SOURCE, TRANSACTION_REFERENCE + "PLUS"))	
 		
 		then: 'should succeed'
-		assertEquals(900, otherAccount.getBalance(), 0.0d)
-		assertEquals(400, account.getBalance(), 0.0d)
+		900 == otherAccount.getBalance()
+		400 == account.getBalance()
 	}
 
 	def 'redoAnAlreadyPayed'() {
@@ -76,22 +76,22 @@ public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbst
 			BankInterface.processPayment(new BankOperationData(iban, 1, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))
 
 		then: 'only one unit is removed'
-			assertEquals(499, this.account.getBalance(), 0.0d);
+			499 == account.getBalance()
 	}
 
-	@Unroll('InterfaceProcessPayment:#iban, #amount, #transaction_source, #transaction_reference' )
+	@Unroll('InterfaceProcessPayment:#_iban, #_amount, #_transaction_source, #_transaction_reference' )
 	def 'exceptions'() {
 		when:
-		BankInterface.processPayment(new BankOperationData(iban, amount, transaction_source, transaction_reference))
+		BankInterface.processPayment(new BankOperationData(_iban, _amount, _transaction_source, _transaction_reference))
 
 		then:
 		thrown(BankException)
 
 		where:
-		iban      | amount | transaction_source | transaction_reference
-		null      | 100    | TRANSACTION_SOURCE | TRANSACTION_REFERENCE
-		"    "    | 100    | TRANSACTION_SOURCE | TRANSACTION_REFERENCE
-		iban      | 0      | TRANSACTION_SOURCE | TRANSACTION_REFERENCE
-		"other"   | 100    | TRANSACTION_SOURCE | TRANSACTION_REFERENCE
+		_iban      | _amount | _transaction_source | _transaction_reference
+		null       | 100     | TRANSACTION_SOURCE  | TRANSACTION_REFERENCE
+		"    "     | 100     | TRANSACTION_SOURCE  | TRANSACTION_REFERENCE
+		iban       | 0       | TRANSACTION_SOURCE  | TRANSACTION_REFERENCE
+		"other"    | 100     | TRANSACTION_SOURCE  | TRANSACTION_REFERENCE
 	}
 }
