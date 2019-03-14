@@ -57,26 +57,20 @@ class HotelConstructorSpockTest extends SpockRollbackTestAbstractClass {
 		HOTEL_CODE  | HOTEL_NAME | NIF | IBAN | PRICE_SINGLE | -1.0
 	}
 
-	def 'duplicated code'() {
+	@Unroll('Hotel: #code, #name')
+	def 'duplications'() {
 		given: 'a hotel'
 		new Hotel(HOTEL_CODE, HOTEL_NAME, NIF, IBAN, PRICE_SINGLE, PRICE_DOUBLE)
 
-		when: 'creating another hotel with the same code'
-		new Hotel(HOTEL_CODE, HOTEL_NAME + " City", NIF, IBAN, PRICE_SINGLE, PRICE_DOUBLE)
+		when: 'creating a hotel with duplicated parameters'
+		new Hotel(code, name, NIF, IBAN, PRICE_SINGLE, PRICE_DOUBLE)
 
 		then: 'throws an exception'
 		thrown(HotelException)
+
+		where:
+		code                | name
+		HOTEL_CODE          | HOTEL_NAME + " City"
+		HOTEL_CODE + "_new" | HOTEL_NAME + "_New"
 	}
-
-	def 'duplicated nif'() {
-		given: 'a hotel'
-		new Hotel(HOTEL_CODE, HOTEL_NAME, NIF, IBAN, PRICE_SINGLE, PRICE_DOUBLE)
-
-		when: 'creating another hotel with the same nif'
-		new Hotel(HOTEL_CODE + "_new", HOTEL_NAME + "_New", NIF, IBAN, PRICE_SINGLE, PRICE_DOUBLE)
-
-		then: 'throws an exception'
-		thrown(HotelException)
-	}
-
 }
