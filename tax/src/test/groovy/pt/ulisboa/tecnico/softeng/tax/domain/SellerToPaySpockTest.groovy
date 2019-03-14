@@ -82,5 +82,4 @@ public class SellerToPaySpockTest extends SpockRollbackTestAbstractClass {
         then: 'checking value toPay'
 		    15.0 == value
 	}
-
 }
