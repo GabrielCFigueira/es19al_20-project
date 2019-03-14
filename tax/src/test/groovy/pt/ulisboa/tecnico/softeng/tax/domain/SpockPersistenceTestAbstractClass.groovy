@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.softeng.Hotel.domain
+package pt.ulisboa.tecnico.softeng.tax.domain
 
 import javax.transaction.NotSupportedException
 import javax.transaction.SystemException
