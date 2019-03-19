@@ -34,7 +34,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |###############################|################################################|
 |  Gabriel Figueira             | hotel.services.local.HotelInterfaceCancelBookingMethodTest          |
 |  86426                        | broker.integration.CompleteProcessOfAnAdventureTest                 |
-|  GabrielCFigueira/Grabiel14   | broker.domain.RentVehicleStateMethodTest 	      	                  |
+|  GabrielCFigueira             | broker.domain.RentVehicleStateMethodTest 	      	                  |
 |###############################|################################################|
 |                               | hotel.domain.BookingConstructorTest		                          |
 |                               | hotel.domain.RoomConstructorMethodTest                              |
