@@ -32,9 +32,14 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |                               | bank.domain.ClientContructorMethodTest		                      |
 |                               | tax.domain.RollbackTestAbstractClass                                |
 |###############################|################################################|
-|  Gabriel Figueira             | hotel.services.local.HotelInterfaceCancelBookingMethodTest          |
-|  86426                        | broker.integration.CompleteProcessOfAnAdventureTest                 |
-|  GabrielCFigueira             | broker.domain.RentVehicleStateMethodTest 	      	                  |
+|                               | hotel.domain.HotelGetPriceMethodTest 			                      |
+|                               | hotel.domain.RoomReserveMethodTest                                  |
+|  Gabriel Figueira             | tax.domain.IRSGetItemTypeByNameTest		                          |
+|  86426                        | tax.domain.TaxPayerGetInvoiceByReferenceTest	                      |
+|  GabrielCFigueira/Grabiel14   | activity.domain.ActivityConstructorMethodTest		                  |
+|                               | activity.domain.ActivityProviderFindOfferMethodTest	              |
+|                               | bank.domain.BankPersistentTest		                              |
+|                               | bank.services.local.BankInterfaceCancelPaymentTest                  |
 |###############################|################################################|
 |                               | hotel.domain.BookingConstructorTest		                          |
 |                               | hotel.domain.RoomConstructorMethodTest                              |
