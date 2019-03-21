@@ -19,6 +19,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestActiv
 @RequestMapping(value = "/providers/{codeProvider}/activities/{codeActivity}/offers/{externalId}/bookings")
 public class BookingController {
 	private static Logger logger = LoggerFactory.getLogger(BookingController.class);
+	private ActivityInterface activityInterface = new ActivityInterface(); 
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String offerBookingsPage(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity,
@@ -47,7 +48,7 @@ public class BookingController {
 				externalId);
 
 		try {
-			ActivityInterface.reserveActivity(externalId, booking);
+			activityInterface.reserveActivity(externalId, booking);
 		} catch (ActivityException e) {
 			model.addAttribute("error", "Error: it was not possible to do the booking");
 			model.addAttribute("booking", booking);

@@ -18,6 +18,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestActiv
 @RequestMapping(value = "/rest/providers")
 public class ActivityRestController {
 	private static Logger logger = LoggerFactory.getLogger(ActivityRestController.class);
+	private ActivityInterface activityInterface = new ActivityInterface();
 
 	@RequestMapping(value = "/reserve", method = RequestMethod.POST)
 	public ResponseEntity<RestActivityBookingData> reserve(@RequestBody RestActivityBookingData activityBookingData) {
@@ -25,7 +26,7 @@ public class ActivityRestController {
 				activityBookingData.getBegin(), activityBookingData.getEnd(), activityBookingData.getAge(),
 				activityBookingData.getNif(), activityBookingData.getIban(), activityBookingData.getAdventureId());
 		try {
-			return new ResponseEntity<RestActivityBookingData>(ActivityInterface.reserveActivity(activityBookingData),
+			return new ResponseEntity<RestActivityBookingData>(activityInterface.reserveActivity(activityBookingData),
 					HttpStatus.OK);
 		} catch (ActivityException be) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -36,7 +37,7 @@ public class ActivityRestController {
 	public ResponseEntity<String> cancel(@RequestParam String reference) {
 		logger.info("cancel reference:{}", reference);
 		try {
-			return new ResponseEntity<>(ActivityInterface.cancelReservation(reference), HttpStatus.OK);
+			return new ResponseEntity<>(activityInterface.cancelReservation(reference), HttpStatus.OK);
 		} catch (ActivityException be) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -46,7 +47,7 @@ public class ActivityRestController {
 	public ResponseEntity<RestActivityBookingData> reservation(@RequestParam String reference) {
 		logger.info("reservation reference:{}", reference);
 		try {
-			return new ResponseEntity<>(ActivityInterface.getActivityReservationData(reference), HttpStatus.OK);
+			return new ResponseEntity<>(activityInterface.getActivityReservationData(reference), HttpStatus.OK);
 		} catch (ActivityException be) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
