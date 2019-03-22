@@ -24,6 +24,7 @@ import spock.lang.Unroll
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
         adventure.setBankInterface(bankInterface)
+
         adventure.setState(State.PROCESS_PAYMENT)
     }
 

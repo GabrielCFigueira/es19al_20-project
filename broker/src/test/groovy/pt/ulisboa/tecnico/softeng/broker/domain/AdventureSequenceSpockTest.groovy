@@ -79,7 +79,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			hotelInterface.getRoomBookingData(ROOM_CONFIRMATION) >> bookingRoomData
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
@@ -110,7 +115,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			hotelInterface.getRoomBookingData(ROOM_CONFIRMATION) >> bookingRoomData
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
@@ -143,7 +153,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			carInterface.getRentingData(RENTING_CONFIRMATION) >> rentingData
 
-			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
@@ -170,7 +185,11 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			activityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION) >> bookingActivityData
 
-			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, activityInterface, bankInterface, hotelInterface, taxInterface)
+			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
 
 		when:
 			adventure.process()
@@ -188,7 +207,11 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new ActivityException()}
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, activityInterface, bankInterface, hotelInterface, taxInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
 
 		when:
 			adventure.process()
@@ -208,7 +231,11 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			activityInterface.cancelReservation(ACTIVITY_CONFIRMATION) >> ACTIVITY_CANCELLATION
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, activityInterface, bankInterface, hotelInterface, taxInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
 
 		when:
 			adventure.process()

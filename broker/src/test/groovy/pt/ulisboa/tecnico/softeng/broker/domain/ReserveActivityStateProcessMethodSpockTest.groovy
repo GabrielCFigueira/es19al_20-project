@@ -21,7 +21,8 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 	def populate4Test() {
 		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-		adventure = new Adventure(broker, BEGIN, END, client, MARGIN, activityInterface)
+		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+		adventure.setActivityInterface(activityInterface)
 		bookingData = new RestActivityBookingData()
 		bookingData.setReference(ACTIVITY_CONFIRMATION)
 		bookingData.setPrice(76.78)
@@ -30,7 +31,8 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 
     def 'successNoBookRoom'(){
         given:
-        def sameDayAdventure = new Adventure(broker, BEGIN, BEGIN, client, MARGIN, activityInterface)
+        def sameDayAdventure = new Adventure(broker, BEGIN, BEGIN, client, MARGIN)
+		sameDayAdventure.setActivityInterface(activityInterface)
 		sameDayAdventure.setState(State.RESERVE_ACTIVITY)
 
         activityInterface.reserveActivity(_) >> bookingData
@@ -44,7 +46,8 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 
 	def 'successToRentVehicle'() {
 		given:
-		def adv = new Adventure(broker, BEGIN, BEGIN, client, MARGIN, true, activityInterface)
+		def adv = new Adventure(broker, BEGIN, BEGIN, client, MARGIN, true)
+		adv.setActivityInterface(activityInterface)
 		adv.setState(State.RESERVE_ACTIVITY)
 
 		activityInterface.reserveActivity(_) >> bookingData
