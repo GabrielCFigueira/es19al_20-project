@@ -18,7 +18,7 @@ public class BookRoomState extends BookRoomState_Base {
 	@Override
 	public void process() {
 		try {
-			RestRoomBookingData bookingData = HotelInterface.reserveRoom(new RestRoomBookingData(Type.SINGLE,
+			RestRoomBookingData bookingData = getAdventure().getHotelInterface().reserveRoom(new RestRoomBookingData(Type.SINGLE,
 					getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getBroker().getNifAsBuyer(),
 					getAdventure().getBroker().getIban(), getAdventure().getID()));
 			getAdventure().setRoomConfirmation(bookingData.getReference());

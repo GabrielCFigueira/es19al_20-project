@@ -62,7 +62,8 @@ public class Processor extends Processor_Base {
 								BankInterface.cancelPayment(booking.getPaymentReference()));
 					}
 					if (!booking.getCancelledInvoice()) {
-						TaxInterface.cancelInvoice(booking.getInvoiceReference());
+						TaxInterface taxInterface = new TaxInterface();
+						taxInterface.cancelInvoice(booking.getInvoiceReference());
 						booking.setCancelledInvoice(true);
 					}
 				} catch (BankException | TaxException | RemoteAccessException ex) {

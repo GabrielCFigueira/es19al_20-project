@@ -4,12 +4,16 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
+	private CarInterface carInterface;
+	private HotelInterface hotelInterface;
 
 	private ActivityInterface activityInterface;
 
@@ -20,17 +24,30 @@ public class Adventure extends Adventure_Base {
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
 		this(broker, begin, end, client, margin, false);
 		setActivityInterface(new ActivityInterface());
+		setHotelInterface(new HotelInterface());
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
 		this(broker, begin, end, client, margin, false);
 		setActivityInterface(activityInterface);
+		setHotelInterface(new HotelInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, HotelInterface hotelInterface ) {
+		this(broker, begin, end, client, margin, false);
+		setHotelInterface(hotelInterface);
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
+		this(broker, begin, end, client, margin, false);
+		this.carInterface = carInterface;
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
 		checkArguments(broker, begin, end, client, margin);
-
+		
 		setID(broker.getCode() + Integer.toString(broker.getCounter()));
+
 		setBegin(begin);
 		setEnd(end);
 		setMargin(margin);
@@ -46,6 +63,7 @@ public class Adventure extends Adventure_Base {
 		setState(State.RESERVE_ACTIVITY);
 
 		setActivityInterface(new ActivityInterface());
+		setHotelInterface(new HotelInterface());
 	}
 	
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, ActivityInterface activityInterface) {
@@ -53,8 +71,9 @@ public class Adventure extends Adventure_Base {
 		setActivityInterface(activityInterface);
 	}
 
-	public void setActivityInterface(ActivityInterface activityInterface){
-		this.activityInterface = activityInterface;
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, HotelInterface hotelInterface) {
+		this(broker,begin,end,client,margin,rentVehicle);
+		setHotelInterface(hotelInterface);
 	}
 
 	public void delete() {
@@ -88,6 +107,10 @@ public class Adventure extends Adventure_Base {
 		return getClient().getAge();
 	}
 
+	public CarInterface getCarInterface() {
+		return this.carInterface;
+	}
+
 	public String getIban() {
 		return getClient().getIban();
 	}
@@ -104,9 +127,27 @@ public class Adventure extends Adventure_Base {
 		return getRentVehicle();
 	}
 
+	/* #################### INTERFACE - GETTERS #################### */
+
 	public ActivityInterface getActivityInterface(){
 		return this.activityInterface;
 	}
+
+	public HotelInterface getHotelInterface(){
+		return this.hotelInterface;
+	}
+
+	/* #################### INTERFACE - SETTERS #################### */
+
+	public void setActivityInterface(ActivityInterface activityInterface){
+		this.activityInterface = activityInterface;
+	}
+
+	public void setHotelInterface(HotelInterface hotelInterface){
+		this.hotelInterface = hotelInterface;
+	}
+
+	/* ############################################################# */
 
 	public void setState(State state) {
 		if (getState() != null) {
