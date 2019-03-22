@@ -23,7 +23,7 @@ public class HotelInterface {
 
 	private static String ENDPOINT = "http://localhost:8085";
 
-	public static RestRoomBookingData reserveRoom(RestRoomBookingData roomBookingData) {
+	public RestRoomBookingData reserveRoom(RestRoomBookingData roomBookingData) {
 		logger.info("reserveRoom arrival:{}, departure:{}, nif:{}, iban:{}, adventureId:{}",
 				roomBookingData.getArrival(), roomBookingData.getDeparture(), roomBookingData.getBuyerNif(),
 				roomBookingData.getBuyerIban(), roomBookingData.getAdventureId());

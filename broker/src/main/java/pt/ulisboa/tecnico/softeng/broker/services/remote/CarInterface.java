@@ -19,7 +19,7 @@ public class CarInterface {
 		CAR, MOTORCYCLE
 	}
 
-	public static RestRentingData rentCar(Type vehicleType, String drivingLicense, String nif, String iban,
+	public RestRentingData rentCar(Type vehicleType, String drivingLicense, String nif, String iban,
 			LocalDate begin, LocalDate end, String adventureId) {
 		logger.info("rentCar vehicleType:{}, drivingLicense:{}, nif:{}, iban:{}, begin:{}, end:{}, adventureId:{}",
 				vehicleType, drivingLicense, nif, iban, begin, end, adventureId);

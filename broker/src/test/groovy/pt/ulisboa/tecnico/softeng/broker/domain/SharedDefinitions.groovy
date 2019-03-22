@@ -41,4 +41,8 @@ trait SharedDefinitions {
 	@Shared def END = new LocalDate(2016, 12, 21)
 	@Shared def ARRIVAL = new LocalDate(2016, 12, 19)
 	@Shared def DEPARTURE = new LocalDate(2016, 12, 21)
+
+	@Shared def broker
+	@Shared def client
+	@Shared def adventure
 }
