@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.CarException;

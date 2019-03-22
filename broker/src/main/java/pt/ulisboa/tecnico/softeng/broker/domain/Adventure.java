@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.*;
@@ -39,15 +41,6 @@ public class Adventure extends Adventure_Base {
 		setCarInterface(new CarInterface());
 	}
 
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
-		this(broker, begin, end, client, margin, false);
-		setActivityInterface(activityInterface);
-		setTaxInterface(new TaxInterface());
-		setBankInterface(new BankInterface());
-		setHotelInterface(new HotelInterface());
-		setCarInterface(new CarInterface());
-	}
-
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface,
 					 HotelInterface hotelInterface) {
 		this(broker, begin, end, client, margin, false);
@@ -68,10 +61,31 @@ public class Adventure extends Adventure_Base {
 		setCarInterface(carInterface);
 	}
 
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, HotelInterface hotelInterface ) {
+		this(broker, begin, end, client, margin, false);
+		setHotelInterface(hotelInterface);
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
+		this(broker, begin, end, client, margin, false);
+		setCarInterface(carInterface);
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, BankInterface bankInterface){
+		this(broker, begin, end, client, margin, false);
+		setBankInterface(bankInterface);
+	}
+
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
 		checkArguments(broker, begin, end, client, margin);
-
+		
 		setID(broker.getCode() + Integer.toString(broker.getCounter()));
+
 		setBegin(begin);
 		setEnd(end);
 		setMargin(margin);
@@ -111,45 +125,15 @@ public class Adventure extends Adventure_Base {
 		setHotelInterface(hotelInterface);
 		setCarInterface(carInterface);
 	}
-
-	public void setActivityInterface(ActivityInterface activityInterface){
-		this.activityInterface = activityInterface;
+	
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, ActivityInterface activityInterface) {
+		this(broker, begin, end, client, margin, rentVehicle);
+		setActivityInterface(activityInterface);
 	}
 
-	public void setBankInterface(BankInterface bankInterface){
-		this.bankInterface = bankInterface;
-	}
-
-	public void setHotelInterface(HotelInterface hotelInterface){
-		this.hotelInterface = hotelInterface;
-	}
-
-	public void setTaxInterface(TaxInterface taxInterface){
-		this.taxInterface = taxInterface;
-	}
-
-	public void setCarInterface(CarInterface carInterface){
-		this.carInterface = carInterface;
-	}
-
-	public ActivityInterface getActivityInterface(){
-		return this.activityInterface;
-	}
-
-	public BankInterface getBankInterface(){
-		return this.bankInterface;
-	}
-
-	public TaxInterface getTaxInterface(){
-		return this.taxInterface;
-	}
-
-	public HotelInterface getHotelInterface(){
-		return this.hotelInterface;
-	}
-
-	public CarInterface getCarInterface(){
-		return this.carInterface;
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, HotelInterface hotelInterface) {
+		this(broker,begin,end,client,margin, rentVehicle);
+		setHotelInterface(hotelInterface);
 	}
 
 	public void delete() {
@@ -198,6 +182,52 @@ public class Adventure extends Adventure_Base {
 	public boolean shouldRentVehicle() {
 		return getRentVehicle();
 	}
+
+	/* #################### INTERFACE - NEW GETTERS #################### */
+
+	public ActivityInterface getActivityInterface(){
+		return this.activityInterface;
+	}
+
+	public HotelInterface getHotelInterface(){
+		return this.hotelInterface;
+	}
+
+	public CarInterface getCarInterface(){
+		return this.carInterface;
+	}
+
+	public BankInterface getBankInterface(){
+		return this.bankInterface;
+	}
+	
+	public TaxInterface getTaxInterface(){
+		return this.taxInterface;
+	}
+
+	/* #################### INTERFACE - NEW SETTERS #################### */
+
+	public void setActivityInterface(ActivityInterface activityInterface){
+		this.activityInterface = activityInterface;
+	}
+
+	public void setHotelInterface(HotelInterface hotelInterface){
+		this.hotelInterface = hotelInterface;
+	}
+
+	public void setCarInterface(CarInterface carInterface){
+		this.carInterface = carInterface;
+	}
+
+	public void setBankInterface(BankInterface bankInterface){
+		this.bankInterface = bankInterface;
+	}
+
+	public void setTaxInterface(TaxInterface taxInterface){
+		this.taxInterface = taxInterface;
+	}
+
+	/* ############################################################# */
 
 	public void setState(State state) {
 		if (getState() != null) {

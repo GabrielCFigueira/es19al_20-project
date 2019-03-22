@@ -1,7 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
+//import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.BankException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
@@ -31,7 +31,7 @@ public class ProcessPaymentState extends ProcessPaymentState_Base {
 			}
 			return;
 		}
-
+		
 		getAdventure().setState(State.TAX_PAYMENT);
 	}
 

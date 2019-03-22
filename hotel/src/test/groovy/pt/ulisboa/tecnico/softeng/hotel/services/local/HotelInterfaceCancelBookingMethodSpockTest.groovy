@@ -8,6 +8,7 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room
 import pt.ulisboa.tecnico.softeng.hotel.domain.SpockRollbackTestAbstractClass
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
 import spock.lang.Unroll
 
@@ -50,5 +51,31 @@ class HotelInterfaceCancelBookingMethodSpockTest extends SpockRollbackTestAbstra
 		null      | 'null reference'
 		''        | 'empty reference'
 		'   '     | 'bank reference'
+	}
+
+	def 'success integration'() {
+		given:
+		def taxInterface = Mock(TaxInterface)
+		taxInterface.cancelInvoice(_ as String)
+
+		when:
+		def cancel = HotelInterface.cancelBooking(this.booking.getReference())
+
+		then:
+		booking.isCancelled()
+		cancel == booking.getCancellation()
+
+	}
+
+	def 'does not exist integration'() {
+		given:
+		def taxInterface = Mock(TaxInterface)
+		0 * taxInterface.cancelInvoice(_ as String)
+	
+		when:
+		HotelInterface.cancelBooking("XPTO");
+	
+		then:
+		thrown(HotelException)
 	}
 }
