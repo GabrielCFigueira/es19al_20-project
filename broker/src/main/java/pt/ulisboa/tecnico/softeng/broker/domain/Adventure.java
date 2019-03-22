@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
@@ -11,6 +12,7 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
+	private BankInterface bankInterface;
 	private CarInterface carInterface;
 	private HotelInterface hotelInterface;
 
@@ -31,6 +33,10 @@ public class Adventure extends Adventure_Base {
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
 		this(broker, begin, end, client, margin, false);
 		this.carInterface = carInterface;
+	}
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, BankInterface MockedBankInterface){
+		this(broker, begin, end, client, margin, false);
+		this.bankInterface = MockedBankInterface;
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
@@ -83,6 +89,9 @@ public class Adventure extends Adventure_Base {
 		if (margin <= 0 || margin > 1) {
 			throw new BrokerException();
 		}
+	}
+	public BankInterface getBankInterface(){
+		return this.bankInterface;
 	}
 
 	public int getAge() {

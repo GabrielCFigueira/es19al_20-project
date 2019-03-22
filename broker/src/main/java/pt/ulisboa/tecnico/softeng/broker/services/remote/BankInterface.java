@@ -14,7 +14,7 @@ public class BankInterface {
 
 	private static String ENDPOINT = "http://localhost:8082";
 
-	public static String processPayment(RestBankOperationData bankOperationData) {
+	public String processPayment(RestBankOperationData bankOperationData) {
 		logger.info("processPayment iban:{}, amount:{}, transactionSource:{}, transactionReference:{}",
 				bankOperationData.getIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
 				bankOperationData.getTransactionReference());
