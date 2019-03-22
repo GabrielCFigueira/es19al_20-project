@@ -14,7 +14,7 @@ public class ActivityInterface {
 
 	private static String ENDPOINT = "http://localhost:8081";
 
-	public static RestActivityBookingData reserveActivity(RestActivityBookingData activityBookingData) {
+	public RestActivityBookingData reserveActivity(RestActivityBookingData activityBookingData) {
 		logger.info("reserveActivity begin:{}, end:{}, age:{}, nif:{}, iban:{}, adventureId:{}",
 				activityBookingData.getBegin(), activityBookingData.getEnd(), activityBookingData.getAge(),
 				activityBookingData.getNif(), activityBookingData.getIban(), activityBookingData.getAdventureId());
