@@ -31,11 +31,13 @@ public class Processor extends Processor_Base {
 
 	private void processInvoices() {
 		Set<Booking> failedToProcess = new HashSet<>();
+		BankInterface bankInterface = new BankInterface();
+		TaxInterface taxInterface = new TaxInterface();
 		for (Booking booking : getBookingSet()) {
 			if (!booking.isCancelled()) {
 				if (booking.getPaymentReference() == null) {
 					try {
-						booking.setPaymentReference(BankInterface.processPayment(new RestBankOperationData(
+						booking.setPaymentReference(bankInterface.processPayment(new RestBankOperationData(
 								booking.getIban(), booking.getAmount(), TRANSACTION_SOURCE, booking.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(booking);
@@ -45,7 +47,7 @@ public class Processor extends Processor_Base {
 				RestInvoiceData invoiceData = new RestInvoiceData(booking.getProviderNif(), booking.getBuyerNif(),
 						booking.getType(), booking.getAmount(), booking.getDate(), booking.getTime());
 				try {
-					booking.setInvoiceReference(TaxInterface.submitInvoice(invoiceData));
+					booking.setInvoiceReference(taxInterface.submitInvoice(invoiceData));
 				} catch (TaxException | RemoteAccessException ex) {
 					failedToProcess.add(booking);
 				}
