@@ -37,7 +37,7 @@ public class ActivityInterface {
 		}
 	}
 
-	public static String cancelReservation(String activityConfirmation) {
+	public String cancelReservation(String activityConfirmation) {
 		logger.info("cancelReservation activityConfirmation:{}", activityConfirmation);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -53,7 +53,7 @@ public class ActivityInterface {
 		}
 	}
 
-	public static RestActivityBookingData getActivityReservationData(String reference) {
+	public RestActivityBookingData getActivityReservationData(String reference) {
 		logger.info("getActivityReservationData reference:{}", reference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {

@@ -45,7 +45,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static String cancelBooking(String roomConfirmation) {
+	public String cancelBooking(String roomConfirmation) {
 		logger.info("cancelBooking roomConfirmation:{}", roomConfirmation);
 		RestTemplate restTemplate = new RestTemplate();
 		try {

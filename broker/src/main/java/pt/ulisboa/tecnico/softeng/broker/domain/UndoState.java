@@ -25,7 +25,7 @@ public class UndoState extends UndoState_Base {
 		if (getAdventure().shouldCancelPayment()) {
 			try {
 				getAdventure()
-						.setPaymentCancellation(BankInterface.cancelPayment(getAdventure().getPaymentConfirmation()));
+						.setPaymentCancellation(getAdventure().getBankInterface().cancelPayment(getAdventure().getPaymentConfirmation()));
 			} catch (BankException | RemoteAccessException ex) {
 				// does not change state
 			}
@@ -34,7 +34,7 @@ public class UndoState extends UndoState_Base {
 		if (getAdventure().shouldCancelActivity()) {
 			try {
 				getAdventure().setActivityCancellation(
-						ActivityInterface.cancelReservation(getAdventure().getActivityConfirmation()));
+						getAdventure().getActivityInterface().cancelReservation(getAdventure().getActivityConfirmation()));
 			} catch (ActivityException | RemoteAccessException ex) {
 				// does not change state
 			}
@@ -42,7 +42,7 @@ public class UndoState extends UndoState_Base {
 
 		if (getAdventure().shouldCancelRoom()) {
 			try {
-				getAdventure().setRoomCancellation(HotelInterface.cancelBooking(getAdventure().getRoomConfirmation()));
+				getAdventure().setRoomCancellation(getAdventure().getHotelInterface().cancelBooking(getAdventure().getRoomConfirmation()));
 			} catch (HotelException | RemoteAccessException ex) {
 				// does not change state
 			}
@@ -51,7 +51,7 @@ public class UndoState extends UndoState_Base {
 		if (getAdventure().shouldCancelVehicleRenting()) {
 			try {
 				getAdventure()
-						.setRentingCancellation(CarInterface.cancelRenting(getAdventure().getRentingConfirmation()));
+						.setRentingCancellation(getAdventure().getCarInterface().cancelRenting(getAdventure().getRentingConfirmation()));
 			} catch (CarException | RemoteAccessException ex) {
 				// does not change state
 			}
