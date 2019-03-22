@@ -91,32 +91,32 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | Name/Number/GitHub Username   |                         Files                                             |
 | ----------------------------- | ------------------------------------------------------------------------- |
 |  Lívio Costa                  | activity.domain.ActivityOfferHasVacancyMethodTest	                        |
-|  86461                        | broker.domain.BulkRoomBookingGetRoomBookingData4TypeMethodTest            |
+|  86461                        | broker.domain.ReserveActivityStateProcessMethodTest                       |
 |  LivioCosta                   | broker.domain.BulkRoomBookingProcessBookingMethodTest                     |
-|###############################|################################################|
+|###############################|#####################################################|
 |  Gabriel Figueira             | hotel.services.local.HotelInterfaceCancelBookingMethodTest                |
-|  86426                        | broker.integration.CompleteProcessOfAnAdventureTest                       |
+|  86426                        | broker.domain.UndoStateProcessMethodTest                                  |
 |  GabrielCFigueira             | broker.domain.RentVehicleStateMethodTest 	      	                        |
-|###############################|################################################|
+|###############################|#####################################################|
 |  João Margaço                 | hotel.domain.ProcessorSubmitBookingMethodTest		                        |
 |  86451                        | broker.domain.BookRoomStateMethodTest            	                        |
-|  JoaoPmargaco                 | broker.domain.ProcessPaymentStateProcessMethodTest                        |
-|###############################|################################################|
+|  JoaoPmargaco                 | activity.service.ActivityInterfaceReserveActivityMethodTest               |
+|###############################|#####################################################|
 |  Diogo Eusébio                | hotel.service.HotelInterfaceBulkBookingMethodTest                         |
-|  87650                        | activity.domain.InvoiceProcessorSubmitBookingMethodTest                   |
-|  DiogoEusebio                 | broker.domain.ReserveActivityStateProcessMethodTest                       |
-|###############################|################################################|
+|  87650                        | broker.domain.BulkRoomBookingGetRoomBookingData4TypeMethodTest            |
+|  DiogoEusebio                 | broker.domain.ProcessPaymentStateProcessMethodTest                        |
+|###############################|#####################################################|
 |  Henrique Silva               | activity.serice.ActivityInterfaceCancelReservationMethodTest              |
 |  86431                        | broker.domain.ConfirmedStateProcessMethodTest        	                    |
 |  HenriqueFSilva               |                                                                           |
-|###############################|################################################|
-|  Pedro Carvalho               | activity.service.ActivityInterfaceGetActivityReservationDataMethodTest    |
-|  86499                        | broker.domain.AdventureSequenceTest                                       |
-|  PedroMatias98                | broker / TaxPaymentState    (TO_DO)                                       |
-|###############################|################################################|
-|  Diogo Faria Fernandes        | activity.service.ActivityInterfaceReserveActivityMethodTest               |
+|###############################|#####################################################|
+|  Pedro Carvalho               | broker.domain.AdventureSequenceTest                                       |
+|  86499                        | broker / TaxPaymentState                                                  |
+|  PedroMatias98                |                                                                           |
+|###############################|#####################################################|
+|  Diogo Faria Fernandes        | activity.domain.InvoiceProcessorSubmitBookingMethodTest                   |
 |  86410                        | broker.domain.CancelledStateProcessMethodTest                             |
-|  DiogoFariaFernandes          | broker.domain.UndoStateProcessMethodTest                                  |
+|  DiogoFariaFernandes          |                                                                           |
 
 
 ### Infrastructure
