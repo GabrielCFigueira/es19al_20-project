@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
+	private CarInterface carInterface;
 	private HotelInterface hotelInterface;
 
 	public enum State {
@@ -26,11 +28,16 @@ public class Adventure extends Adventure_Base {
 		setHotelInterface(hotelInterface);
 	}
 
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
+		this(broker, begin, end, client, margin, false);
+		this.carInterface = carInterface;
+	}
+
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
 		checkArguments(broker, begin, end, client, margin);
 
-		setID(broker.getCode() + Integer.toString(broker.getCounter()));
-		setBegin(begin);
+		setBegin(begin);		setID(broker.getCode() + Integer.toString(broker.getCounter()));
+
 		setEnd(end);
 		setMargin(margin);
 		setRentVehicle(rentVehicle);
@@ -80,6 +87,10 @@ public class Adventure extends Adventure_Base {
 
 	public int getAge() {
 		return getClient().getAge();
+	}
+
+	public CarInterface getCarInterface() {
+		return this.carInterface;
 	}
 
 	public String getIban() {
