@@ -6,9 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.*;
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
+	private TaxInterface taxInterface;
+	private BankInterface bankInterface;
+	private ActivityInterface activityInterface;
+	private HotelInterface hotelInterface;
+	private CarInterface carInterface;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
@@ -16,6 +22,50 @@ public class Adventure extends Adventure_Base {
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
 		this(broker, begin, end, client, margin, false);
+		setActivityInterface(new ActivityInterface());
+		setTaxInterface(new TaxInterface());
+		setBankInterface(new BankInterface());
+		setHotelInterface(new HotelInterface());
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface,
+					  BankInterface bankInterface, HotelInterface hotelInterface, TaxInterface taxInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
+		setTaxInterface(taxInterface);
+		setBankInterface(bankInterface);
+		setHotelInterface(hotelInterface);
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
+		setTaxInterface(new TaxInterface());
+		setBankInterface(new BankInterface());
+		setHotelInterface(new HotelInterface());
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface,
+					 HotelInterface hotelInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
+		setTaxInterface(new TaxInterface());
+		setBankInterface(new BankInterface());
+		setHotelInterface(hotelInterface);
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface,
+					 BankInterface bankInterface, HotelInterface hotelInterface, TaxInterface taxInterface,CarInterface carInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
+		setTaxInterface(taxInterface);
+		setBankInterface(bankInterface);
+		setHotelInterface(hotelInterface);
+		setCarInterface(carInterface);
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
@@ -35,6 +85,71 @@ public class Adventure extends Adventure_Base {
 		setTime(DateTime.now());
 
 		setState(State.RESERVE_ACTIVITY);
+		setActivityInterface(new ActivityInterface());
+		setTaxInterface(new TaxInterface());
+		setBankInterface(new BankInterface());
+		setHotelInterface(new HotelInterface());
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,
+					 ActivityInterface activityInterface,BankInterface bankInterface, HotelInterface hotelInterface, TaxInterface taxInterface) {
+		this(broker,begin,end,client,margin,rentVehicle);
+		setActivityInterface(activityInterface);
+		setTaxInterface(taxInterface);
+		setBankInterface(bankInterface);
+		setHotelInterface(hotelInterface);
+		setCarInterface(new CarInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,
+					 ActivityInterface activityInterface,BankInterface bankInterface, HotelInterface hotelInterface, TaxInterface taxInterface, CarInterface carInterface) {
+		this(broker,begin,end,client,margin,rentVehicle);
+		setActivityInterface(activityInterface);
+		setTaxInterface(taxInterface);
+		setBankInterface(bankInterface);
+		setHotelInterface(hotelInterface);
+		setCarInterface(carInterface);
+	}
+
+	public void setActivityInterface(ActivityInterface activityInterface){
+		this.activityInterface = activityInterface;
+	}
+
+	public void setBankInterface(BankInterface bankInterface){
+		this.bankInterface = bankInterface;
+	}
+
+	public void setHotelInterface(HotelInterface hotelInterface){
+		this.hotelInterface = hotelInterface;
+	}
+
+	public void setTaxInterface(TaxInterface taxInterface){
+		this.taxInterface = taxInterface;
+	}
+
+	public void setCarInterface(CarInterface carInterface){
+		this.carInterface = carInterface;
+	}
+
+	public ActivityInterface getActivityInterface(){
+		return this.activityInterface;
+	}
+
+	public BankInterface getBankInterface(){
+		return this.bankInterface;
+	}
+
+	public TaxInterface getTaxInterface(){
+		return this.taxInterface;
+	}
+
+	public HotelInterface getHotelInterface(){
+		return this.hotelInterface;
+	}
+
+	public CarInterface getCarInterface(){
+		return this.carInterface;
 	}
 
 	public void delete() {

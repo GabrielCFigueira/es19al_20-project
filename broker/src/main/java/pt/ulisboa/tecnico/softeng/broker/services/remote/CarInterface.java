@@ -19,7 +19,7 @@ public class CarInterface {
 		CAR, MOTORCYCLE
 	}
 
-	public static RestRentingData rentCar(Type vehicleType, String drivingLicense, String nif, String iban,
+	public RestRentingData rentCar(Type vehicleType, String drivingLicense, String nif, String iban,
 			LocalDate begin, LocalDate end, String adventureId) {
 		logger.info("rentCar vehicleType:{}, drivingLicense:{}, nif:{}, iban:{}, begin:{}, end:{}, adventureId:{}",
 				vehicleType, drivingLicense, nif, iban, begin, end, adventureId);
@@ -43,7 +43,7 @@ public class CarInterface {
 		}
 	}
 
-	public static String cancelRenting(String rentingReference) {
+	public String cancelRenting(String rentingReference) {
 		logger.info("cancelRenting rentingReference:{}", rentingReference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -59,7 +59,7 @@ public class CarInterface {
 		}
 	}
 
-	public static RestRentingData getRentingData(String reference) {
+	public RestRentingData getRentingData(String reference) {
 		logger.info("getRentingData reference:{}", reference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {

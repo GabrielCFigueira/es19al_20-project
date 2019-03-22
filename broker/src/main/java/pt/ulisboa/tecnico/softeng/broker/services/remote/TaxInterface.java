@@ -15,7 +15,7 @@ public class TaxInterface {
 
 	private static String ENDPOINT = "http://localhost:8086";
 
-	public static String submitInvoice(RestInvoiceData invoiceData) {
+	public String submitInvoice(RestInvoiceData invoiceData) {
 		logger.info("submitInvoice buyerNif:{}, sellerNif:{}, itemType:{}, value:{}, date:{}, tim:{}",
 				invoiceData.getBuyerNif(), invoiceData.getSellerNif(), invoiceData.getItemType(),
 				invoiceData.getValue(), invoiceData.getDate(), invoiceData.getTime());
