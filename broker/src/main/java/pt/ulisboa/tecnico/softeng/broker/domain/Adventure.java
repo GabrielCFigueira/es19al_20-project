@@ -6,9 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
+
+	private ActivityInterface activityInterface;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
@@ -16,6 +19,12 @@ public class Adventure extends Adventure_Base {
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
 		this(broker, begin, end, client, margin, false);
+		setActivityInterface(new ActivityInterface());
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
+		this(broker, begin, end, client, margin, false);
+		setActivityInterface(activityInterface);
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
@@ -35,6 +44,17 @@ public class Adventure extends Adventure_Base {
 		setTime(DateTime.now());
 
 		setState(State.RESERVE_ACTIVITY);
+
+		setActivityInterface(new ActivityInterface());
+	}
+	
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, ActivityInterface activityInterface) {
+		this(broker, begin, end, client, margin, rentVehicle);
+		setActivityInterface(activityInterface);
+	}
+
+	public void setActivityInterface(ActivityInterface activityInterface){
+		this.activityInterface = activityInterface;
 	}
 
 	public void delete() {
@@ -82,6 +102,10 @@ public class Adventure extends Adventure_Base {
 
 	public boolean shouldRentVehicle() {
 		return getRentVehicle();
+	}
+
+	public ActivityInterface getActivityInterface(){
+		return this.activityInterface;
 	}
 
 	public void setState(State state) {
