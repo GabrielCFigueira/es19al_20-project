@@ -231,7 +231,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			activityInterface.cancelReservation(ACTIVITY_CONFIRMATION) >> ACTIVITY_CANCELLATION
 
-			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
@@ -263,7 +268,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			carInterface.cancelRenting(RENTING_CONFIRMATION) >> RENTING_CANCELLATION
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
@@ -300,7 +310,12 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
 			bankInterface.cancelPayment(PAYMENT_CONFIRMATION) >> PAYMENT_CANCELLATION
 
-			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true, activityInterface, bankInterface, hotelInterface, taxInterface, carInterface)
+			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
+			adventure.setActivityInterface(activityInterface)
+			adventure.setBankInterface(bankInterface)
+			adventure.setHotelInterface(hotelInterface)
+			adventure.setTaxInterface(taxInterface)
+			adventure.setCarInterface(carInterface)
 
 		when:
 			adventure.process()
