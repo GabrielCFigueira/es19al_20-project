@@ -1,10 +1,6 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;

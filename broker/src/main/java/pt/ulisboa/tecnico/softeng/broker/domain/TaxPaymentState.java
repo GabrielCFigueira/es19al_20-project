@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestInvoiceData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.TaxException;
