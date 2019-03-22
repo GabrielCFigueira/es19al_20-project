@@ -16,7 +16,6 @@ public class Adventure extends Adventure_Base {
 	private BankInterface bankInterface;
 	private CarInterface carInterface;
 	private HotelInterface hotelInterface;
-
 	private ActivityInterface activityInterface;
 
 	public enum State {
@@ -25,14 +24,11 @@ public class Adventure extends Adventure_Base {
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
 		this(broker, begin, end, client, margin, false);
-		setActivityInterface(new ActivityInterface());
-		setHotelInterface(new HotelInterface());
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
 		this(broker, begin, end, client, margin, false);
 		setActivityInterface(activityInterface);
-		setHotelInterface(new HotelInterface());
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, HotelInterface hotelInterface ) {
@@ -42,11 +38,12 @@ public class Adventure extends Adventure_Base {
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
 		this(broker, begin, end, client, margin, false);
-		this.carInterface = carInterface;
+		setCarInterface(carInterface);
 	}
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, BankInterface MockedBankInterface){
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, BankInterface bankInterface){
 		this(broker, begin, end, client, margin, false);
-		this.bankInterface = MockedBankInterface;
+		setBankInterface(bankInterface);
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
@@ -70,6 +67,8 @@ public class Adventure extends Adventure_Base {
 
 		setActivityInterface(new ActivityInterface());
 		setHotelInterface(new HotelInterface());
+		setCarInterface(new CarInterface());
+		setBankInterface(new BankInterface());
 	}
 	
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, ActivityInterface activityInterface) {
@@ -78,7 +77,7 @@ public class Adventure extends Adventure_Base {
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, HotelInterface hotelInterface) {
-		this(broker,begin,end,client,margin,rentVehicle);
+		this(broker,begin,end,client,margin, rentVehicle);
 		setHotelInterface(hotelInterface);
 	}
 
@@ -108,16 +107,9 @@ public class Adventure extends Adventure_Base {
 			throw new BrokerException();
 		}
 	}
-	public BankInterface getBankInterface(){
-		return this.bankInterface;
-	}
 
 	public int getAge() {
 		return getClient().getAge();
-	}
-
-	public CarInterface getCarInterface() {
-		return this.carInterface;
 	}
 
 	public String getIban() {
@@ -136,7 +128,7 @@ public class Adventure extends Adventure_Base {
 		return getRentVehicle();
 	}
 
-	/* #################### INTERFACE - GETTERS #################### */
+	/* #################### INTERFACE - NEW GETTERS #################### */
 
 	public ActivityInterface getActivityInterface(){
 		return this.activityInterface;
@@ -146,7 +138,15 @@ public class Adventure extends Adventure_Base {
 		return this.hotelInterface;
 	}
 
-	/* #################### INTERFACE - SETTERS #################### */
+	public CarInterface getCarInterface(){
+		return this.carInterface;
+	}
+
+	public BankInterface getBankInterface(){
+		return this.bankInterface;
+	}
+
+	/* #################### INTERFACE - NEW SETTERS #################### */
 
 	public void setActivityInterface(ActivityInterface activityInterface){
 		this.activityInterface = activityInterface;
@@ -154,6 +154,14 @@ public class Adventure extends Adventure_Base {
 
 	public void setHotelInterface(HotelInterface hotelInterface){
 		this.hotelInterface = hotelInterface;
+	}
+
+	public void setCarInterface(CarInterface carInterface){
+		this.carInterface = carInterface;
+	}
+
+	public void setBankInterface(BankInterface bankInterface){
+		this.bankInterface = bankInterface;
 	}
 
 	/* ############################################################# */
