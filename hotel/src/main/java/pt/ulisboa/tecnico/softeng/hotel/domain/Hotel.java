@@ -28,6 +28,21 @@ public class Hotel extends Hotel_Base {
 		FenixFramework.getDomainRoot().addHotel(this);
 	}
 
+	public Hotel(String code, String name, String nif, String iban, double priceSingle, double priceDouble,Processor processor) {
+		checkArguments(code, name, nif, iban, priceSingle, priceDouble);
+
+		setCode(code);
+		setName(name);
+		setNif(nif);
+		setIban(iban);
+		setPriceSingle(priceSingle);
+		setPriceDouble(priceDouble);
+
+		setProcessor(processor);
+
+		FenixFramework.getDomainRoot().addHotel(this);
+	}
+
 	public void delete() {
 		setRoot(null);
 
