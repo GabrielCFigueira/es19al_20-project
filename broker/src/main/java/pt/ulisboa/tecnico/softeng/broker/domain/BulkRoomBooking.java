@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class BulkRoomBooking extends BulkRoomBooking_Base {
     public static final int MAX_HOTEL_EXCEPTIONS = 3;
     public static final int MAX_REMOTE_ERRORS = 10;
+    private HotelInterface hotelInterface;
 
     public BulkRoomBooking(Broker broker, int number, LocalDate arrival, LocalDate departure, String buyerNif,
                            String buyerIban) {
@@ -25,6 +26,16 @@ public class BulkRoomBooking extends BulkRoomBooking_Base {
         setBuyerNif(buyerNif);
         setBuyerIban(buyerIban);
         setBroker(broker);
+
+        setHotelInterface(new HotelInterface());
+    }
+
+    public HotelInterface getHotelInterface() {
+        return this.hotelInterface;
+    }
+
+    public void setHotelInterface(HotelInterface hotelInterface) {
+        this.hotelInterface = hotelInterface;
     }
 
     public void delete() {
@@ -54,7 +65,7 @@ public class BulkRoomBooking extends BulkRoomBooking_Base {
         }
 
         try {
-            for (String reference : HotelInterface.bulkBooking(getNumber(), getArrival(), getDeparture(), getBuyerNif(),
+            for (String reference : getHotelInterface().bulkBooking(getNumber(), getArrival(), getDeparture(), getBuyerNif(),
                     getBuyerIban(), getId())) {
                 addReference(new Reference(this, reference));
             }
