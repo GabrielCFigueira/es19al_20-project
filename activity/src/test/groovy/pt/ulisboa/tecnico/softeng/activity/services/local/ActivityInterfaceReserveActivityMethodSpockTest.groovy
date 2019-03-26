@@ -35,8 +35,8 @@ class ActivityInterfaceReserveActivityMethodSpockTest extends SpockRollbackTestA
 
 	def 'reserveActivity'() {
         given:
-            bankInterface.processPayment(_) >> ""
-            taxInterface.submitInvoice(_) >> ""
+            bankInterface.processPayment(_) >> null
+            taxInterface.submitInvoice(_) >> null
 		when:    
             def activity = new Activity(provider1, "XtremX", MIN_AGE, MAX_AGE, CAPACITY) 
             new ActivityOffer(activity, new LocalDate(2018, 02, 19), new LocalDate(2018, 12, 20), 30) 

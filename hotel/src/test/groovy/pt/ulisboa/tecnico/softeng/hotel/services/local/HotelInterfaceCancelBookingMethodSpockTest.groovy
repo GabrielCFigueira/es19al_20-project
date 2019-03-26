@@ -15,29 +15,29 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
 import spock.lang.Unroll
 
 class HotelInterfaceCancelBookingMethodSpockTest extends SpockRollbackTestAbstractClass {
-	def NIF_BUYER = "123456789";
-	def IBAN_BUYER = "IBAN_BUYER";
-	def ARRIVAL = new LocalDate(2016, 12, 19);
-	def DEPARTURE = new LocalDate(2016, 12, 21);
-	def hotel;
-	def room;
-	def booking;
+	def NIF_BUYER = "123456789"
+	def IBAN_BUYER = "IBAN_BUYER"
+	def ARRIVAL = new LocalDate(2016, 12, 19)
+	def DEPARTURE = new LocalDate(2016, 12, 21)
+	def hotel
+	def room
+	def booking
 
-	def taxInterface = Mock(TaxInterface);
+	def taxInterface = Mock(TaxInterface)
 
 	@Override
 	def populate4Test() {
-		hotel = new Hotel("XPTO123", "Paris", "NIF", "IBAN", 20.0, 30.0);
+		hotel = new Hotel("XPTO123", "Paris", "NIF", "IBAN", 20.0, 30.0)
 		def processor = new Processor()
 		processor.setTaxInterface(taxInterface)
 		hotel.setProcessor(processor)
-		room = new Room(hotel, "01", Type.DOUBLE);
-		booking = room.reserve(Type.DOUBLE, ARRIVAL, DEPARTURE, NIF_BUYER, IBAN_BUYER);
+		room = new Room(hotel, "01", Type.DOUBLE)
+		booking = room.reserve(Type.DOUBLE, ARRIVAL, DEPARTURE, NIF_BUYER, IBAN_BUYER)
 	}
 
 	def 'success'() {
 		when: 'a booking is cancelled'
-		def cancel = HotelInterface.cancelBooking(booking.getReference());
+		def cancel = HotelInterface.cancelBooking(booking.getReference())
 
 		then:
 		booking.isCancelled()
@@ -47,7 +47,7 @@ class HotelInterfaceCancelBookingMethodSpockTest extends SpockRollbackTestAbstra
 	@Unroll()
 	def 'invalid arguments'() {
 		when: 'a booking is cancelled'
-		HotelInterface.cancelBooking(reference);
+		HotelInterface.cancelBooking(reference)
 
 		then: 'throws an exception'
 		thrown(HotelException)
@@ -78,7 +78,7 @@ class HotelInterfaceCancelBookingMethodSpockTest extends SpockRollbackTestAbstra
 		0 * taxInterface.cancelInvoice(_ as String)
 	
 		when:
-		HotelInterface.cancelBooking("XPTO");
+		HotelInterface.cancelBooking("XPTO")
 	
 		then:
 		thrown(HotelException)
