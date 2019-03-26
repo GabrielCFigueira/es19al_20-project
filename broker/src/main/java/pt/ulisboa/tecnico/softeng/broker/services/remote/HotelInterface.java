@@ -77,7 +77,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure, String nif, String iban,
+	public Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure, String nif, String iban,
 			String bulkId) {
 		logger.info("bulkBooking number:{}, arrival:{}, departure:{}, nif:{}, iban:{}, bulkId:{}", number, arrival,
 				departure, nif, iban, bulkId);
