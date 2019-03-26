@@ -35,7 +35,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		sameDayAdventure.setActivityInterface(activityInterface)
 		sameDayAdventure.setState(State.RESERVE_ACTIVITY)
 
-        activityInterface.reserveActivity(_) >> bookingData
+        activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingData
 
         when:
         sameDayAdventure.process()
@@ -50,7 +50,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		adv.setActivityInterface(activityInterface)
 		adv.setState(State.RESERVE_ACTIVITY)
 
-		activityInterface.reserveActivity(_) >> bookingData
+		activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingData
 		
 		when:
 		adv.process()
@@ -61,7 +61,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 
 	def 'successBookRoom'() {
 		given:
-		activityInterface.reserveActivity(_) >> bookingData
+		activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingData
 
 		when:
 		adventure.process()
@@ -70,28 +70,11 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		State.BOOK_ROOM == adventure.getState().getValue()
 	}
 
-	@Unroll('ReserveActivity: #_return | #_assert_value')
-	def 'activityException and singleRemoteAccessException'(){
+	@Unroll('ReserveActivity: #_return | #_assert_value | #_iter')
+	def 'activityException and singleRemoteAccessException and maxRemoteAccessException and maxMinusOneRemoteAccessException'(){
 		given:
-		activityInterface.reserveActivity(_) >> {throw _return}
+		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw _return}
 
-		when:
-		adventure.process()
-
-		then:
-		_assert_value == adventure.getState().getValue()
-
-		where:
-			_return						| _assert_value
-			new ActivityException()		| State.UNDO
-			new RemoteAccessException()	| State.RESERVE_ACTIVITY
-	}
-
-	@Unroll('ReserveActivity: #_assert_value | #_iter')
-	def 'maxRemoteAccessException and maxMinusOneRemoteAccessException'() {
-		given:
-		activityInterface.reserveActivity(_) >> {throw new RemoteAccessException()}
-		
 		when:
 		for(def i=0; i < _iter; i++)
 			adventure.process()
@@ -100,14 +83,16 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		_assert_value == adventure.getState().getValue()
 
 		where:
-			_assert_value			| _iter
-			State.UNDO				| 5
-			State.RESERVE_ACTIVITY	| 4
+			_return						| _assert_value				| _iter
+			new ActivityException()		| State.UNDO				| 1
+			new RemoteAccessException()	| State.RESERVE_ACTIVITY	| 1
+			new RemoteAccessException()	| State.UNDO				| 5
+			new RemoteAccessException()	| State.RESERVE_ACTIVITY	| 4
 	}
 
 	def 'twoRemoteAccessExceptionOneSuccess'() {
 		given:
-		activityInterface.reserveActivity(_) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> bookingData
+		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> bookingData
 
 		when:
 		for(def i=0; i < 3; i++)
@@ -119,7 +104,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
     
 	def 'oneRemoteAccessExceptionOneActivityException'() {
 		given:
-		activityInterface.reserveActivity(_) >> {throw new RemoteAccessException()} >> {throw new ActivityException()}
+		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new RemoteAccessException()} >> {throw new ActivityException()}
 
 		when:
 		for(def i=0; i < 2; i++)
