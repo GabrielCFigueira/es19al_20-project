@@ -39,8 +39,8 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
 	def 'success'() {
 		when:
-			bankInterface.processPayment(_) >> ""
-			taxInterface.submitInvoice(_) >> ""
+			bankInterface.processPayment(_) >> null
+			taxInterface.submitInvoice(_) >> null
 		then:
 			hotel.getProcessor().submitBooking(booking) 
 	}
@@ -49,8 +49,8 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 	@Unroll
 	def 'taxExceptions'() {
 		given:
-			bankInterface.processPayment(_) >> ""
-			taxInterface.submitInvoice(_) >> {throw exception} >> {this.anyString}
+			bankInterface.processPayment(_) >> null
+			taxInterface.submitInvoice(_) >> {throw exception}
 		when:
 			hotel.getProcessor().submitBooking(booking) 
 		then:
@@ -70,7 +70,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 	def 'bankExceptions'() {
 		given:
 			taxInterface.submitInvoice(_) >> ""
-			bankInterface.processPayment(_) >> {throw exception} >> {this.anyString}
+			bankInterface.processPayment(_) >> {throw exception} 
 		when:
 			hotel.getProcessor().submitBooking(booking) 
 			hotel.getProcessor().submitBooking(new Booking(room, arrivalTwo, departureTwo, NIF_BUYER, IBAN_BUYER)) 
@@ -87,8 +87,8 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 		given:
 			taxInterface.submitInvoice(_) >> null
 			bankInterface.processPayment(_) >> null
-			taxInterface.cancelInvoice(_ as String) >> null 
-			bankInterface.cancelPayment(_ as String) >> null 
+			taxInterface.cancelInvoice(_) >> null 
+			bankInterface.cancelPayment(_) >> null 
 		expect:
 			hotel.getProcessor().submitBooking(booking) 
 			booking.cancel() 
@@ -100,7 +100,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 			taxInterface.submitInvoice(_) >> null 
 			bankInterface.processPayment(_) >> null 
 			taxInterface.cancelInvoice(_) >> null 
-			bankInterface.cancelPayment(_) >> {throw exception} >> {this.anyString} 
+			bankInterface.cancelPayment(_) >> {throw exception}
 		when:
 			hotel.getProcessor().submitBooking(booking) 
 		then:
