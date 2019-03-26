@@ -48,14 +48,14 @@ import spock.lang.Unroll
             adventure.getState().getValue() == state
 
         where:
-        times | state                | exception                  
-        2     |State.CANCELLED       | new TaxException()        
-        1     |State.TAX_PAYMENT     | new RemoteAccessException()
-        4     |State.CANCELLED       | new RemoteAccessException()
-        2     |State.TAX_PAYMENT     | new RemoteAccessException()
+            times | state                | exception                  
+            2     |State.CANCELLED       | new TaxException()        
+            1     |State.TAX_PAYMENT     | new RemoteAccessException()
+            4     |State.CANCELLED       | new RemoteAccessException()
+            2     |State.TAX_PAYMENT     | new RemoteAccessException()
     }
 
-    def 'oneRemoteAccessExceptionOneSucces'() {
+    def 'oneRemoteAccessExceptionOneSuccess'() {
         given:
             taxInterface.submitInvoice(_) >> 
         { throw new RemoteAccessException() } >> PAYMENT_CONFIRMATION
