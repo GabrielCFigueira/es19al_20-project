@@ -72,7 +72,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 	@Unroll
 	def 'bankExceptions'() {
 		given:
-			taxInterface.submitInvoice(_) >> ""
+			taxInterface.submitInvoice(_) >> null
 			bankInterface.processPayment(_) >> {throw exception} 
 		when:
 			hotel.getProcessor().submitBooking(booking) 
