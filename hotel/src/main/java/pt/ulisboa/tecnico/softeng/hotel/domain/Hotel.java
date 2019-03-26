@@ -25,8 +25,6 @@ public class Hotel extends Hotel_Base {
 		setPriceSingle(priceSingle);
 		setPriceDouble(priceDouble);
 		processor = new Processor();
-		processor.setBankInterface(new BankInterface());
-		processor.setTaxInterface(new TaxInterface());
 		setProcessor(processor);
 
 		FenixFramework.getDomainRoot().addHotel(this);

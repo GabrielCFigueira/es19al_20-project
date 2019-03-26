@@ -40,6 +40,11 @@ public class Processor extends Processor_Base {
 		deleteDomainObject();
 	}
 
+	public Processor() {
+		taxInterface = new TaxInterface();
+		bankInterface = new BankInterface();
+	}
+
 	public void submitBooking(Booking booking) {
 		addBooking(booking);
 		processInvoices();
