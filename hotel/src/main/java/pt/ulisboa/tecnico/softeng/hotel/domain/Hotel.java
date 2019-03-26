@@ -14,7 +14,7 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface;
 
 public class Hotel extends Hotel_Base {
 	static final int CODE_SIZE = 7;
-
+	private Processor processor; 
 	public Hotel(String code, String name, String nif, String iban, double priceSingle, double priceDouble) {
 		checkArguments(code, name, nif, iban, priceSingle, priceDouble);
 
@@ -24,22 +24,9 @@ public class Hotel extends Hotel_Base {
 		setIban(iban);
 		setPriceSingle(priceSingle);
 		setPriceDouble(priceDouble);
-
-		setProcessor(new Processor(new BankInterface(),new TaxInterface()));
-
-		FenixFramework.getDomainRoot().addHotel(this);
-	}
-
-	public Hotel(String code, String name, String nif, String iban, double priceSingle, double priceDouble,Processor processor) {
-		checkArguments(code, name, nif, iban, priceSingle, priceDouble);
-
-		setCode(code);
-		setName(name);
-		setNif(nif);
-		setIban(iban);
-		setPriceSingle(priceSingle);
-		setPriceDouble(priceDouble);
-
+		processor = new Processor();
+		processor.setBankInterface(new BankInterface());
+		processor.setTaxInterface(new TaxInterface());
 		setProcessor(processor);
 
 		FenixFramework.getDomainRoot().addHotel(this);

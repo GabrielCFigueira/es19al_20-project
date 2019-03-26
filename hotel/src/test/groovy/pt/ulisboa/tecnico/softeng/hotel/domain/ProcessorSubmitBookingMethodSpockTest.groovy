@@ -31,8 +31,11 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
 	@Override
 	def populate4Test() {
-		processor = new Processor(bankInterface,taxInterface)
-		hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20.0, 30.0, processor) 
+		processor = new Processor()
+		processor.setBankInterface(bankInterface);
+		processor.setTaxInterface(taxInterface);
+		hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20.0, 30.0)
+		hotel.setProcessor(processor) 
 		room = new Room(hotel, "01", Room.Type.SINGLE) 
 		booking = new Booking(room, arrival, departure, NIF_BUYER, IBAN_BUYER) 
 	}
