@@ -61,7 +61,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static RestRoomBookingData getRoomBookingData(String reference) {
+	public RestRoomBookingData getRoomBookingData(String reference) {
 		logger.info("getRoomBookingData reference:{}", reference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {

@@ -10,6 +10,9 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
 
 
 public class Adventure extends Adventure_Base {
@@ -19,6 +22,10 @@ public class Adventure extends Adventure_Base {
 	private ActivityInterface activityInterface;
 	private TaxInterface taxInterface;
 	private CarInterface carInterface;
+
+	private RestActivityBookingData activityBookingData;
+	private RestRentingData rentingData;
+	private RestRoomBookingData roomBookingData;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
@@ -52,6 +59,9 @@ public class Adventure extends Adventure_Base {
 		setBankInterface(new BankInterface());
 		setHotelInterface(new HotelInterface());
 		setCarInterface(new CarInterface());
+		setActivityBookingData(new RestActivityBookingData());
+		setRentingData(new RestRentingData());
+		setRoomBookingData(new RestRoomBookingData());
 	}
 
 	public void delete() {
@@ -123,6 +133,12 @@ public class Adventure extends Adventure_Base {
 		return this.taxInterface;
 	}
 
+	public RestActivityBookingData getActivityBookingData() { return activityBookingData; }
+
+	public RestRentingData getRentingData() { return rentingData; }
+
+	public RestRoomBookingData getRoomBookingData() { return roomBookingData; }
+
 	/* #################### INTERFACE - NEW SETTERS #################### */
 
 	public void setActivityInterface(ActivityInterface activityInterface){
@@ -144,6 +160,12 @@ public class Adventure extends Adventure_Base {
 	public void setTaxInterface(TaxInterface taxInterface){
 		this.taxInterface = taxInterface;
 	}
+
+	public void setActivityBookingData(RestActivityBookingData activityBookingData) { this.activityBookingData = activityBookingData; }
+
+	public void setRentingData(RestRentingData rentingData) { this.rentingData = rentingData; }
+
+	public void setRoomBookingData(RestRoomBookingData roomBookingData) { this.roomBookingData = roomBookingData; }
 
 	/* ############################################################# */
 
