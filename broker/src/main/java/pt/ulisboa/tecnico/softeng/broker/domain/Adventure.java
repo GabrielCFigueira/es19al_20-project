@@ -6,17 +6,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
-
-import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
+import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
+
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
 	private BankInterface bankInterface;
-	private CarInterface carInterface;
 	private HotelInterface hotelInterface;
 	private ActivityInterface activityInterface;
+	private TaxInterface taxInterface;
+	private CarInterface carInterface;
+
+	private RestActivityBookingData activityBookingData;
+	private RestRentingData rentingData;
+	private RestRoomBookingData roomBookingData;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
@@ -24,26 +33,6 @@ public class Adventure extends Adventure_Base {
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
 		this(broker, begin, end, client, margin, false);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, ActivityInterface activityInterface) {
-		this(broker, begin, end, client, margin, false);
-		setActivityInterface(activityInterface);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, HotelInterface hotelInterface ) {
-		this(broker, begin, end, client, margin, false);
-		setHotelInterface(hotelInterface);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, CarInterface carInterface) {
-		this(broker, begin, end, client, margin, false);
-		setCarInterface(carInterface);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, BankInterface bankInterface){
-		this(broker, begin, end, client, margin, false);
-		setBankInterface(bankInterface);
 	}
 
 	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
@@ -64,21 +53,15 @@ public class Adventure extends Adventure_Base {
 		setTime(DateTime.now());
 
 		setState(State.RESERVE_ACTIVITY);
-
+		
 		setActivityInterface(new ActivityInterface());
+		setTaxInterface(new TaxInterface());
+		setBankInterface(new BankInterface());
 		setHotelInterface(new HotelInterface());
 		setCarInterface(new CarInterface());
-		setBankInterface(new BankInterface());
-	}
-	
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, ActivityInterface activityInterface) {
-		this(broker, begin, end, client, margin, rentVehicle);
-		setActivityInterface(activityInterface);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, HotelInterface hotelInterface) {
-		this(broker,begin,end,client,margin, rentVehicle);
-		setHotelInterface(hotelInterface);
+		setActivityBookingData(new RestActivityBookingData());
+		setRentingData(new RestRentingData());
+		setRoomBookingData(new RestRoomBookingData());
 	}
 
 	public void delete() {
@@ -145,6 +128,16 @@ public class Adventure extends Adventure_Base {
 	public BankInterface getBankInterface(){
 		return this.bankInterface;
 	}
+	
+	public TaxInterface getTaxInterface(){
+		return this.taxInterface;
+	}
+
+	public RestActivityBookingData getActivityBookingData() { return activityBookingData; }
+
+	public RestRentingData getRentingData() { return rentingData; }
+
+	public RestRoomBookingData getRoomBookingData() { return roomBookingData; }
 
 	/* #################### INTERFACE - NEW SETTERS #################### */
 
@@ -163,6 +156,16 @@ public class Adventure extends Adventure_Base {
 	public void setBankInterface(BankInterface bankInterface){
 		this.bankInterface = bankInterface;
 	}
+
+	public void setTaxInterface(TaxInterface taxInterface){
+		this.taxInterface = taxInterface;
+	}
+
+	public void setActivityBookingData(RestActivityBookingData activityBookingData) { this.activityBookingData = activityBookingData; }
+
+	public void setRentingData(RestRentingData rentingData) { this.rentingData = rentingData; }
+
+	public void setRoomBookingData(RestRoomBookingData roomBookingData) { this.roomBookingData = roomBookingData; }
 
 	/* ############################################################# */
 
