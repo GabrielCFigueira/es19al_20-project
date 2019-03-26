@@ -19,6 +19,8 @@ public class Processor extends Processor_Base {
 
 	private static final String TRANSACTION_SOURCE = "HOTEL";
 
+	private TaxInterface taxInterface; 
+
 	public void delete() {
 		setHotel(null);
 
@@ -27,6 +29,14 @@ public class Processor extends Processor_Base {
 		}
 
 		deleteDomainObject();
+	}
+
+	public Processor() {
+		taxInterface = new TaxInterface();
+	}
+
+	public void setTaxInterface(TaxInterface taxInterface) {
+		this.taxInterface = taxInterface;
 	}
 
 	public void submitBooking(Booking booking) {
@@ -51,7 +61,7 @@ public class Processor extends Processor_Base {
 				RestInvoiceData invoiceData = new RestInvoiceData(booking.getProviderNif(), booking.getBuyerNif(),
 						Booking.getType(), booking.getPrice(), booking.getArrival(), booking.getTime());
 				try {
-					booking.setInvoiceReference(TaxInterface.submitInvoice(invoiceData));
+					booking.setInvoiceReference(taxInterface.submitInvoice(invoiceData));
 				} catch (TaxException | RemoteAccessException ex) {
 					failedToProcess.add(booking);
 				}
@@ -62,7 +72,6 @@ public class Processor extends Processor_Base {
 								BankInterface.cancelPayment(booking.getPaymentReference()));
 					}
 					if (!booking.getCancelledInvoice()) {
-						TaxInterface taxInterface = new TaxInterface();
 						taxInterface.cancelInvoice(booking.getInvoiceReference());
 						booking.setCancelledInvoice(true);
 					}
