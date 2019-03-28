@@ -9,6 +9,7 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException 
 import pt.ulisboa.tecnico.softeng.activity.services.remote.BankInterface 
 import pt.ulisboa.tecnico.softeng.activity.services.remote.TaxInterface 
+import pt.ulisboa.tecnico.softeng.activity.domain.*
 import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestActivityBookingData 
 import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestBankOperationData 
 import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestInvoiceData 
@@ -24,20 +25,24 @@ class ActivityInterfaceReserveActivityMethodSpockTest extends SpockRollbackTestA
 	def provider2 
     def taxInterface
     def bankInterface
+	def processor1
+	def processor2
 
 	@Override
 	def populate4Test() {
         taxInterface = Mock(TaxInterface)
         bankInterface = Mock(BankInterface)
-		provider1 = new ActivityProvider("XtremX", "Adventure++", "NIF", IBAN) 
-		provider2 = new ActivityProvider("Walker", "Sky", "NIF2", IBAN) 
+		processor1 = new Processor(bankInterface,taxInterface)
+		processor2= new Processor(bankInterface,taxInterface)
+		provider1 = new ActivityProvider("XtremX", "Adventure++", "NIF", IBAN,processor1) 
+		provider2 = new ActivityProvider("Walker", "Sky", "NIF2", IBAN,processor2) 
 	}
 
 	def 'reserveActivity'() {
-        given:
+        given:'mocking the remote invocations to succeed and return references'
             bankInterface.processPayment(_) >> null
             taxInterface.submitInvoice(_) >> null
-		when:    
+		when:'executing methods'
             def activity = new Activity(provider1, "XtremX", MIN_AGE, MAX_AGE, CAPACITY) 
             new ActivityOffer(activity, new LocalDate(2018, 02, 19), new LocalDate(2018, 12, 20), 30) 
             def activityBookingData = new RestActivityBookingData() 
@@ -47,22 +52,22 @@ class ActivityInterfaceReserveActivityMethodSpockTest extends SpockRollbackTestA
             activityBookingData.setIban(IBAN) 
             activityBookingData.setNif(NIF) 
             def bookingData = ActivityInterface.reserveActivity(activityBookingData) 
-        then:   
+        then:'testing the bookingData'
 		    bookingData != null
 		    bookingData.getReference().startsWith("XtremX")
 	}
 
 	def 'reserveActivityNoOption'() {
-		given:
+		given:'creating activityBookingData'
 			def activityBookingData = new RestActivityBookingData() 
-		when:
+		when:'testing the activityBookingData'
 			activityBookingData.setAge(20) 
 			activityBookingData.setBegin(new LocalDate(2018, 02, 19)) 
 			activityBookingData.setEnd(new LocalDate(2018, 12, 20)) 
 			activityBookingData.setIban(IBAN) 
 			activityBookingData.setNif(NIF) 
 			def bookingData = ActivityInterface.reserveActivity(activityBookingData) 
-		then:	
+		then:'throws an exception'
 			thrown(ActivityException)
 	}
 
