@@ -42,7 +42,7 @@ class ActivityInterfaceReserveActivityMethodSpockTest extends SpockRollbackTestA
         given:'mocking the remote invocations to succeed and return references'
             bankInterface.processPayment(_ as RestBankOperationData) >> null
             taxInterface.submitInvoice(_ as RestInvoiceData) >> null
-		when:'executing methods'
+		when:'executing method'
             def activity = new Activity(provider1, "XtremX", MIN_AGE, MAX_AGE, CAPACITY) 
             new ActivityOffer(activity, new LocalDate(2018, 02, 19), new LocalDate(2018, 12, 20), 30) 
             def activityBookingData = new RestActivityBookingData() 
