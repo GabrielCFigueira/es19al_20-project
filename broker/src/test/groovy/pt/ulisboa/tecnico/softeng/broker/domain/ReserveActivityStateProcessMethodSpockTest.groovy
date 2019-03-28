@@ -2,14 +2,26 @@ package pt.ulisboa.tecnico.softeng.broker.domain
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State
 import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface
 import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.ActivityException
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException
 
 import spock.lang.Unroll
 
 class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstractClass {
+	def rentingData = new RestRentingData()
+	def roomBookingData = new RestRoomBookingData()
+	def bankInterface = new BankInterface()
+	def hotelInterface = new HotelInterface()
+	def carInterface = new CarInterface()
+
 	def taxInterface = Mock(TaxInterface)
     def activityInterface = Mock(ActivityInterface)
 	def bookingData = Mock(RestActivityBookingData)
@@ -19,10 +31,10 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
     def adventure
 
 	def populate4Test() {
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface,
+				bankInterface, hotelInterface, carInterface, bookingData, rentingData, roomBookingData)
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
 		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
-		adventure.setActivityInterface(activityInterface)
 		bookingData = new RestActivityBookingData()
 		bookingData.setReference(ACTIVITY_CONFIRMATION)
 		bookingData.setPrice(76.78)
@@ -32,7 +44,6 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
     def 'successNoBookRoom'(){
         given:
         def sameDayAdventure = new Adventure(broker, BEGIN, BEGIN, client, MARGIN)
-		sameDayAdventure.setActivityInterface(activityInterface)
 		sameDayAdventure.setState(State.RESERVE_ACTIVITY)
 
         activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingData
@@ -47,7 +58,6 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 	def 'successToRentVehicle'() {
 		given:
 		def adv = new Adventure(broker, BEGIN, BEGIN, client, MARGIN, true)
-		adv.setActivityInterface(activityInterface)
 		adv.setState(State.RESERVE_ACTIVITY)
 
 		activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingData
@@ -76,8 +86,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw _return}
 
 		when:
-		for(def i=0; i < _iter; i++)
-			adventure.process()
+		1.upto(_iter) { adventure.process() }
 
 		then:
 		_assert_value == adventure.getState().getValue()
@@ -95,8 +104,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> bookingData
 
 		when:
-		for(def i=0; i < 3; i++)
-			adventure.process()
+		1.upto(3) { adventure.process() }
 		
 		then:
 		State.BOOK_ROOM == adventure.getState().getValue()
@@ -107,8 +115,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 		activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new RemoteAccessException()} >> {throw new ActivityException()}
 
 		when:
-		for(def i=0; i < 2; i++)
-			adventure.process()
+		1.upto(2) { adventure.process() }
 		
 		then:
 		State.UNDO == adventure.getState().getValue()
