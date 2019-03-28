@@ -16,9 +16,11 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 
     def bankInterface = Mock(BankInterface)
     def taxInterface = Mock(TaxInterface)
+	def processor
 
 	def populate4Test() {
-		provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN)
+		processor = new Processor(bankInterface, taxInterface)
+		provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN, processor)
 		def activity = new Activity(provider, "Bush Walking", 18, 80, 3)
 
 		def begin = new LocalDate(2016, 12, 19)
@@ -30,8 +32,7 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 	@Unroll('Booking: #_iter | #_assert')
 	def 'success and bookingIsFull and bookingIsFullMinusOne'() {
         when:
-		for(def i=0; i<_iter; i++)
-			new Booking(provider, offer, NIF, IBAN)
+		1.upto(_iter) { new Booking(provider, offer, NIF, IBAN) }
 
         then:
 		_assert == offer.hasVacancy()
