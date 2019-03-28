@@ -127,7 +127,7 @@ public class UndoStateProcessMethodSpockTest extends SpockRollbackTestAbstractCl
 	}
 
 	@Unroll()
-	def 'success revert room booking'() {
+	def 'success revert room booking with Exception'() {
         given:
 		adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION)
 		adventure.setPaymentCancellation(PAYMENT_CANCELLATION)
