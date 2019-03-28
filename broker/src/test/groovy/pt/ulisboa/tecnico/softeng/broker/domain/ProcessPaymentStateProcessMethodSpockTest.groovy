@@ -12,6 +12,13 @@ import spock.lang.Unroll
  class ProcessPaymentStateProcessMethodSpockTest extends SpockRollbackTestAbstractClass {
     def TRANSACTION_SOURCE = "ADVENTURE"
 
+    def activityInterface = new ActivityInterface()
+    def roomInterface = new HotelInterface()
+    def carInterface = new CarInterface()
+    def activityReservationData = new RestActivityBookingData()
+    def rentingData = new RestRentingData()
+    def carInterface = new CarInterface()
+
     def taxInterface = Mock(TaxInterface)
     def bankInterface = Mock(BankInterface)
     def broker
@@ -20,10 +27,12 @@ import spock.lang.Unroll
 
     @Override
     def populate4Test() {
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, 
+            activityInterface, taxInterface, bankInterface, roomInterface, carInterface, 
+            activityReservationData, rentingData, roomBookingData)
+
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
-        adventure.setBankInterface(bankInterface)
 
         adventure.setState(State.PROCESS_PAYMENT)
     }
@@ -59,12 +68,10 @@ import spock.lang.Unroll
     def 'twoRemoteAccessExceptionOneSucces'() {
         when:
         3 * bankInterface.processPayment(_) >> 
-        { throw new RemoteAccessException() } >> { throw new RemoteAccessException() } >>> [PAYMENT_CONFIRMATION]
+        { throw new RemoteAccessException() } >> { throw new RemoteAccessException() } >> PAYMENT_CONFIRMATION
         
         then:
-        adventure.process()
-        adventure.process()
-        adventure.process()
+        1.upto(3) { adventure.process() }
 
         adventure.getState().getValue() == State.TAX_PAYMENT
     }
@@ -75,9 +82,7 @@ import spock.lang.Unroll
         { throw new RemoteAccessException() } >> { throw new BankException() }
         
         then:
-        adventure.process()
-        adventure.process()
-        adventure.process()
+        1.upto(3) { adventure.process() }
 
         adventure.getState().getValue() == State.CANCELLED
     }
