@@ -62,9 +62,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def successSequence() {
+	def 'success sequence'() {
 		// Testing: book activity, hotel, car, pay, tax, confirm
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingRoomData
@@ -88,13 +88,13 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(6) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CONFIRMED == adventure.getState().getValue()
 	}
 
-	def successSequenceOneNoCar() {
+	def 'success sequence one no car'() {
 		// Testing: book activity, hotel, pay, tax, confirm
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingRoomData
@@ -114,15 +114,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(5) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CONFIRMED == adventure.getState().getValue()
 	}
 
 
-	def successSequenceNoHotel() {
-
+	def 'success sequence no hotel'() {
 		// Testing: book activity, car, pay, tax, confirm
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			carInterface.rentCar(_ as CarInterface.Type, _ as String, _ as String, _ as String,
@@ -143,14 +142,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(5) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CONFIRMED == adventure.getState().getValue()
 	}
 
 
-	def successSequenceNoHotelNoCar() {
+	def 'success sequence no hotel no car'() {
 		// Testing: book activity, pay, tax, confirm
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			bankInterface.processPayment(_ as RestBankOperationData) >> PAYMENT_CONFIRMATION
@@ -166,14 +165,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(4) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CONFIRMED == adventure.getState().getValue()
 	}
 
 
-	def unsuccessSequenceFailActivity() {
+	def 'unsuccess sequence fail activity'() {
 		// Testing: fail activity, undo, cancelled
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new ActivityException()}
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
@@ -181,14 +180,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(2) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
-	def unsuccessSequenceFailHotel() {
+	def 'unsuccess sequence fail hotel'() {
 		// Testing: activity, fail hotel, undo, cancelled
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw new HotelException()}
@@ -200,14 +199,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(4) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
-	def unsuccessSequenceFailCar() {
+	def 'unsuccess sequence fail car'() {
 		// Testing: activity, fail car, undo, cancelled
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			carInterface.rentCar(_ as CarInterface.Type, _ as String, _ as String, _ as String,
@@ -220,15 +219,15 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(4) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
-	def unsuccessSequenceFailPayment() {
+	def 'unsuccess sequence fail payment'() {
 
 		// Testing: activity, room, car, fail payment, undo, cancelled
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingRoomData
@@ -249,14 +248,14 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(6) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
-	def unsuccessSequenceFailTax() {
+	def 'unsuccess sequence fail tax'() {
 		// Testing: activity, room, car, payment, fail tax, undo, cancelled
-		given:
+		given:	'this output to the operations'
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
 
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingRoomData
@@ -281,7 +280,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 		when:
 			1.upto(6) {	adventure.process() }
 
-		then:
+		then:	'should succeed'
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
