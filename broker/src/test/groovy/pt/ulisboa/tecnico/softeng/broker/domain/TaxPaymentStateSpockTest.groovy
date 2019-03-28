@@ -2,6 +2,13 @@ package pt.ulisboa.tecnico.softeng.broker.domain
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State
 import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.TaxException
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException
@@ -12,15 +19,22 @@ import spock.lang.Unroll
     def TRANSACTION_SOURCE = "ADVENTURE"
 
     def taxInterface = Mock(TaxInterface)
+    def bankInterface = new BankInterface()
+    def activityInterface = new ActivityInterface()
+    def hotelInterface = new HotelInterface()
+    def carInterface = new CarInterface()
+    def activityBookingData = new RestActivityBookingData()
+    def restRentingData = new RestRentingData()
+    def roomBookingData = new RestRoomBookingData()
     def broker
     def client
     def adventure
 
     def populate4Test() {
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,activityInterface, taxInterface, bankInterface,
+                  hotelInterface, carInterface, activityBookingData, restRentingData, roomBookingData)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
-        adventure.setTaxInterface(taxInterface)
 
         adventure.setState(State.TAX_PAYMENT)
     }
