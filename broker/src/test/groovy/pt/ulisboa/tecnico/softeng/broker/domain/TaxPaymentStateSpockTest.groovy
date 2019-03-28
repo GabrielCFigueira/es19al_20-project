@@ -40,7 +40,7 @@ import spock.lang.Unroll
             taxInterface.submitInvoice(_) >> { throw exception }
         
         when:   'processing the adventure X times'
-            1.upto( times, { adventure.process() } )
+            1.upto(times) { adventure.process() }
         then:   'should succeed'
             adventure.getState().getValue() == state
 
