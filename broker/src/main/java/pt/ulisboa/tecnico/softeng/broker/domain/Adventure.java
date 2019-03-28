@@ -56,50 +56,6 @@ public class Adventure extends Adventure_Base {
 
 	}
 
-	/*Constructors for interface testing*/
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin,
-					 ActivityInterface activityInterface, TaxInterface taxInterface, BankInterface bankInterface,
-					 HotelInterface hotelInterface, CarInterface carInterface, RestActivityBookingData activityBookingData,
-					 RestRentingData restRentingData, RestRoomBookingData roomBookingData) {
-
-		this(broker, begin, end, client, margin, false, activityInterface, taxInterface,
-				bankInterface, hotelInterface, carInterface, activityBookingData, restRentingData, roomBookingData);
-	}
-
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,
-					 ActivityInterface activityInterface, TaxInterface taxInterface, BankInterface bankInterface,
-					 HotelInterface hotelInterface, CarInterface carInterface, RestActivityBookingData activityBookingData,
-					 RestRentingData restRentingData, RestRoomBookingData roomBookingData) {
-
-		checkArguments(broker, begin, end, client, margin);
-
-		setID(broker.getCode() + Integer.toString(broker.getCounter()));
-
-		setBegin(begin);
-		setEnd(end);
-		setMargin(margin);
-		setRentVehicle(rentVehicle);
-		setClient(client);
-
-		broker.addAdventure(this);
-		setBroker(broker);
-
-		setCurrentAmount(0.0);
-		setTime(DateTime.now());
-
-		setState(State.RESERVE_ACTIVITY);
-
-		setActivityInterface(activityInterface);
-		setTaxInterface(taxInterface);
-		setBankInterface(bankInterface);
-		setHotelInterface(hotelInterface);
-		setCarInterface(carInterface);
-		setActivityBookingData(activityBookingData);
-		setRentingData(restRentingData);
-		setRoomBookingData(roomBookingData);
-	}
-	/*-----------------------------------------------------------------*/
-
 	public void delete() {
 		setBroker(null);
 		setClient(null);
@@ -147,63 +103,7 @@ public class Adventure extends Adventure_Base {
 		return getRentVehicle();
 	}
 
-	/* #################### INTERFACE - NEW GETTERS #################### */
 
-	public ActivityInterface getActivityInterface(){
-		return this._activityInterface;
-	}
-
-	public HotelInterface getHotelInterface(){
-		return this._hotelInterface;
-	}
-
-	public CarInterface getCarInterface(){
-		return this._carInterface;
-	}
-
-	public BankInterface getBankInterface(){
-		return this._bankInterface;
-	}
-	
-	public TaxInterface getTaxInterface(){
-		return this._taxInterface;
-	}
-
-	public RestActivityBookingData getActivityBookingData() { return this._activityBookingData; }
-
-	public RestRentingData getRentingData() { return this._rentingData; }
-
-	public RestRoomBookingData getRoomBookingData() { return this._roomBookingData; }
-
-	/* #################### INTERFACE - NEW SETTERS #################### */
-
-	public void setActivityInterface(ActivityInterface activityInterface){
-		this._activityInterface = activityInterface;
-	}
-
-	public void setHotelInterface(HotelInterface hotelInterface){
-		this._hotelInterface = hotelInterface;
-	}
-
-	public void setCarInterface(CarInterface carInterface){
-		this._carInterface = carInterface;
-	}
-
-	public void setBankInterface(BankInterface bankInterface){
-		this._bankInterface = bankInterface;
-	}
-
-	public void setTaxInterface(TaxInterface taxInterface){
-		this._taxInterface = taxInterface;
-	}
-
-	public void setActivityBookingData(RestActivityBookingData activityBookingData) { this._activityBookingData = activityBookingData; }
-
-	public void setRentingData(RestRentingData rentingData) { this._rentingData = rentingData; }
-
-	public void setRoomBookingData(RestRoomBookingData roomBookingData) { this._roomBookingData = roomBookingData; }
-
-	/* ############################################################# */
 
 	public void setState(State state) {
 		if (getState() != null) {

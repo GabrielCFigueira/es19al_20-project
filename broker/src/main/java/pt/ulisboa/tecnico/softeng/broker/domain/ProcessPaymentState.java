@@ -18,7 +18,7 @@ public class ProcessPaymentState extends ProcessPaymentState_Base {
 	public void process() {
 		try {
 			getAdventure()
-					.setPaymentConfirmation(getAdventure().getBankInterface().processPayment(new RestBankOperationData(getAdventure().getIban(),
+					.setPaymentConfirmation(getAdventure().getBroker().getBankInterface().processPayment(new RestBankOperationData(getAdventure().getIban(),
 							getAdventure().getAmount(), TRANSACTION_SOURCE, getAdventure().getID())));
 		} catch (BankException be) {
 			getAdventure().setState(State.UNDO);
