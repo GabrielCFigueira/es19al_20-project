@@ -7,6 +7,10 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
+import pt.ulisboa.tecnico.softeng.activity.services.remote.BankInterface;
+import pt.ulisboa.tecnico.softeng.activity.services.remote.TaxInterface;
+
+
 
 public class ActivityProvider extends ActivityProvider_Base {
 	static final int CODE_SIZE = 6;
@@ -24,6 +28,19 @@ public class ActivityProvider extends ActivityProvider_Base {
 		FenixFramework.getDomainRoot().addActivityProvider(this);
 	}
 
+	public ActivityProvider(String code, String name, String nif, String iban, Processor processor) {
+		checkArguments(code, name, nif, iban);
+
+		setCode(code);
+		setName(name);
+		setNif(nif);
+		setIban(iban);
+
+		setProcessor(processor);
+
+		FenixFramework.getDomainRoot().addActivityProvider(this);
+	}	
+	
 	public void delete() {
 		setRoot(null);
 
