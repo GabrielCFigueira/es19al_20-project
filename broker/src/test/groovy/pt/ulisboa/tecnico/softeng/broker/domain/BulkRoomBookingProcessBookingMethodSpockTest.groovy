@@ -148,9 +148,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
          new HashSet<>(Arrays.asList("ref1", "ref2"))
 
         when:
-        def iter = BulkRoomBooking.MAX_REMOTE_ERRORS * 2
-        for (def i = 0; i < iter; i++)
-            bulk.processBooking();
+        1.upto(2 * BulkRoomBooking.MAX_REMOTE_ERRORS) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
