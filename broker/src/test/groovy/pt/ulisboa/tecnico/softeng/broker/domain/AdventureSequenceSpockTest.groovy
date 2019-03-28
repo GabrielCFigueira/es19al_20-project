@@ -58,7 +58,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def successSequence() {
+	def 'success sequence'() {
 		// Testing: book activity, hotel, car, pay, tax, confirm
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -98,7 +98,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			State.CONFIRMED == adventure.getState().getValue()
 	}
 
-	def successSequenceOneNoCar() {
+	def 'success sequence one no car'() {
 		// Testing: book activity, hotel, pay, tax, confirm
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -134,8 +134,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def successSequenceNoHotel() {
-
+	def 'success sequence no hotel'() {
 		// Testing: book activity, car, pay, tax, confirm
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -172,7 +171,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def successSequenceNoHotelNoCar() {
+	def 'success sequence no hotel no car'() {
 		// Testing: book activity, pay, tax, confirm
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -202,7 +201,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def unsuccessSequenceFailActivity() {
+	def 'unsuccess sequence fail activity'() {
 		// Testing: fail activity, undo, cancelled
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new ActivityException()}
@@ -222,7 +221,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def unsuccessSequenceFailHotel() {
+	def 'unsuccess sequence fail hotel'() {
 		// Testing: activity, fail hotel, undo, cancelled
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -248,7 +247,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def unsuccessSequenceFailCar() {
+	def 'unsuccess sequence fail car'() {
 		// Testing: activity, fail car, undo, cancelled
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData
@@ -276,7 +275,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def unsuccessSequenceFailPayment() {
+	def 'unsuccess sequence fail payment'() {
 
 		// Testing: activity, room, car, fail payment, undo, cancelled
 		given:
@@ -315,7 +314,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 
-	def unsuccessSequenceFailTax() {
+	def 'unsuccess sequence fail tax'() {
 		// Testing: activity, room, car, payment, fail tax, undo, cancelled
 		given:
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> bookingActivityData

@@ -35,15 +35,12 @@ import spock.lang.Unroll
     }
     
     @Unroll(' AccessExceptions: #times , #state , #exception ')
-    def 'AccessExceptions'() {
+    def 'access exceptions'() {
         given:
             taxInterface.submitInvoice(_) >> { throw exception }
         
         when:
-            for(def i = 0; i < times; i++){
-                adventure.process()
-            }
-
+            1.upto( times, { adventure.process() } )
         then:
             adventure.getState().getValue() == state
 
@@ -53,14 +50,16 @@ import spock.lang.Unroll
             1     |State.TAX_PAYMENT     | new RemoteAccessException()
             4     |State.CANCELLED       | new RemoteAccessException()
             2     |State.TAX_PAYMENT     | new RemoteAccessException()
+            3     |State.UNDO            | new RemoteAccessException()
     }
 
-    def 'oneRemoteAccessExceptionOneSuccess'() {
+    def 'two remote access exception one success'() {
         given:
             taxInterface.submitInvoice(_) >> 
-        { throw new RemoteAccessException() } >> PAYMENT_CONFIRMATION
+        { throw new RemoteAccessException() } >> { throw new RemoteAccessException() } >> PAYMENT_CONFIRMATION
         
         when:
+            adventure.process()
             adventure.process()
             adventure.process()
 
@@ -68,7 +67,7 @@ import spock.lang.Unroll
             adventure.getState().getValue() == State.CONFIRMED
     }
  
-    def 'oneRemoteAccessExceptionOneTaxException'() {
+    def 'one remote access exception one tax exception'() {
         given:
             taxInterface.submitInvoice(_) >> 
             { throw new RemoteAccessException() } >> { throw new TaxException() }
