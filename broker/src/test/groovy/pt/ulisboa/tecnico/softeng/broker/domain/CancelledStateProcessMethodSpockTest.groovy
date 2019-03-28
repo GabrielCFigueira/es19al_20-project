@@ -1,12 +1,15 @@
 package pt.ulisboa.tecnico.softeng.broker.domain 
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface 
-import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData 
+import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.BankException 
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException 
 import spock.lang.Unroll
@@ -21,14 +24,10 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 	
 	@Override
 	def populate4Test() {
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN) 
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface,
+				bankInterface, hotelInterface, carInterface, new RestActivityBookingData(), new RestRentingData(), new RestRoomBookingData()) 
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE) 
 		adventure = new Adventure(broker, BEGIN, END, client, MARGIN) 
-		adventure.setTaxInterface(taxInterface)
-		adventure.setBankInterface(bankInterface)
-		adventure.setActivityInterface(activityInterface)
-		adventure.setHotelInterface(hotelInterface)
-		adventure.setCarInterface(carInterface)
 		adventure.setState(State.CANCELLED) 
 	}
 
@@ -66,30 +65,29 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			
 
 	}
+	
+	@Unroll('cancelledPaymentSecondBankException:#_exception')
 	def 'cancelledPaymentSecondBankException'() {
 		given:
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
-			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> {throw new RestBankOperationData()} >> {throw new BankException()}
+			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> new RestBankOperationData() >> {throw _exception}
 			
 		when:	
 			adventure.process() 
 		then:	
 		
 			State.CANCELLED == adventure.getState().getValue() 
-	}
-
-	def 'cancelledPaymentSecondRemoteAccessException'() {
-		given:
-			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
-			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
-			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> {throw new RestBankOperationData()} >> {throw new RemoteAccessException()} 
 			
-		when:	
-			adventure.process() 
-		then:	
-			State.CANCELLED == adventure.getState().getValue()
+		where:
+			_exception						| _			
+			new BankException()				| _
+		    new RemoteAccessException()		| _
+			
 	}
+	
+
+	
 
 	def 'cancelledPayment'() {
 		given:
