@@ -34,22 +34,11 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 
 	@Override
 	def populate4Test() {
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
-		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-		adventure = new Adventure(broker, BEGIN, END, client, MARGIN, activityInterface, taxInterface,
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface,
 				bankInterface, roomInterface, carInterface, activityReservationData, rentingData, roomBookingData)
-
-		/*
-		adventure.setTaxInterface(taxInterface)
-		adventure.setBankInterface(bankInterface)
-		adventure.setHotelInterface(roomInterface)
-		adventure.setActivityInterface(activityInterface)
-		adventure.setCarInterface(carInterface)
-		adventure.setActivityBookingData(activityReservationData)
-		adventure.setRentingData(rentingData)
-		adventure.setRoomBookingData(roomBookingData)
-		*/
-
+		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
+		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+		
 		adventure.setState(State.CONFIRMED)
 	}
 
