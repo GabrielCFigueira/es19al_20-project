@@ -39,7 +39,7 @@ public class TaxInterface {
 		}
 	}
 
-	public static void cancelInvoice(String invoiceReference) {
+	public void cancelInvoice(String invoiceReference) {
 		logger.info("cancelInvoice invoiceReference:{}", invoiceReference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
