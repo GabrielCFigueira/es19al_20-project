@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
+
+import java.util.Set;
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
@@ -17,9 +19,24 @@ public class BookRoomState extends BookRoomState_Base {
 	@Override
 	public void process() {
 		try {
-			RestRoomBookingData bookingData = getAdventure().getBroker().getHotelInterface().reserveRoom(new RestRoomBookingData(Type.SINGLE,
-					getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getBroker().getNifAsBuyer(),
-					getAdventure().getBroker().getIban(), getAdventure().getID()));
+			RestRoomBookingData restdata = new RestRoomBookingData(Type.SINGLE,
+			getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getBroker().getNifAsBuyer(),
+			getAdventure().getBroker().getIban(), getAdventure().getID());
+			Set<BulkRoomBooking> bulks = getAdventure().getBroker().getRoomBulkBookingSet();
+			Boolean foundRoom = false;
+			RestRoomBookingData bookingData = null;
+			for(BulkRoomBooking bulk : bulks) {/*comparar datas*/
+				if (getAdventure().getBegin().isAfter(bulk.getArrival()) && getAdventure().getEnd().isBefore(bulk.getDeparture())){
+					bookingData = bulk.getRoomBookingData4Type(Type.SINGLE.toString());
+					if(bookingData!= null){
+						foundRoom = true;
+						break;
+					}
+				}
+			}
+			if (!foundRoom){
+				bookingData = getAdventure().getBroker().getHotelInterface().reserveRoom(restdata);
+			}
 			getAdventure().setRoomConfirmation(bookingData.getReference());
 			getAdventure().incAmountToPay(bookingData.getPrice());
 		} catch (HotelException he) {
