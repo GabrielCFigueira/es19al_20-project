@@ -19,20 +19,12 @@ import java.util.Set
 class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbstractClass {
     
     def bulk
-
-    def rentingData = new RestRentingData()
-	def roomBookingData = new RestRoomBookingData()
-	def bankInterface = new BankInterface()
-	def carInterface = new CarInterface()
-	def taxInterface = new TaxInterface()
-    def activityInterface = new ActivityInterface()
-	def bookingData = new RestActivityBookingData()
-
+    
     def hotelInterface = Mock(HotelInterface)
 
     def populate4Test() {
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface,
-				bankInterface, hotelInterface, carInterface, bookingData, rentingData, roomBookingData)
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, new ActivityInterface(), new TaxInterface(),
+				new BankInterface(), hotelInterface, new CarInterface(), new RestActivityBookingData(), new RestRentingData(), new RestRoomBookingData())
         bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, BEGIN, END, NIF_AS_BUYER, IBAN_BUYER)
     }
 
