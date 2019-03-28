@@ -158,11 +158,6 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			1.upto(max_number) {
 				adventure.process()
 			}
-			/*
-			for (int i = 0; i < max_number; i++) {
-				this.adventure.process()
-			}
-			*/
 
 		then: 'adventure is state'
 			state == adventure.getState().getValue()
