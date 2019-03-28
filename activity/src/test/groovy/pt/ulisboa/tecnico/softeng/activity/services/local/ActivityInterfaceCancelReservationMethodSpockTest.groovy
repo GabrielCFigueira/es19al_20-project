@@ -21,9 +21,12 @@ class ActivityInterfaceCancelReservationMethodSpockTest extends SpockRollbackTes
 	def taxInterface = Mock(TaxInterface)
 	def bankInterface = Mock(BankInterface)
 
+	def processor
+
 	@Override
 	def populate4Test() {
-		provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN)
+		processor = new Processor(bankInterface, taxInterface)
+		provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN, processor)
 		def activity = new Activity(provider, "Bush Walking", 18, 80, 3)
 
 		def begin = new LocalDate(2016, 12, 19)
