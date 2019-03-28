@@ -54,7 +54,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 		when:'submitting a booking'
 			hotel.getProcessor().submitBooking(booking)
 			hotel.getProcessor().submitBooking(new Booking(room, arrivalTwo, departureTwo, NIF_BUYER, IBAN_BUYER)) 
-		then:'invokes the tax interface'
+		then:'invoke the tax interface'
 			3 * taxInterface.submitInvoice(_ as RestInvoiceData) >> null
 		where:
 			exception		                |  _ 
