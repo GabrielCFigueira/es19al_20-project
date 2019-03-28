@@ -31,37 +31,31 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
 	@Override
 	def populate4Test() {
-		processor = new Processor()
-		processor.setBankInterface(bankInterface);
-		processor.setTaxInterface(taxInterface);
-		hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20.0, 30.0)
-		hotel.setProcessor(processor) 
+		processor = new Processor(bankInterface,taxInterface)
+		hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20.0, 30.0,processor)
 		room = new Room(hotel, "01", Room.Type.SINGLE) 
 		booking = new Booking(room, arrival, departure, NIF_BUYER, IBAN_BUYER) 
 	}
 
 	def 'success'() {
-		when:
+		when: 'mocking the remote invocations to succeed and return references'
 			bankInterface.processPayment(_) >> null
 			taxInterface.submitInvoice(_) >> null
-		then:
+		then:'submitting a booking'
 			hotel.getProcessor().submitBooking(booking) 
 	}
 
 
 	@Unroll
 	def 'taxExceptions'() {
-		given:
+		given:'mocking the remote invocations to succeed and return references'
 			bankInterface.processPayment(_) >> null
 			taxInterface.submitInvoice(_) >> {throw exception}
-		when:
-			hotel.getProcessor().submitBooking(booking) 
-		then:
-			1 * taxInterface.submitInvoice(_) >> null
-		when:
+		when:'submitting a booking'
+			hotel.getProcessor().submitBooking(booking)
 			hotel.getProcessor().submitBooking(new Booking(room, arrivalTwo, departureTwo, NIF_BUYER, IBAN_BUYER)) 
-		then:
-			2 * taxInterface.submitInvoice(_) >> null
+		then:'invokes the tax interface'
+			3 * taxInterface.submitInvoice(_) >> null
 		where:
 			exception		                |  _ 
 			new TaxException()  			|  _
@@ -71,13 +65,13 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
 	@Unroll
 	def 'bankExceptions'() {
-		given:
+		given:'mocking the remote invocations to succeed and return references'
 			taxInterface.submitInvoice(_) >> null
 			bankInterface.processPayment(_) >> {throw exception} 
-		when:
+		when:'submitting two different bookings'
 			hotel.getProcessor().submitBooking(booking) 
 			hotel.getProcessor().submitBooking(new Booking(room, arrivalTwo, departureTwo, NIF_BUYER, IBAN_BUYER)) 
-		then:
+		then:'invokes the bank interface'
 			times * bankInterface.processPayment(_)
 		where:
 			exception		                | times 
@@ -87,31 +81,31 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 	}
 
 	def 'successCancel'() {
-		given:
+		given:'mocking the remote invocations to succeed and return references'
 			taxInterface.submitInvoice(_) >> null
 			bankInterface.processPayment(_) >> null
 			taxInterface.cancelInvoice(_) >> null 
 			bankInterface.cancelPayment(_) >> null 
-		expect:
+		expect:'submitting booking and cancelling it'
 			hotel.getProcessor().submitBooking(booking) 
 			booking.cancel() 
 	}
 
 	@Unroll
 	def 'oneExceptions'() {
-		given:
+		given:'mocking the remote invocations to succeed and return references'
 			taxInterface.submitInvoice(_) >> null 
 			bankInterface.processPayment(_) >> null 
 			taxInterface.cancelInvoice(_) >> null 
 			bankInterface.cancelPayment(_) >> {throw exception}
-		when:
+		when:'submitting booking'
 			hotel.getProcessor().submitBooking(booking) 
-		then:
+		then:'cancelling payment'
 			bankInterface.cancelPayment(_) >> null
-		when:
+		when:'cancelling booking and submitting booking'
 			booking.cancel() 
 			hotel.getProcessor().submitBooking(new Booking(room, arrival, departure, NIF_BUYER, IBAN_BUYER)) 
-		then: 
+		then:'cancelling payment'
 			bankInterface.cancelPayment(_) >> null
 		where:
 			exception                   | _
@@ -121,19 +115,19 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
 	@Unroll
 	def 'oneTaxExceptionOnCancelInvoice'() {
-		given:
+		given:'mocking the remote invocations to succeed and return references'
 			taxInterface.submitInvoice(_) >> null
 			bankInterface.processPayment(_) >> null
 			bankInterface.cancelPayment(_) >> null
 			taxInterface.cancelInvoice(_) >> {throw exception} 
-		when:
+		when:'submitting booking'
 			hotel.getProcessor().submitBooking(booking)
 		then:
 			taxInterface.cancelInvoice(_) >> null
-		when:
+		when:'cancelling and submitting booking'
 			booking.cancel() 
 			hotel.getProcessor().submitBooking(new Booking(room, arrival, departure, NIF_BUYER, IBAN_BUYER)) 
-		then: 
+		then:'cancelling invoice'
 			taxInterface.cancelInvoice(_) >> null
 		where: 
 			exception 					| _ 
