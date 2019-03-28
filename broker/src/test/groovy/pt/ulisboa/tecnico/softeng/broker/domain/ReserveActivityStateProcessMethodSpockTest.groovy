@@ -16,12 +16,6 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessE
 import spock.lang.Unroll
 
 class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstractClass {
-	def rentingData = new RestRentingData()
-	def roomBookingData = new RestRoomBookingData()
-	def bankInterface = new BankInterface()
-	def hotelInterface = new HotelInterface()
-	def carInterface = new CarInterface()
-
 	def taxInterface = Mock(TaxInterface)
     def activityInterface = Mock(ActivityInterface)
 	def bookingData = Mock(RestActivityBookingData)
@@ -32,7 +26,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
 
 	def populate4Test() {
 		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface,
-				bankInterface, hotelInterface, carInterface, bookingData, rentingData, roomBookingData)
+				new BankInterface(), new HotelInterface(), new CarInterface(), bookingData, new RestRentingData(), new RestRoomBookingData())
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
 		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
 		bookingData = new RestActivityBookingData()
