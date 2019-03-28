@@ -36,8 +36,10 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 	def populate4Test() {
 		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+		adventure = new Adventure(broker, BEGIN, END, client, MARGIN, activityInterface, taxInterface,
+				bankInterface, roomInterface, carInterface, activityReservationData, rentingData, roomBookingData)
 
+		/*
 		adventure.setTaxInterface(taxInterface)
 		adventure.setBankInterface(bankInterface)
 		adventure.setHotelInterface(roomInterface)
@@ -46,6 +48,7 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 		adventure.setActivityBookingData(activityReservationData)
 		adventure.setRentingData(rentingData)
 		adventure.setRoomBookingData(roomBookingData)
+		*/
 
 		adventure.setState(State.CONFIRMED)
 	}
@@ -163,10 +166,14 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> {throw new BankException()}
 
 		when: 'processing this adventure max_number times'
-			//1.upto(max_number, adventure.process())
+			1.upto(max_number) {
+				adventure.process()
+			}
+			/*
 			for (int i = 0; i < max_number; i++) {
 				this.adventure.process()
 			}
+			*/
 
 		then: 'adventure is state'
 			state == adventure.getState().getValue()

@@ -17,15 +17,15 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBoo
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
-	private BankInterface bankInterface;
-	private HotelInterface hotelInterface;
-	private ActivityInterface activityInterface;
-	private TaxInterface taxInterface;
-	private CarInterface carInterface;
+	private BankInterface _bankInterface;
+	private HotelInterface _hotelInterface;
+	private ActivityInterface _activityInterface;
+	private TaxInterface _taxInterface;
+	private CarInterface _carInterface;
 
-	private RestActivityBookingData activityBookingData;
-	private RestRentingData rentingData;
-	private RestRoomBookingData roomBookingData;
+	private RestActivityBookingData _activityBookingData;
+	private RestRentingData _rentingData;
+	private RestRoomBookingData _roomBookingData;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
@@ -53,16 +53,52 @@ public class Adventure extends Adventure_Base {
 		setTime(DateTime.now());
 
 		setState(State.RESERVE_ACTIVITY);
-		
-		setActivityInterface(new ActivityInterface());
-		setTaxInterface(new TaxInterface());
-		setBankInterface(new BankInterface());
-		setHotelInterface(new HotelInterface());
-		setCarInterface(new CarInterface());
-		setActivityBookingData(new RestActivityBookingData());
-		setRentingData(new RestRentingData());
-		setRoomBookingData(new RestRoomBookingData());
+
 	}
+
+	/*Constructors for interface testing*/
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin,
+					 ActivityInterface activityInterface, TaxInterface taxInterface, BankInterface bankInterface,
+					 HotelInterface hotelInterface, CarInterface carInterface, RestActivityBookingData activityBookingData,
+					 RestRentingData restRentingData, RestRoomBookingData roomBookingData) {
+
+		this(broker, begin, end, client, margin, false, activityInterface, taxInterface,
+				bankInterface, hotelInterface, carInterface, activityBookingData, restRentingData, roomBookingData);
+	}
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,
+					 ActivityInterface activityInterface, TaxInterface taxInterface, BankInterface bankInterface,
+					 HotelInterface hotelInterface, CarInterface carInterface, RestActivityBookingData activityBookingData,
+					 RestRentingData restRentingData, RestRoomBookingData roomBookingData) {
+
+		checkArguments(broker, begin, end, client, margin);
+
+		setID(broker.getCode() + Integer.toString(broker.getCounter()));
+
+		setBegin(begin);
+		setEnd(end);
+		setMargin(margin);
+		setRentVehicle(rentVehicle);
+		setClient(client);
+
+		broker.addAdventure(this);
+		setBroker(broker);
+
+		setCurrentAmount(0.0);
+		setTime(DateTime.now());
+
+		setState(State.RESERVE_ACTIVITY);
+
+		setActivityInterface(activityInterface);
+		setTaxInterface(taxInterface);
+		setBankInterface(bankInterface);
+		setHotelInterface(hotelInterface);
+		setCarInterface(carInterface);
+		setActivityBookingData(activityBookingData);
+		setRentingData(restRentingData);
+		setRoomBookingData(roomBookingData);
+	}
+	/*-----------------------------------------------------------------*/
 
 	public void delete() {
 		setBroker(null);
@@ -114,58 +150,58 @@ public class Adventure extends Adventure_Base {
 	/* #################### INTERFACE - NEW GETTERS #################### */
 
 	public ActivityInterface getActivityInterface(){
-		return this.activityInterface;
+		return this._activityInterface;
 	}
 
 	public HotelInterface getHotelInterface(){
-		return this.hotelInterface;
+		return this._hotelInterface;
 	}
 
 	public CarInterface getCarInterface(){
-		return this.carInterface;
+		return this._carInterface;
 	}
 
 	public BankInterface getBankInterface(){
-		return this.bankInterface;
+		return this._bankInterface;
 	}
 	
 	public TaxInterface getTaxInterface(){
-		return this.taxInterface;
+		return this._taxInterface;
 	}
 
-	public RestActivityBookingData getActivityBookingData() { return activityBookingData; }
+	public RestActivityBookingData getActivityBookingData() { return this._activityBookingData; }
 
-	public RestRentingData getRentingData() { return rentingData; }
+	public RestRentingData getRentingData() { return this._rentingData; }
 
-	public RestRoomBookingData getRoomBookingData() { return roomBookingData; }
+	public RestRoomBookingData getRoomBookingData() { return this._roomBookingData; }
 
 	/* #################### INTERFACE - NEW SETTERS #################### */
 
 	public void setActivityInterface(ActivityInterface activityInterface){
-		this.activityInterface = activityInterface;
+		this._activityInterface = activityInterface;
 	}
 
 	public void setHotelInterface(HotelInterface hotelInterface){
-		this.hotelInterface = hotelInterface;
+		this._hotelInterface = hotelInterface;
 	}
 
 	public void setCarInterface(CarInterface carInterface){
-		this.carInterface = carInterface;
+		this._carInterface = carInterface;
 	}
 
 	public void setBankInterface(BankInterface bankInterface){
-		this.bankInterface = bankInterface;
+		this._bankInterface = bankInterface;
 	}
 
 	public void setTaxInterface(TaxInterface taxInterface){
-		this.taxInterface = taxInterface;
+		this._taxInterface = taxInterface;
 	}
 
-	public void setActivityBookingData(RestActivityBookingData activityBookingData) { this.activityBookingData = activityBookingData; }
+	public void setActivityBookingData(RestActivityBookingData activityBookingData) { this._activityBookingData = activityBookingData; }
 
-	public void setRentingData(RestRentingData rentingData) { this.rentingData = rentingData; }
+	public void setRentingData(RestRentingData rentingData) { this._rentingData = rentingData; }
 
-	public void setRoomBookingData(RestRoomBookingData roomBookingData) { this.roomBookingData = roomBookingData; }
+	public void setRoomBookingData(RestRoomBookingData roomBookingData) { this._roomBookingData = roomBookingData; }
 
 	/* ############################################################# */
 
