@@ -51,7 +51,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 		    State.RENT_VEHICLE == adv.getState().getValue()  
 	}
 
-	@Unroll
+	@Unroll('#exception,#argument')
 	def 'exceptions'(){
 		given:'mocking the remote invocation to succeed and return references'
 			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw exception}
@@ -65,7 +65,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			new RemoteAccessException() 	|	State.BOOK_ROOM
 	}
 
-	@Unroll
+	@Unroll('#iterations,#state')
 	def 'maxExceptions'() {
 		given:'mocking the remote invocation to succeed and return references'
 			iterations * hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw new RemoteAccessException()} 
