@@ -1,7 +1,9 @@
 package pt.ulisboa.tecnico.softeng.broker.domain  
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State  
-import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface  
+import pt.ulisboa.tecnico.softeng.broker.services.remote.*;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData  
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException  
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException  
@@ -17,10 +19,9 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Override
 	def populate4Test() {
         hotelInterface = Mock(HotelInterface)
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)  
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,new ActivityInterface(),new TaxInterface(),new BankInterface(),hotelInterface,new CarInterface(),new RestActivityBookingData(),new RestRentingData(),new RestRoomBookingData())  
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)  
 		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
-		adventure.setHotelInterface(hotelInterface)  
 
 		bookingData = new RestRoomBookingData()  
 		bookingData.setReference(ROOM_CONFIRMATION)  
@@ -30,33 +31,32 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 	def 'successBookRoom'() {
-        given:
-            hotelInterface.reserveRoom(_) >> bookingData
-        when:
+        given:'mocking the remote invocation to succeed and return references'
+            hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingData
+        when:'processing an adventure'
 		    adventure.process()  
-        then:
+        then:'reaching the right state'
 		    State.PROCESS_PAYMENT == adventure.getState().getValue()
 	}
 
 	def 'successBookRoomToRenting'() {
-        given:
+        given:'creating an adventure'
 		    def adv = new Adventure(broker, BEGIN, END, client, MARGIN, true)
-			adv.setHotelInterface(hotelInterface)  
 		    adv.setState(State.BOOK_ROOM)  
-			hotelInterface.reserveRoom(_) >> bookingData  
-        when:
+			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingData  
+        when:'processing an adventure'
 		    adv.process()  
-        then:
+        then:'reaching the right state'
 		    State.RENT_VEHICLE == adv.getState().getValue()  
 	}
 
 	@Unroll
 	def 'exceptions'(){
-		given:
-			hotelInterface.reserveRoom(_) >> {throw exception}
-		when:
+		given:'mocking the remote invocation to succeed and return references'
+			hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw exception}
+		when:'processing the adventure'
 			adventure.process()
-		then:
+		then:'reaching the right state'
 			argument == adventure.getState().getValue()
 		where:
 			exception 						|	 argument
@@ -66,13 +66,13 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 	@Unroll
 	def 'maxExceptions'() {
-		given:
-			iterations * hotelInterface.reserveRoom(_) >> {throw new RemoteAccessException()} 
-		when:
-			for (def i=0; i< iterations; i++){
+		given:'mocking the remote invocation to succeed and return references'
+			iterations * hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw new RemoteAccessException()} 
+		when:'processing the adventure multiple times'
+			1.upto(iterations){
 				adventure.process()
 			}
-		then:
+		then:'reaching the right state'
 			state == adventure.getState().getValue()
 		where:
 			iterations						    | state
@@ -81,26 +81,26 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 	}
 
 	def 'fiveRemoteAccessExceptionOneSuccess'() {
-        given:
+        given:'mocking the remote invocation to succeed and return references'
             def times = 6
-            times * hotelInterface.reserveRoom(_) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()}  >>> [bookingData]
-        when:
-            for (def i = 0 ;  i < 6 ; i++) {
+            times * hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()}  >>> [bookingData]
+        when:'processing the adventure multiple times'
+            1.upto(6) {
                 adventure.process()  
             }
-        then: 
+        then:'reaching the right state'
 		    State.PROCESS_PAYMENT == adventure.getState().getValue()
 	}
 
 	def 'oneRemoteAccessExceptionOneHotelException'() {
-		given:
+		given:'mocking the remote invocation to succeed and return references'
 			def times = 2
-			times * hotelInterface.reserveRoom(_) >> {throw new RemoteAccessException()} >> {throw new HotelException()}
-		when:
-			for (def i=0; i< 2; i++){
+			times * hotelInterface.reserveRoom(_ as RestRoomBookingData) >> {throw new RemoteAccessException()} >> {throw new HotelException()}
+		when:'processing the adventure multiple times'
+			1.upto(2){
 				adventure.process()  
 			}
-		then:
+		then:'reaching the right state'
 			State.UNDO == adventure.getState().getValue() 
 	}
 
