@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.CarException;
@@ -24,8 +23,7 @@ public class RentVehicleState extends RentVehicleState_Base {
 	public void process() {
 		try {
 			// For now we will only reserve cars
-			CarInterface carInterface = getAdventure().getCarInterface();
-			RestRentingData rentingData = carInterface.rentCar(Type.CAR, getAdventure().getClient().getDrivingLicense(),
+			RestRentingData rentingData = getAdventure().getCarInterface().rentCar(Type.CAR, getAdventure().getClient().getDrivingLicense(),
 					getAdventure().getBroker().getNifAsBuyer(), getAdventure().getBroker().getIban(),
 					getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getID());
 

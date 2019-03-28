@@ -22,7 +22,8 @@ import spock.lang.Unroll
     def populate4Test() {
         broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        adventure = new Adventure(broker, BEGIN, END, client, MARGIN, bankInterface)
+        adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+        adventure.setBankInterface(bankInterface)
 
         adventure.setState(State.PROCESS_PAYMENT)
     }

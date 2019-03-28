@@ -6,6 +6,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.BankInterface
 import pt.ulisboa.tecnico.softeng.activity.services.remote.TaxInterface
 import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestBankOperationData
 import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestInvoiceData
+import spock.lang.Unroll
 
 class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def IBAN = "IBAN"
@@ -26,37 +27,26 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 		offer = new ActivityOffer(activity, begin, end, 30)
 	}
 
-	def 'success'() {
+	@Unroll('Booking: #_iter | #_assert')
+	def 'success and bookingIsFull and bookingIsFullMinusOne'() {
         when:
-		new Booking(provider, offer, NIF, IBAN)
+		for(def i=0; i<_iter; i++)
+			new Booking(provider, offer, NIF, IBAN)
 
         then:
-		true == offer.hasVacancy()
-	}
+		_assert == offer.hasVacancy()
 
-	def 'bookingIsFull'() {
-		when:
-        new Booking(provider, offer, NIF, IBAN)
-		new Booking(provider, offer, NIF, IBAN)
-		new Booking(provider, offer, NIF, IBAN)
-
-        then:
-		false == offer.hasVacancy()
-	}
-
-	def 'bookingIsFullMinusOne'() {
-        when:
-		new Booking(provider, offer, NIF, IBAN)
-		new Booking(provider, offer, NIF, IBAN)
-
-		then:
-        true == offer.hasVacancy()
+		where:
+			_iter	| _assert
+			1		| true
+			3		| false
+			2		| true
 	}
 
 	def 'hasCancelledBookings'() {
 		given:
-        bankInterface.processPayment(_) >> ""
-        taxInterface.submitInvoice(_) >> ""
+        bankInterface.processPayment(_ as RestBankOperationData) >> null
+        taxInterface.submitInvoice(_ as RestInvoiceData) >> null
 
         when:
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
@@ -72,10 +62,12 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 		true == offer.hasVacancy()
 	}
 
-	def hasCancelledBookingsButFull() {
-        bankInterface.processPayment(_) >> ""
-        taxInterface.submitInvoice(_) >> ""
+	def 'hasCancelledBookingsButFull'() {
+        given:
+		bankInterface.processPayment(_ as RestBankOperationData) >> null
+        taxInterface.submitInvoice(_ as RestInvoiceData) >> null
 
+		when:
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
 		def booking = new Booking(provider, offer, NIF, IBAN)
@@ -86,6 +78,7 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 
 		provider.getProcessor().submitBooking(booking)
 
+		then:
 		false == offer.hasVacancy()
 	}
 

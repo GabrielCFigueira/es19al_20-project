@@ -8,6 +8,8 @@ import pt.ulisboa.tecnico.softeng.activity.domain.*
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException
 import pt.ulisboa.tecnico.softeng.activity.services.remote.BankInterface
 import pt.ulisboa.tecnico.softeng.activity.services.remote.TaxInterface
+import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestBankOperationData
+import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestInvoiceData
 
 
 class ActivityInterfaceCancelReservationMethodSpockTest extends SpockRollbackTestAbstractClass {
@@ -29,24 +31,26 @@ class ActivityInterfaceCancelReservationMethodSpockTest extends SpockRollbackTes
 		offer = new ActivityOffer(activity, begin, end, 30)
 	}
 
-	def success() {
-		bankInterface.processPayment(_) >> ""
-		taxInterface.submitInvoice(_) >> ""
+	def 'success'() {
+		given: 'this processes'
+			bankInterface.processPayment(_ as RestBankOperationData) >> null
+			taxInterface.submitInvoice(_ as RestInvoiceData) >> null
 
-		def booking = new Booking(provider, offer, NIF, IBAN)
-		provider.getProcessor().submitBooking(booking)
+		when: 'creating a new booking'
+			def booking = new Booking(provider, offer, NIF, IBAN)
+			provider.getProcessor().submitBooking(booking)
+			def cancel = ActivityInterface.cancelReservation(booking.getReference())
 
-		def cancel = ActivityInterface.cancelReservation(booking.getReference())
-
-		true == booking.isCancelled()
-		cancel == booking.getCancel()
+		then: 'booking is cancelled'
+			true == booking.isCancelled()
+			cancel == booking.getCancel()
 	}
 
 
 	def 'activity does not exist'() {
 		given: 'this processes'
-			bankInterface.processPayment(_) >> ""
-			taxInterface.submitInvoice(_) >> ""
+			bankInterface.processPayment(_ as RestBankOperationData) >> null
+			taxInterface.submitInvoice(_ as RestInvoiceData	) >> null
 
 		when: 'submitting a booking and cancelling a reservation'
 			provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))

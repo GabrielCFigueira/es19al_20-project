@@ -45,7 +45,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static String cancelBooking(String roomConfirmation) {
+	public String cancelBooking(String roomConfirmation) {
 		logger.info("cancelBooking roomConfirmation:{}", roomConfirmation);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -61,7 +61,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static RestRoomBookingData getRoomBookingData(String reference) {
+	public RestRoomBookingData getRoomBookingData(String reference) {
 		logger.info("getRoomBookingData reference:{}", reference);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -77,7 +77,7 @@ public class HotelInterface {
 		}
 	}
 
-	public static Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure, String nif, String iban,
+	public Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure, String nif, String iban,
 			String bulkId) {
 		logger.info("bulkBooking number:{}, arrival:{}, departure:{}, nif:{}, iban:{}, bulkId:{}", number, arrival,
 				departure, nif, iban, bulkId);
