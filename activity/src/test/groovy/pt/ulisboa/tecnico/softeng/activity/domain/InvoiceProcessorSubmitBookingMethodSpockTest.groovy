@@ -1,8 +1,7 @@
 package pt.ulisboa.tecnico.softeng.activity.domain 
 
 import org.joda.time.LocalDate 
-import org.junit.Test 
-import org.junit.runner.RunWith 
+
 
 
 import pt.ulisboa.tecnico.softeng.activity.services.remote.BankInterface 
@@ -14,9 +13,9 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.exceptions.RemoteAcce
 import pt.ulisboa.tecnico.softeng.activity.services.remote.exceptions.TaxException 
 import pt.ulisboa.tecnico.softeng.activity.domain.SpockRollbackTestAbstractClass
 import spock.lang.Unroll
-import spock.lang.Shared
 
-class InvoiceProcessorSubmitBookingMethodMockSpockTest extends SpockRollbackTestAbstractClass {
+
+class InvoiceProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractClass {
 	      def CANCEL_PAYMENT_REFERENCE = "CancelPaymentReference" 
 	      def INVOICE_REFERENCE = "InvoiceReference" 
 	      def PAYMENT_REFERENCE = "PaymentReference" 
@@ -32,7 +31,8 @@ class InvoiceProcessorSubmitBookingMethodMockSpockTest extends SpockRollbackTest
 
 	@Override
 	def populate4Test() {
-		 provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN) 
+		def processor = new Processor(bankInterface, taxInterface)
+		 provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", IBAN, processor) 
 		 def activity = new Activity( provider, "Bush Walking", 18, 80, 10) 
 
 		 def begin = new LocalDate(2016, 12, 19) 
@@ -44,56 +44,61 @@ class InvoiceProcessorSubmitBookingMethodMockSpockTest extends SpockRollbackTest
 	
 	def 'success'() {
 		when:
-			bankInterface.processPayment(_) >> "" 
-			taxInterface.submitInvoice(_) >> "" 
-			
+			bankInterface.processPayment(_) >> null
+			taxInterface.submitInvoice(_) >> null
 		then: 
-
-		 provider.getProcessor().submitBooking( booking) 
+		 	provider.getProcessor().submitBooking( booking) 
 
 	} 
 	
 	def 'successCancel'() {
 		when:
-			taxInterface.submitInvoice(_) >> ""
-			bankInterface.processPayment(_) >> ""
+			taxInterface.submitInvoice(_) >> null
+			bankInterface.processPayment(_) >> null
 		then:
-			taxInterface.cancelInvoice(_ as String) >> ""
-			bankInterface.cancelPayment(_ as String) >> ""
+			taxInterface.cancelInvoice(_ as String) >> null
+			bankInterface.cancelPayment(_ as String) >> null
 		
 			provider.getProcessor().submitBooking( booking)
 			booking.cancel()
 	}
 	
-	@Unroll('oneFailureSubmitInvoice:#exception')
+	@Unroll('oneFailureSubmitInvoice:#_exception')
 	def 'oneFailureSubmitInvoice'(){
-		when:
+		given:
 			bankInterface.processPayment(_) >> PAYMENT_REFERENCE 
-			taxInterface.submitInvoice(_) >> {throw exception} >> INVOICE_REFERENCE
-		then:	
-		 provider.getProcessor().submitBooking( booking) 
-		 provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN)) 
+			taxInterface.submitInvoice(_) >> {throw _exception} >> INVOICE_REFERENCE
+		when:	
+			 provider.getProcessor().submitBooking( booking) 
+		then:
+			1 * taxInterface.submitInvoice(_) >> {throw _exception} 
+		when:	
+			 provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN)) 
+		then: 
+			 2 * taxInterface.submitInvoice(_) >> INVOICE_REFERENCE
 
-		 for(def i=0;i<3;i++)
-			 taxInterface.submitInvoice(_) >> "" 
+
 		where:
-      		exception					| _
+      		_exception					| _
 			new TaxException()			| _
 			new RemoteAccessException()	| _
 	}
 	
 	@Unroll('oneFailureProcessPayment:#exception')
 	def 'oneFailureProcessPayment'(){
-		when:
+		given:
 			bankInterface.processPayment(_) >> {throw exception} >> PAYMENT_REFERENCE
 			taxInterface.submitInvoice(_) >> INVOICE_REFERENCE
 
-		then:	
-		 provider.getProcessor().submitBooking( booking) 
-		 provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN)) 
+		when:	
+		 	provider.getProcessor().submitBooking( booking) 
+		then: 
+			1 * bankInterface.processPayment(_) >> {throw exception}
+		when:	
+		 	provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN)) 
+		then: 
+		 	2 * bankInterface.processPayment(_) >> PAYMENT_REFERENCE
 
-		 for(def i=0;i<3;i++)
-			 bankInterface.processPayment(_) >> ""
 		where:
 			  exception					| _
 			new BankException()			| _
@@ -104,20 +109,19 @@ class InvoiceProcessorSubmitBookingMethodMockSpockTest extends SpockRollbackTest
 	
 	@Unroll('oneExceptionCancelPayment:#exception')
 	def 'oneExceptionCancelPayment'(){
-		when:
-			taxInterface.submitInvoice(_) >> ""
-			bankInterface.processPayment(_) >> ""
-		then:
-			bankInterface.cancelPayment(_ as String) >> {throw exception}  >> CANCEL_PAYMENT_REFERENCE
-			taxInterface.cancelInvoice(_ as String) >> ""
-	
+		given:
+			taxInterface.submitInvoice(_) >> null
+			bankInterface.processPayment(_) >> null
+			bankInterface.cancelPayment(_) >> {throw exception}  >> CANCEL_PAYMENT_REFERENCE
+			taxInterface.cancelInvoice(_) >> null
+			
+		when:	
 			provider.getProcessor().submitBooking( booking)
 			booking.cancel()
 			provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN))
-
-			for(def i=0;i<2;i++)
-				bankInterface.cancelPayment(_ as String) >> ""
-
+		then:
+			2 * bankInterface.cancelPayment(_) >> {throw exception}  >> CANCEL_PAYMENT_REFERENCE
+		
 		where:
 			  exception					| _
 			new BankException()			| _
@@ -128,22 +132,19 @@ class InvoiceProcessorSubmitBookingMethodMockSpockTest extends SpockRollbackTest
 	
 	@Unroll('oneExceptionCancelInvoice:#exception')
 	def 'oneExceptionCancelInvoice'(){
+		given:
+			bankInterface.processPayment(_) >> null 
+			taxInterface.submitInvoice(_) >> null 	
+			bankInterface.cancelPayment(_) >> CANCEL_PAYMENT_REFERENCE 
+			taxInterface.cancelInvoice(_) >> {throw exception} 
 		when:
-			bankInterface.processPayment(_) >> "" 
-			taxInterface.submitInvoice(_) >> "" 
-		then:		
-			bankInterface.cancelPayment(_ as String) >> CANCEL_PAYMENT_REFERENCE 
-			taxInterface.cancelInvoice(_ as String) >> {throw exception} 
-		 
-
 			provider.getProcessor().submitBooking( booking) 
-			booking.cancel() 
-			provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN)) 
-
+			booking.cancel()
+			provider.getProcessor().submitBooking(new Booking( provider,  offer, NIF, IBAN))
+		then:
 			
-			for(def i=0;i<2;i++)
-			   bankInterface.cancelPayment(_ as String) >> ""
-
+			2 * taxInterface.cancelInvoice(_) >> {throw exception} 
+			
 		where:
 			
 			  exception					| _

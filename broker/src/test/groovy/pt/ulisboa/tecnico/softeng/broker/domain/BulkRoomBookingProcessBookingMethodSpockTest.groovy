@@ -1,6 +1,14 @@
 package pt.ulisboa.tecnico.softeng.broker.domain
 
+import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestBankOperationData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException
 
@@ -11,13 +19,13 @@ import java.util.Set
 class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbstractClass {
     
     def bulk
-
+    
     def hotelInterface = Mock(HotelInterface)
 
     def populate4Test() {
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN)
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, new ActivityInterface(), new TaxInterface(),
+				new BankInterface(), hotelInterface, new CarInterface(), new RestActivityBookingData(), new RestRentingData(), new RestRoomBookingData())
         bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, BEGIN, END, NIF_AS_BUYER, IBAN_BUYER)
-        bulk.setHotelInterface(hotelInterface)
     }
 
     def 'success'() {
@@ -37,8 +45,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
          new HashSet<>(Arrays.asList("ref3", "ref4"))
         
         when:
-        for (def i = 0; i < 2; i++) 
-            bulk.processBooking()
+        1.upto(2) { bulk.processBooking() }
         
         then:
         2 == bulk.getReferences().size()
@@ -50,8 +57,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
          new HashSet<>(Arrays.asList("ref1", "ref2"))
         
         when:
-        for (def i = 0; i < 2; i++) 
-            bulk.processBooking()
+        1.upto(2) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
@@ -63,8 +69,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
         hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new HotelException()}
         
         when:
-        for (def i = 0; i < 3; i++) 
-            bulk.processBooking()
+        1.upto(3) { bulk.processBooking() }
 
         then:
         0 == bulk.getReferences().size()
@@ -73,12 +78,10 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
 
     def 'maxMinusOneHotelException'() {
         given:
-        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new HotelException()} >>
-         new HashSet<>(Arrays.asList("ref1", "ref2"))
+        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new HotelException()} >> {throw new HotelException()} >> new HashSet<>(Arrays.asList("ref1", "ref2"))
 
         when:
-        for (def i = 0; i < 3; i++) 
-            bulk.processBooking()
+        1.upto(3) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
@@ -87,12 +90,11 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
     
     def 'hotelExceptionValueIsResetByRemoteException'() {
         given:
-        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new HotelException()} >>
+        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new HotelException()} >> {throw new HotelException()} >>
          {throw new RemoteAccessException()} >> {throw new HotelException()} >> {throw new HotelException()} >> new HashSet<>(Arrays.asList("ref1", "ref2"))
         
         when:
-        for (def i = 0; i < 6; i++) 
-            bulk.processBooking()
+        1.upto(6) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
@@ -105,8 +107,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
          new HashSet<>(Arrays.asList("ref1", "ref2"))
 
         when:
-        for (def i = 0; i < 2; i++) 
-            bulk.processBooking()
+        1.upto(2) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
@@ -119,8 +120,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
 
         when:
         def iter = BulkRoomBooking.MAX_REMOTE_ERRORS + 1
-        for (def i = 0; i < iter; i++)
-            bulk.processBooking()
+        1.upto(iter) { bulk.processBooking() }
 
         then:
         0 == bulk.getReferences().size()
@@ -129,14 +129,12 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
 
     def 'maxMinusOneRemoteException'() {
         given:
-        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new RemoteAccessException()} >>
+        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >>
          new HashSet<>(Arrays.asList("ref1", "ref2")) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> 
          new HashSet<>(Arrays.asList("ref1", "ref2"))
 
         when:
-        def iter = BulkRoomBooking.MAX_REMOTE_ERRORS * 2
-        for (def i = 0; i < iter; i++)
-            bulk.processBooking()
+        1.upto(2 * BulkRoomBooking.MAX_REMOTE_ERRORS) { bulk.processBooking() }
 
         then:
         2 == bulk.getReferences().size()
@@ -145,7 +143,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
 
     def 'remoteExceptionValueIsResetByHotelException'() {
         given:
-        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new RemoteAccessException()} >>
+        hotelInterface.bulkBooking(NUMBER_OF_BULK, ARRIVAL, DEPARTURE, NIF_AS_BUYER, IBAN_BUYER, bulk.getId()) >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >>
          {throw new HotelException()} >> {throw new RemoteAccessException()} >> {throw new RemoteAccessException()} >> 
          new HashSet<>(Arrays.asList("ref1", "ref2"))
 

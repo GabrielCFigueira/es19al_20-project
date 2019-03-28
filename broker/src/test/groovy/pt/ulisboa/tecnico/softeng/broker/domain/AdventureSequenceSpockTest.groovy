@@ -30,12 +30,16 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	def activityInterface = Mock(ActivityInterface)
 	def hotelInterface = Mock(HotelInterface)
 	def carInterface = Mock(CarInterface)
+	def activityBookingData = new RestActivityBookingData()
+	def restRentingData = new RestRentingData()
+	def roomBookingData = new RestRoomBookingData()
 	def broker
 	def client
 
 
 	def populate4Test() {
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, BROKER_NIF_AS_BUYER, BROKER_IBAN)
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, BROKER_NIF_AS_BUYER, BROKER_IBAN, activityInterface, taxInterface, bankInterface,
+				  hotelInterface, carInterface, activityBookingData, restRentingData, roomBookingData)
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
 
 		bookingActivityData = new RestActivityBookingData()
@@ -80,19 +84,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			hotelInterface.getRoomBookingData(ROOM_CONFIRMATION) >> bookingRoomData
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(6) {	adventure.process() }
 
 		then:
 			State.CONFIRMED == adventure.getState().getValue()
@@ -116,18 +110,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			hotelInterface.getRoomBookingData(ROOM_CONFIRMATION) >> bookingRoomData
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(5) {	adventure.process() }
 
 		then:
 			State.CONFIRMED == adventure.getState().getValue()
@@ -154,18 +139,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			carInterface.getRentingData(RENTING_CONFIRMATION) >> rentingData
 
 			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(5) {	adventure.process() }
 
 		then:
 			State.CONFIRMED == adventure.getState().getValue()
@@ -186,16 +162,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			activityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION) >> bookingActivityData
 
 			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(4) {	adventure.process() }
 
 		then:
 			State.CONFIRMED == adventure.getState().getValue()
@@ -208,14 +177,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			activityInterface.reserveActivity(_ as RestActivityBookingData) >> {throw new ActivityException()}
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
+			1.upto(2) {	adventure.process() }
 
 		then:
 			State.CANCELLED == adventure.getState().getValue()
@@ -232,16 +196,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			activityInterface.cancelReservation(ACTIVITY_CONFIRMATION) >> ACTIVITY_CANCELLATION
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(4) {	adventure.process() }
 
 		then:
 			State.CANCELLED == adventure.getState().getValue()
@@ -259,17 +216,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			activityInterface.cancelReservation(ACTIVITY_CONFIRMATION) >> ACTIVITY_CANCELLATION
 
 			def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(4) {	adventure.process() }
 
 		then:
 			State.CANCELLED == adventure.getState().getValue()
@@ -296,19 +245,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			carInterface.cancelRenting(RENTING_CONFIRMATION) >> RENTING_CANCELLATION
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(6) {	adventure.process() }
 
 		then:
 			State.CANCELLED == adventure.getState().getValue()
@@ -338,19 +277,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 			bankInterface.cancelPayment(PAYMENT_CONFIRMATION) >> PAYMENT_CANCELLATION
 
 			def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
-			adventure.setActivityInterface(activityInterface)
-			adventure.setBankInterface(bankInterface)
-			adventure.setHotelInterface(hotelInterface)
-			adventure.setTaxInterface(taxInterface)
-			adventure.setCarInterface(carInterface)
 
 		when:
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
-			adventure.process()
+			1.upto(6) {	adventure.process() }
 
 		then:
 			State.CANCELLED == adventure.getState().getValue()
