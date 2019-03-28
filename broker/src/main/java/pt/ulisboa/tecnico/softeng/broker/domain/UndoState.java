@@ -55,7 +55,7 @@ public class UndoState extends UndoState_Base {
 
 		if (getAdventure().shouldCancelInvoice()) {
 			try {
-				TaxInterface.cancelInvoice(getAdventure().getInvoiceReference());
+				getAdventure().getBroker().getTaxInterface().cancelInvoice(getAdventure().getInvoiceReference());
 				getAdventure().setInvoiceCancelled(true);
 			} catch (TaxException | RemoteAccessException ex) {
 				// does not change state
