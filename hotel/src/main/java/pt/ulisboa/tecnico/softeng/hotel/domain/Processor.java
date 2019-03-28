@@ -21,6 +21,10 @@ public class Processor extends Processor_Base {
 	private BankInterface bankInterface;
 	private TaxInterface taxInterface;
 
+	public Processor(BankInterface bankInterface, TaxInterface taxInterface){
+		setBankInterface(bankInterface);
+		setTaxInterface(taxInterface);
+	}
 	/*Setters*/
 	public void setBankInterface(BankInterface bankInterface){
 		this.bankInterface = bankInterface;
