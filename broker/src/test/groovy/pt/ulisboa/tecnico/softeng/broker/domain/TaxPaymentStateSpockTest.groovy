@@ -59,9 +59,7 @@ import spock.lang.Unroll
         { throw new RemoteAccessException() } >> { throw new RemoteAccessException() } >> PAYMENT_CONFIRMATION
         
         when:   'processing 3 times an adventure'
-            adventure.process()
-            adventure.process()
-            adventure.process()
+            1.upto(3) { adventure.process() }
 
         then:   'should succeed'
             adventure.getState().getValue() == State.CONFIRMED
@@ -73,9 +71,7 @@ import spock.lang.Unroll
             { throw new RemoteAccessException() } >> { throw new TaxException() }
         
         when:   'processing 3 times an adventure'
-            adventure.process()
-            adventure.process()
-            adventure.process()
+            1.upto(3) { adventure.process() }
 
         then:   'should succeed'
             adventure.getState().getValue() == State.CANCELLED
