@@ -12,6 +12,10 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room
 import pt.ulisboa.tecnico.softeng.hotel.domain.SpockRollbackTestAbstractClass
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.BankInterface;
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface;
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.dataobjects.RestBankOperationData;
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.dataobjects.RestInvoiceData;
 import spock.lang.Shared
 import spock.lang.Unroll
 
@@ -21,11 +25,15 @@ class HotelInterfaceBulkBookingMethodSpockTest extends SpockRollbackTestAbstract
 	@Shared def BULK_ID = 'BULK_ID'
 	@Shared def ARRIVAL = new LocalDate(2016, 12, 19)
 	@Shared def DEPARTURE = new LocalDate(2016, 12, 21)
-
+	def bankInterface
+	def taxInterface
 	def hotel;
 
 	@Override
 	def populate4Test() {
+		bankInterface = Mock(BankInterface)
+        taxInterface = Mock(TaxInterface)
+
 		hotel = new Hotel('XPTO123', 'Paris', 'NIF', 'IBAN', 20.0, 30.0)
 		new Room(hotel, '01', Type.DOUBLE)
 		new Room(hotel, '02', Type.SINGLE)
@@ -41,6 +49,9 @@ class HotelInterfaceBulkBookingMethodSpockTest extends SpockRollbackTestAbstract
 
 	@Unroll('bulkbooking #number rooms and the reference size is #refSize')
 	def 'success'() {
+		given:
+			bankInterface.processPayment(_ as RestBankOperationData) >> "ok!"
+			taxInterface.submitInvoice(_ as RestInvoiceData) >> true
 		when: 'bulkbooking rooms'
 		def references = HotelInterface.bulkBooking(number, ARRIVAL, DEPARTURE, NIF_BUYER,
 				IBAN_BUYER, BULK_ID)

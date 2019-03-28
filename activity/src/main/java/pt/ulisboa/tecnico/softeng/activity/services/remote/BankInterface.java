@@ -39,7 +39,7 @@ public class BankInterface {
 		}
 	}
 
-	public static String cancelPayment(String reference) {
+	public String cancelPayment(String reference) {
 		logger.info("cancelPayment reference:{}", reference);
 
 		RestTemplate restTemplate = new RestTemplate();
