@@ -19,7 +19,8 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Override
 	def populate4Test() {
         hotelInterface = Mock(HotelInterface)
-		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,new ActivityInterface(),new TaxInterface(),new BankInterface(),hotelInterface,new CarInterface(),new RestActivityBookingData(),new RestRentingData(),new RestRoomBookingData())  
+		broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,new ActivityInterface(),
+		new TaxInterface(),new BankInterface(),hotelInterface,new CarInterface(),new RestActivityBookingData(),new RestRentingData(),new RestRoomBookingData())  
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)  
 		adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
 
