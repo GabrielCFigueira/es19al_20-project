@@ -11,6 +11,7 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Processor
 import pt.ulisboa.tecnico.softeng.hotel.domain.SpockRollbackTestAbstractClass
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type
 import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface
+import pt.ulisboa.tecnico.softeng.hotel.services.remote.BankInterface
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException
 import spock.lang.Unroll
 
@@ -27,10 +28,9 @@ class HotelInterfaceCancelBookingMethodSpockTest extends SpockRollbackTestAbstra
 
 	@Override
 	def populate4Test() {
-		hotel = new Hotel("XPTO123", "Paris", "NIF", "IBAN", 20.0, 30.0)
-		def processor = new Processor()
-		processor.setTaxInterface(taxInterface)
-		hotel.setProcessor(processor)
+		def processor = new Processor(new BankInterface(), taxInterface)
+		hotel = new Hotel("XPTO123", "Paris", "NIF", "IBAN", 20.0, 30.0, processor)
+
 		room = new Room(hotel, "01", Type.DOUBLE)
 		booking = room.reserve(Type.DOUBLE, ARRIVAL, DEPARTURE, NIF_BUYER, IBAN_BUYER)
 	}
