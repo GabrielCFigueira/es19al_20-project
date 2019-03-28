@@ -30,9 +30,9 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 	def activityInterface = Mock(ActivityInterface)
 	def hotelInterface = Mock(HotelInterface)
 	def carInterface = Mock(CarInterface)
-	def activityBookingData = Mock(RestActivityBookingData)
-	def restRentingData = Mock(RestRentingData)
-	def roomBookingData = Mock(RestRoomBookingData)
+	def activityBookingData = new RestActivityBookingData()
+	def restRentingData = new RestRentingData()
+	def roomBookingData = new RestRoomBookingData()
 	def broker
 	def client
 
