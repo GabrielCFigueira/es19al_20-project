@@ -4,28 +4,14 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.BankInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.TaxInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
+
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRentingData;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
+
 
 
 public class Adventure extends Adventure_Base {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
-	private BankInterface _bankInterface;
-	private HotelInterface _hotelInterface;
-	private ActivityInterface _activityInterface;
-	private TaxInterface _taxInterface;
-	private CarInterface _carInterface;
 
-	private RestActivityBookingData _activityBookingData;
-	private RestRentingData _rentingData;
-	private RestRoomBookingData _roomBookingData;
 
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
