@@ -99,11 +99,17 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 		@Shared def BEGIN = new LocalDate(2016, 12, 19)
 		@Shared def END = new LocalDate(2016, 12, 21)*/
 		given:
-			def mockedBroker = Mock(Broker)
+			//def mockedBroker = Mock(Broker)
 			System.out.println("\n\n\n" + mockedBroker)
-			BulkRoomBooking roomBooking = new BulkRoomBooking(broker, NUMBER_OF_BULK, new LocalDate(2016,12,18), new LocalDate(2016,12,22), NIF_AS_BUYER,
-                           IBAN_BUYER)
-			mockedBroker.getRoomBulkBookingSet() >> new HashSet<>(Arrays.asList(roomBooking)) ;
+			def roomBooking = Mock(BulkRoomBooking)
+			/*BulkRoomBooking roomBooking = new BulkRoomBooking(mockedBroker, NUMBER_OF_BULK, new LocalDate(2016,12,18), new LocalDate(2016,12,22), NIF_AS_BUYER,
+                           IBAN_BUYER)*/
+			broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,activityInterface,
+		taxInterface,bankInterface,hotelInterface,carInterface,restActivityBookingData,restRentingData,restRoomBookingData)
+			adventure = new Adventure(mockedBroker, BEGIN, END, client, MARGIN)
+			roomBooking.getArrival() >> new LocalDate(2016,12,18)
+			roomBooking.getDeparture() >> new LocalDate(2016,12,22)
+			 HashSet<>(Arrays.asList(roomBooking) books = broker.getRoomBulkBookingSet();
 		when: 
 			adventure.process()
 		then:
