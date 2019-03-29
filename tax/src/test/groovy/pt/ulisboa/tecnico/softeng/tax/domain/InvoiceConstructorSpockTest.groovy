@@ -67,6 +67,7 @@ class InvoiceConstructorSpockTest extends SpockRollbackTestAbstractClass {
 		VALUE  | new LocalDate(1969, 12, 31) | itemType   | seller   | buyer
 	}
 
+	// JFF: this is not running as a test... (it's not even a test)
 	def equal1970() {
 		new Invoice(VALUE, new LocalDate(1970, 01, 01), itemType, seller, buyer)
 	}

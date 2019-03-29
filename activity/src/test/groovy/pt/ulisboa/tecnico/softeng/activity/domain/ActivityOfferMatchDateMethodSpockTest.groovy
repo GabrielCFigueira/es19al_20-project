@@ -18,7 +18,9 @@ class ActivityOfferMatchDateMethodSpockTest extends SpockRollbackTestAbstractCla
 
 		offer = new ActivityOffer(activity, this.begin, this.end, 30)
 	}
-	
+
+	// JFF: duplication coudl be avoided by using data tables
+	// JFF: == true unnecessary
 	def 'success'() {
 		expect:
 		true == offer.matchDate(begin, end)

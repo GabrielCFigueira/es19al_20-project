@@ -42,6 +42,7 @@ class ClientConstructorMethodSpockTest extends SpockRollbackTestAbstractClass im
 
 	}
 
+	// JFF: this test seems to be incomplete/incorrect: what is it testing?
 	def 'client exists with same IBAN'() {
 		expect: 'that it doesnt work'
 		new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)

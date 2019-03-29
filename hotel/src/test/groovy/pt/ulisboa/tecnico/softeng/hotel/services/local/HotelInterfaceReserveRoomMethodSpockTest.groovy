@@ -12,6 +12,7 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.dataobjects.RestRoomBook
 import spock.lang.Shared
 import spock.lang.Unroll
 
+// JFF: class name different from file name
 class HotelInterfaceReserveRoomMethodTest extends SpockRollbackTestAbstractClass {
     def arrival = new LocalDate(2016, 12, 19)
 	def departure = new LocalDate(2016, 12, 24)

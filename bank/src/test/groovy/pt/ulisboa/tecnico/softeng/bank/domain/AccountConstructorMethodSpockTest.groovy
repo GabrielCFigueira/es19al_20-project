@@ -5,6 +5,7 @@ import spock.lang.Unroll
 import spock.lang.Shared
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 
+// JFF: class name different from file name
 class AccountContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def bank
 	@Shared def client

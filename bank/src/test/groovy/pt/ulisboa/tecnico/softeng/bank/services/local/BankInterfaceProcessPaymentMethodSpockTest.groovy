@@ -11,6 +11,8 @@ import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationD
 import spock.lang.Shared
 import spock.lang.Unroll
 
+// JFF: class name different from file name
+// JFF: public modifier unnecessary
 public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbstractClass {
     @Shared def TRANSACTION_SOURCE = "ADVENTURE"
 	@Shared def TRANSACTION_REFERENCE = "REFERENCE"
@@ -36,7 +38,7 @@ public class BankInterfaceProcessPaymentMethodTest extends SpockRollbackTestAbst
 		
 		then: 'Should succeed'
 		null != newReference
-		true == newReference.startsWith("BK01")
+		true == newReference.startsWith("BK01") // JFF: == true unnecessary
 
 		null != bank.getOperation(newReference)
 		bank.getOperation(newReference).getType() == Operation.Type.WITHDRAW

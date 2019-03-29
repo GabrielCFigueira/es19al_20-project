@@ -61,6 +61,7 @@ class BuyerToReturnSpockTest extends SpockRollbackTestAbstractClass {
 			thrown(TaxException)
 	}
 
+	// JFF: duplication could be avoided using dat tables
 	def 'equal1970'() {
 		when: 'creating invoice'
 			new Invoice(100,LocalDate.parse("1970-02-13"), itemType, seller, buyer) 

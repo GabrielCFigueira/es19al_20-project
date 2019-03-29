@@ -4,6 +4,7 @@ package pt.ulisboa.tecnico.softeng.bank.domain
 import pt.ist.fenixframework.FenixFramework
 
 
+// JFF: class name different from file name
 class BankPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
     
     def private static final BANK_NAME = "Money"

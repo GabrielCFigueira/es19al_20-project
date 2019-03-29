@@ -11,7 +11,10 @@ class ActivityMatchAgeMethodSpockTest extends SpockRollbackTestAbstractClass {
 		def provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN")
 		activity = new Activity(provider, "Bush Walking", MIN_AGE, MAX_AGE, CAPACITY)
 	}
-	
+
+
+	// JFF: duplication could be avoided by using data tables
+	// JFF: ==true unnecessary
 	def 'success'(){
 		when: 'difference between MAX_AGE and MIN_AGE'
 		def value = (MAX_AGE - MIN_AGE)

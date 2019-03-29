@@ -25,7 +25,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
 	def NIF_BUYER = "123456789"
 	def IBAN_BUYER = "IBAN_BUYER"
 
-
+	// JFF: unused variables
 	def taxInterface
 
 	def bankInterface

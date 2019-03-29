@@ -35,6 +35,7 @@ class TaxPayerGetInvoiceByReferenceSpockTest extends SpockRollbackTestAbstractCl
         this.invoice == this.seller.getInvoiceByReference(this.invoice.getReference())
     }
 
+	// JFF: duplication could be avoided using data tables
     def nullReference() {
         when:
         this.seller.getInvoiceByReference(null)

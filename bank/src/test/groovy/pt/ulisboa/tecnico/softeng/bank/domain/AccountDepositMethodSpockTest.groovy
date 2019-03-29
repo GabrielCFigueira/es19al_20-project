@@ -40,6 +40,7 @@ class AccountDepositMethodSpockTest extends SpockRollbackTestAbstractClass {
 			-100  | _
 	}
 
+	// JFF: what is being tested here?
 	def 'one amount'() {
 		expect: "that the deposit is successful"
 			account.deposit(1);

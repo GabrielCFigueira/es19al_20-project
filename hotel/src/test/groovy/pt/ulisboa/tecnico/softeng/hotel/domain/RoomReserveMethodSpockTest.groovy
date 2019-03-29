@@ -54,14 +54,15 @@ class RoomReserveMethodSpockTest extends SpockRollbackTestAbstractClass {
     }
 
 
+    // JFF: inconsistency: method name not as string
     def allConflit() {
         when:
         this.room.reserve(Type.SINGLE, this.arrival, this.departure, this.NIF_BUYER, this.IBAN_BUYER)
 
         then:
-        try {
+        try { // JFF: try {} .. should not be used here
 			this.room.reserve(Type.SINGLE, this.arrival, this.departure, this.NIF_BUYER, this.IBAN_BUYER)
-			fail();
+			fail(); // JFF: fail() should not be here
 		} catch (HotelException he) {
 			1 == this.room.getBookingSet().size()
 		}

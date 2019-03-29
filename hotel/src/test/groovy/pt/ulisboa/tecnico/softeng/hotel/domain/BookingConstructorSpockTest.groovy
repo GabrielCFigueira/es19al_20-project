@@ -17,6 +17,7 @@ public class BookingConstructorSpockTest extends SpockRollbackTestAbstractClass 
 	@Shared def IBAN_BUYER = "IBAN_BUYER" 
 	@Shared def room 
 
+	// JFF: unused variables
 	def taxInterface 
 	def bankInterface 
 
@@ -50,6 +51,7 @@ public class BookingConstructorSpockTest extends SpockRollbackTestAbstractClass 
 			room   | ARRIVAL  | ARRIVAL.minusDays(1)   | NIF_BUYER   | IBAN_BUYER 
 	}
 
+	// JFF: what is this testing?
 	def 'arrivalEqualDeparture'() {
         expect: 'the creation of a new booking'
 		    new Booking(room, ARRIVAL, ARRIVAL, NIF_BUYER, IBAN_BUYER) 

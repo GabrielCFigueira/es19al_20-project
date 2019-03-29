@@ -11,6 +11,7 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 		client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
 	}
 
+	// JFF: duplication could be avoided using data tables
 	def 'success'() {
         when:	'creating a new adventure'
 		    adventure = new Adventure(broker, begin, end, client, MARGIN)

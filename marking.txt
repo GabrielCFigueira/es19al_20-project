@@ -1,0 +1,5 @@
+Penalties: -0.2
+        * Unused variables, use of == true, etc.
+        * Commits with multiple names
+        * Class names and file names do not always match
+        * See other comments in code that were not already taken into consideration in the spreadsheet

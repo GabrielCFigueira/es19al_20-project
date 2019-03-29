@@ -12,6 +12,7 @@ import pt.ulisboa.tecnico.softeng.tax.domain.ItemType
 import pt.ulisboa.tecnico.softeng.tax.domain.Seller 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException 
 
+// JFF: public modifier unnecessary
 public class SellerToPaySpockTest extends SpockRollbackTestAbstractClass {
 	def SELLER_NIF = "123456789" 
 	def BUYER_NIF = "987654321" 

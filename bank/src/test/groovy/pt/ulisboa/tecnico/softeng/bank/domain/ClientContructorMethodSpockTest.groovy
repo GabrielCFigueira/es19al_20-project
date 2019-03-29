@@ -5,6 +5,7 @@ import spock.lang.Unroll
 
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 
+// JFF: public modifier unnecessary
 public class ClientContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def CLIENT_NAME = "António"
 

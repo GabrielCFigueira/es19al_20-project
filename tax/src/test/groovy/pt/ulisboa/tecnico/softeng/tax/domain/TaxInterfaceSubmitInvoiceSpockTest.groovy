@@ -84,6 +84,7 @@ class TaxInterfaceSubmitInvoiceSpockTest extends SpockRollbackTestAbstractClass 
 
 	}
 
+	// JFF: what is this testing?
 	def 'equals to 1970'() {
         expect: 'that the date is equal to 1970'
 		    def invoiceData = new RestInvoiceData(REFERENCE, SELLER_NIF, BUYER_NIF, FOOD, VALUE,

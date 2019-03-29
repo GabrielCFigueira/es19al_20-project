@@ -5,6 +5,7 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 import spock.lang.Shared
 import spock.lang.Unroll
 
+// JFF: class name different from file name
 class BankConstructorTest extends SpockRollbackTestAbstractClass {
     @Shared def BANK_CODE = "BK01"
 	@Shared def BANK_NAME = "Money"

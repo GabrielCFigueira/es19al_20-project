@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.softeng.bank.domain 
 
+// JFF: class name different from file name
 class OperationRevertMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def bank 
 	def account 

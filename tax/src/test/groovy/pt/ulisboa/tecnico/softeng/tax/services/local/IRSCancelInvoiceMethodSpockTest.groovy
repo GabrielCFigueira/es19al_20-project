@@ -38,7 +38,7 @@ class IRSCancelInvoiceMethodSpockTest extends SpockRollbackTestAbstractClass {
 		when:'when cancelling the Invoice'
 			TaxInterface.cancelInvoice(reference)
 		then:'should succeed'
-			true == invoice.isCancelled()
+			true == invoice.isCancelled() // JFF: == true unnecessary
 	}
 	
 	@Unroll('IRSCancelInvoice:#arg')
