@@ -9,6 +9,11 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelExceptio
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException  
 import spock.lang.Unroll
 
+import java.util.Arrays
+import java.util.HashSet
+import java.util.Set
+import org.joda.time.LocalDate
+
 class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def bookingData  
     def hotelInterface
@@ -22,6 +27,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
     def broker
     def client 
     def adventure 
+	
 
 	@Override
 	def populate4Test() {
@@ -86,6 +92,22 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			iterations						    | state
 			BookRoomState.MAX_REMOTE_ERRORS	    | State.UNDO 
 			BookRoomState.MAX_REMOTE_ERRORS - 1	| State.BOOK_ROOM 
+	}
+
+	def 'bulkFound'(){
+		/*
+		@Shared def BEGIN = new LocalDate(2016, 12, 19)
+		@Shared def END = new LocalDate(2016, 12, 21)*/
+		given:
+			def mockedBroker = Mock(Broker)
+			System.out.println("\n\n\n" + mockedBroker)
+			BulkRoomBooking roomBooking = new BulkRoomBooking(broker, NUMBER_OF_BULK, new LocalDate(2016,12,18), new LocalDate(2016,12,22), NIF_AS_BUYER,
+                           IBAN_BUYER)
+			mockedBroker.getRoomBulkBookingSet() >> new HashSet<>(Arrays.asList(roomBooking)) ;
+		when: 
+			adventure.process()
+		then:
+			0 * hotelInterface.reserveRoom(_ as RestRoomBookingData)
 	}
 
 	def 'fiveRemoteAccessExceptionOneSuccess'() {
