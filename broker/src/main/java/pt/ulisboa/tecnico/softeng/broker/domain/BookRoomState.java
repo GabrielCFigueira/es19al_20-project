@@ -25,9 +25,7 @@ public class BookRoomState extends BookRoomState_Base {
 			Set<BulkRoomBooking> bulks = getAdventure().getBroker().getRoomBulkBookingSet();
 			Boolean foundRoom = false;
 			RestRoomBookingData bookingData = null;
-			for(BulkRoomBooking bulk : bulks) {/*comparar datas*/
-				System.out.println("\n\n\numa coisa qualquer");
-				System.out.println("\n\n");
+			for(BulkRoomBooking bulk : bulks) {
 				if (getAdventure().getBegin().isAfter(bulk.getArrival()) && getAdventure().getEnd().isBefore(bulk.getDeparture())){
 					bookingData = bulk.getRoomBookingData4Type(Type.SINGLE.toString());
 					if(bookingData!= null){

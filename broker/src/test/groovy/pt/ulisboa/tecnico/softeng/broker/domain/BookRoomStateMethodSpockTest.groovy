@@ -43,7 +43,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 		adventure.setState(State.BOOK_ROOM)  
 	}
-
+/*
 	def 'successBookRoom'() {
         given:'mocking the remote invocation to succeed and return references'
             hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingData
@@ -94,28 +94,6 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			BookRoomState.MAX_REMOTE_ERRORS - 1	| State.BOOK_ROOM 
 	}
 
-	def 'bulkFound'(){
-		/*
-		@Shared def BEGIN = new LocalDate(2016, 12, 19)
-		@Shared def END = new LocalDate(2016, 12, 21)*/
-		given:
-			//def mockedBroker = Mock(Broker)
-			System.out.println("\n\n\n" + mockedBroker)
-			def roomBooking = Mock(BulkRoomBooking)
-			/*BulkRoomBooking roomBooking = new BulkRoomBooking(mockedBroker, NUMBER_OF_BULK, new LocalDate(2016,12,18), new LocalDate(2016,12,22), NIF_AS_BUYER,
-                           IBAN_BUYER)*/
-			broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,activityInterface,
-		taxInterface,bankInterface,hotelInterface,carInterface,restActivityBookingData,restRentingData,restRoomBookingData)
-			adventure = new Adventure(mockedBroker, BEGIN, END, client, MARGIN)
-			roomBooking.getArrival() >> new LocalDate(2016,12,18)
-			roomBooking.getDeparture() >> new LocalDate(2016,12,22)
-			 HashSet<>(Arrays.asList(roomBooking) books = broker.getRoomBulkBookingSet();
-		when: 
-			adventure.process()
-		then:
-			0 * hotelInterface.reserveRoom(_ as RestRoomBookingData)
-	}
-
 	def 'fiveRemoteAccessExceptionOneSuccess'() {
         given:'mocking the remote invocation to succeed and return references'
             def times = 6
@@ -138,6 +116,28 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			}
 		then:'reaching the right state'
 			State.UNDO == adventure.getState().getValue() 
+	}
+
+*/
+	@Unroll
+	def 'bulkFound'(){
+		given:
+			def roomBookingData = new RestRoomBookingData()
+        	roomBookingData.setRoomType(SINGLE)
+        	hotelInterface.getRoomBookingData(_ as String) >> roomBookingData 
+			def bulkRoomBooking = new BulkRoomBooking(broker, NUMBER_OF_BULK, _begin, _end, NIF_AS_BUYER,
+                           IBAN_BUYER)
+			bulkRoomBooking.addReference(new Reference(bulkRoomBooking,"ref1"))
+			
+			broker.addRoomBulkBooking(bulkRoomBooking)
+		when: 
+			adventure.process()
+		then:
+			_times * hotelInterface.reserveRoom(_ as RestRoomBookingData)
+		where:
+			_times | _begin                         | _end 
+			   0   |  new LocalDate(2016,12,18)     | new LocalDate(2016,12,22)
+			   1   |  new LocalDate(2016,12,19)		| new LocalDate(2016,12,20)
 	}
 
 }
