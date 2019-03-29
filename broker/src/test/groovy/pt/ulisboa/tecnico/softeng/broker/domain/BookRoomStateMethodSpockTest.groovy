@@ -118,14 +118,13 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			State.UNDO == adventure.getState().getValue() 
 	}
 
-
-	@Unroll
+	@Unroll('#_times,#_begin,#_end')
 	def 'bulkFound'(){
 		given:
 			def roomBookingData = new RestRoomBookingData()
         	roomBookingData.setRoomType(SINGLE)
         	hotelInterface.getRoomBookingData(_ as String) >> roomBookingData 
-			def bulkRoomBooking = new BulkRoomBooking(broker, NUMBER_OF_BULK, _begin, _end, NIF_AS_BUYER,
+			def bulkRoomBooking = new BulkRoomBooking(broker, NUMBER_OF_BULK,  _begin , _end, NIF_AS_BUYER,
                            IBAN_BUYER)
 			bulkRoomBooking.addReference(new Reference(bulkRoomBooking,"ref1"))
 			
@@ -133,10 +132,12 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 		when: 
 			adventure.process()
 		then:
-			_times * hotelInterface.reserveRoom(_ as RestRoomBookingData)
+			_times * hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingData
 		where:
-			_times | _begin                         | _end 
-			   0   |  new LocalDate(2016,12,18)     | new LocalDate(2016,12,22)
+			_times	|	_begin								| _end
+			0		|	 new LocalDate(2016,12,18)			| new LocalDate(2016,12,22)
+			1		|	new LocalDate(2015,12,18)			| new LocalDate(2015,12,20)
 	}
+
 
 }
