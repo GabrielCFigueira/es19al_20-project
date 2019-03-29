@@ -43,7 +43,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 		adventure.setState(State.BOOK_ROOM)  
 	}
-/*
+
 	def 'successBookRoom'() {
         given:'mocking the remote invocation to succeed and return references'
             hotelInterface.reserveRoom(_ as RestRoomBookingData) >> bookingData
@@ -118,7 +118,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 			State.UNDO == adventure.getState().getValue() 
 	}
 
-*/
+
 	@Unroll
 	def 'bulkFound'(){
 		given:
@@ -137,7 +137,6 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 		where:
 			_times | _begin                         | _end 
 			   0   |  new LocalDate(2016,12,18)     | new LocalDate(2016,12,22)
-			   1   |  new LocalDate(2016,12,19)		| new LocalDate(2016,12,20)
 	}
 
 }
