@@ -33,11 +33,11 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 
 
 	def 'didNotPayed'() {
-		when:
+		when:'when calling adventure process'
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'	
 			State.CANCELLED == adventure.getState().getValue() 
-		and:	
+		and:'return null in mocked interfaces 0 times'	
 			0 * bankInterface.getOperationData(_ as String) >> null
 				 
 			0 * activityInterface.getActivityReservationData(_ as String) >> null  
@@ -50,13 +50,13 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 	
 	@Unroll('cancelledPaymentFirst:#_exception')
 	def 'cancelledPaymentFirst'() {
-		given:
+		given: 'given the adventure setter and the mocked interfaces return exceptions'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION)
 			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> {throw _exception }
-		when:
+		when:'when calling adventure process'
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'		
 			State.CANCELLED == adventure.getState().getValue() 
 		where:
 			_exception						| _
@@ -68,15 +68,14 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 	
 	@Unroll('cancelledPaymentSecondBankException:#_exception')
 	def 'cancelledPaymentSecondBankException'() {
-		given:
+		given:'given the adventure setters and the mocked interfaces return exceptions'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> new RestBankOperationData() >> {throw _exception}
 			
-		when:	
+		when:'when calling adventure process'
 			adventure.process() 
-		then:	
-		
+		then:'then check if state is cancelled'		
 			State.CANCELLED == adventure.getState().getValue() 
 			
 		where:
@@ -90,21 +89,21 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 	
 
 	def 'cancelledPayment'() {
-		given:
+		given:'given the adventure setter and the mocked interfaces return null'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			bankInterface.getOperationData(PAYMENT_CONFIRMATION) >> null
 			bankInterface.getOperationData(PAYMENT_CANCELLATION) >> null
 					
-		when:	
+		when:'when calling adventure process'	
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'	
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
 	def 'cancelledActivity'() {
-		given:
+		given:'given the adventure setters and the mocked interfaces return null'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION) 
@@ -113,15 +112,15 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			bankInterface.getOperationData(PAYMENT_CANCELLATION) >> null
 			activityInterface.getActivityReservationData(ACTIVITY_CANCELLATION) >> null
 			
-		when:
+		when:'when calling adventure process'
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'	
 
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 	def 'cancelledRoom'() {
-		given:
+		given:'given the adventure setters and the mocked interfaces return null'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION) 
@@ -132,16 +131,16 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			bankInterface.getOperationData(PAYMENT_CANCELLATION) >> null
 			activityInterface.getActivityReservationData(ACTIVITY_CANCELLATION) >> null
 			hotelInterface.getRoomBookingData(ROOM_CANCELLATION) >> null
-		when:			
+		when:'when calling adventure process'			
 			adventure.process() 
 			
-		then:	
+		then:'then check if state is cancelled'	
 
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 	def 'cancelledRenting'() {
-		given:
+		given:'given the adventure setters and the mocked interfaces return null'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION) 
@@ -153,15 +152,15 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			activityInterface.getActivityReservationData(ACTIVITY_CANCELLATION) >> null
 			carInterface.getRentingData(RENTING_CANCELLATION) >> null
 		
-		when:	
+		when:'when calling adventure process'	
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'	
 			State.CANCELLED == adventure.getState().getValue()
 	}
 
 
 	def 'cancelledBookAndRenting'() {
-		given:
+		given:'given the adventure setters and the mocked interfaces return null'
 			adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION) 
 			adventure.setPaymentCancellation(PAYMENT_CANCELLATION) 
 			adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION) 
@@ -176,9 +175,9 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 			hotelInterface.getRoomBookingData(ROOM_CANCELLATION) >> null
 			carInterface.getRentingData(RENTING_CANCELLATION) >> null
 			
-		when:	
+		when:'when calling adventure process'	
 			adventure.process() 
-		then:	
+		then:'then check if state is cancelled'	
 			State.CANCELLED == adventure.getState().getValue() 
 	}
 
