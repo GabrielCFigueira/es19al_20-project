@@ -49,7 +49,7 @@ public class RentVehicleStateMethodSpockTest extends SpockRollbackTestAbstractCl
 		BEGIN, END, _ as String) >> {throw _return}
 
 		when:
-		for (def i = 0; i < _t; i++)
+		for (def i = 0; i < _t; i++)   // JFF: Groovy has better ways of writing these loops
 			adventure.process()
 
 		then:

@@ -58,7 +58,7 @@ import spock.lang.Unroll
         bankInterface.processPayment(_) >> { throw exception }
         
         then:
-        for(def i = 0; i < times; i++){
+        for(def i = 0; i < times; i++){ // JFF: Groovy has better ways of writing these loops...
             adventure.process()
         }
         adventure.getState().getValue() == state

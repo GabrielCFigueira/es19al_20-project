@@ -42,7 +42,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 			bankInterface.processPayment(_ as RestBankOperationData) >> null
 			taxInterface.submitInvoice(_ as RestInvoiceData) >> null
 		then:'submitting a booking'
-			hotel.getProcessor().submitBooking(booking) 
+			hotel.getProcessor().submitBooking(booking)  // JFF: you could use the return values from the mocks to enrich the test
 	}
 
 

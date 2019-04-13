@@ -23,6 +23,7 @@ class ActivityInterfaceCancelReservationMethodSpockTest extends SpockRollbackTes
 
 	def processor
 
+	// JFF: tests different from what was expected (see solutions)
 	@Override
 	def populate4Test() {
 		processor = new Processor(bankInterface, taxInterface)

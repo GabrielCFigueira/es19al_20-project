@@ -20,6 +20,7 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.TaxException
 import spock.lang.Unroll
 
 
+// JFF: no need to use public modifier
 public class UndoStateProcessMethodSpockTest extends SpockRollbackTestAbstractClass {
 	
 	def taxInterface = Mock(TaxInterface)
