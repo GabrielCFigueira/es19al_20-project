@@ -11,7 +11,7 @@ Ordene a tabela por ordem crescente da data de término.
 
 |   Issue id | Owner (ist number)      | Owner (github username) | PRs id (with link)  |            Date    |  
 | ---------- | ----------------------- | ----------------------- | ------------------- | ------------------ |
-|            |                         |                         |                     |                    |
+|    128     |      Pedro Carvalho     |      PedroMatias98      |                     |                    |
 |            |                         |                         |                     |                    |
 |            |                         |                         |                     |                    |
 |            |                         |                         |                     |                    |

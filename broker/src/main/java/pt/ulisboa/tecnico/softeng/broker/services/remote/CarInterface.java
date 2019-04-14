@@ -41,6 +41,7 @@ public class CarInterface {
         }
     }
 
+
     public String cancelRenting(String rentingReference) {
         logger.info("cancelRenting rentingReference:{}", rentingReference);
         RestTemplate restTemplate = new RestTemplate();
