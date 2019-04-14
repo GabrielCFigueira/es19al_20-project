@@ -11,7 +11,7 @@ Ordene a tabela por ordem crescente da data de término.
 
 |   Issue id | Owner (ist number)      | Owner (github username)  | PRs id (with link)  |            Date    |  
 | ---------- | ----------------------- | ------------------------ | ------------------- | ------------------ |
-|  129       |  86461/                 |  LivioCosta/             |       TO EDIT       |                    |
+|  129       |  86461/86431            |  LivioCosta/HenriqueFSilva |       TO EDIT       |                    |
 |            |                         |                          |                     |                    |
 |            |                         |                          |                     |                    |
 |            |                         |                          |                     |                    |
