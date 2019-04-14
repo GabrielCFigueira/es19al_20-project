@@ -18,7 +18,7 @@ public class Adventure extends Adventure_Base {
         this(broker, begin, end, client, margin, false);
     }
 
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, VType vehicleType) {
+    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, VehicleType vehicleType) {
         checkArguments(broker, begin, end, client, margin);
 
         setID(broker.getCode() + Integer.toString(broker.getCounter()));
@@ -55,7 +55,7 @@ public class Adventure extends Adventure_Base {
         setTime(DateTime.now());
 
         setState(State.RESERVE_ACTIVITY);
-        setVehicleType(new VType(this,Type.CAR));
+        setVehicleType(new VehicleType(this,Type.CAR));
     }
 
     public void delete() {
