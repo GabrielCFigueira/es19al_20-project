@@ -9,15 +9,15 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 Ordene a tabela por ordem crescente da data de término.
 
-|   Issue id | Owner (ist number)      | Owner (github username) | PRs id (with link)  |            Date    |  
-| ---------- | ----------------------- | ----------------------- | ------------------- | ------------------ |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
-|            |                         |                         |                     |                    |
+|   Issue id | Owner (ist number)      | Owner (github username)  | PRs id (with link)  |            Date    |  
+| ---------- | ----------------------- | ------------------------ | ------------------- | ------------------ |
+|  129       |  86461/                 |  LivioCosta/             |       TO EDIT       |                    |
+|            |                         |                          |                     |                    |
+|            |                         |                          |                     |                    |
+|            |                         |                          |                     |                    |
+|            |                         |                          |                     |                    |
+|            |                         |                          |                     |                    |
+|            |                         |                          |                     |                    |
 
 
 ### Infrastructure
