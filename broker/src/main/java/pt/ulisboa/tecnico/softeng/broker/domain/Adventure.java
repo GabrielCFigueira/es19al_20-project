@@ -18,25 +18,6 @@ public class Adventure extends Adventure_Base {
         this(broker, begin, end, client, margin, false);
     }
 
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle, VehicleType vehicleType) {
-        checkArguments(broker, begin, end, client, margin);
-
-        setID(broker.getCode() + Integer.toString(broker.getCounter()));
-        setBegin(begin);
-        setEnd(end);
-        setMargin(margin);
-        setRentVehicle(rentVehicle);
-        setClient(client);
-        setVehicleType(vehicleType);
-
-        broker.addAdventure(this);
-        setBroker(broker);
-
-        setCurrentAmount(0.0);
-        setTime(DateTime.now());
-
-        setState(State.RESERVE_ACTIVITY);
-    }
 
     public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
