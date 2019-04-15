@@ -6,15 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type;
 
 public class Adventure extends Adventure_Base {
     public enum State {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
+
     public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
         this(broker, begin, end, client, margin, false);
     }
+
 
     public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
@@ -33,17 +36,21 @@ public class Adventure extends Adventure_Base {
         setTime(DateTime.now());
 
         setState(State.RESERVE_ACTIVITY);
+        setVehicleType(new VehicleType(this,Type.CAR));
     }
 
     public void delete() {
         setBroker(null);
         setClient(null);
+        if(getVehicleType()!=null)
+            getVehicleType().delete();
 
         getState().delete();
 
         deleteDomainObject();
     }
 
+    
     private void checkArguments(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
         if (client == null || broker == null || begin == null || end == null) {
             throw new BrokerException();

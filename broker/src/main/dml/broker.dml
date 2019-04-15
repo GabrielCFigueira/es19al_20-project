@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
+enum pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type as VType;
+
 class Broker {
 	String code;
 	String name;
@@ -127,5 +129,18 @@ relation BulkRoomBookingHasReferences {
 	}
 	Reference playsRole reference {
 		multiplicity 0..*;
+	}
+}
+
+class VehicleType {
+	VType type;
+}
+
+relation AdventureHasVehicle {
+	Adventure playsRole adventure {
+		multiplicity 0..1;
+	}
+	VehicleType playsRole vehicleType {
+		multiplicity 0..1;
 	}
 }
