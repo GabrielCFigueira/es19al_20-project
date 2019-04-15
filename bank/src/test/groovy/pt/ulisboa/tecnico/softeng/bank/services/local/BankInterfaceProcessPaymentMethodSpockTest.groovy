@@ -111,4 +111,48 @@ class BankInterfaceProcessPaymentMethodSpockTest extends SpockRollbackTestAbstra
 		then: 'an exception is thrown'
 		thrown(BankException)
 	}
+
+	/*Tests for transfer operation*/
+	def 'successfulTransfer'() {
+		given: 'creating two different accounts'
+			def targetClient = new Client(bank,'Pestana')
+			def targetAccount = new Account(bank,targetClient)
+			def otherIban = targetAccount.getIBAN()
+
+		when: 'process payment'
+		BankInterface.processPayment(
+				new BankOperationData(iban, otherIban, 400, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))
+
+		then: 'values check up'
+			targetAccount.getBalance() == 400.0
+			account.getBalance() == 100.0
+	}
+
+	def 'transferWithRepeatedAccount'() {
+		when: 'process payment'
+		BankInterface.processPayment(
+				new BankOperationData(iban, iban, 400, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))
+
+		then: 'throws exception'
+			thrown(BankException)
+	}
+
+	def 'transferWithoutEnoughBalance'() {
+		given: 'creating two different accounts'
+			def targetClient = new Client(bank,'Pestana')
+			def targetAccount = new Account(bank,targetClient)
+			def otherIban = targetAccount.getIBAN()
+
+		when: 'process payment'
+		BankInterface.processPayment(
+				new BankOperationData(iban, otherIban, 600, TRANSACTION_SOURCE, TRANSACTION_REFERENCE))
+
+		then: 'throws exception'
+			thrown(BankException)
+	}	
+
+	
+
+
+
 }
