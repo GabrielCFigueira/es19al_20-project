@@ -130,6 +130,11 @@ public class BankInterface {
 					for (Bank targetBank : FenixFramework.getDomainRoot().getBankSet()) {
 						targetAccount = targetBank.getAccount(bankOperationData.getTargetIban());
 						if (targetAccount != null) {
+
+							/*Trying to transfer to same account*/
+							if(sourceAccount.getIBAN().equals(targetAccount.getIBAN()))
+								throw new BankException();
+
 							Operation newOperation = sourceAccount.transfer(bankOperationData.getValue(), targetAccount);
 							newOperation.setTransactionSource(bankOperationData.getTransactionSource());
 							newOperation.setTransactionReference(bankOperationData.getTransactionReference());
