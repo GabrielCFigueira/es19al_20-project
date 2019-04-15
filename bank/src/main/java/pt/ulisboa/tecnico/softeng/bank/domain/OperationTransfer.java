@@ -20,7 +20,7 @@ public class OperationTransfer extends OperationTransfer_Base {
     }
 
     public String revert(){
-        if(getCancellation().contains("_CANCEL"))
+        if(getCancellation() != null && getCancellation().contains("_CANCEL"))
             throw new BankException();
 
         setCancellation(getReference() + "_CANCEL");
