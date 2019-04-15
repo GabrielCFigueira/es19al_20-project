@@ -18,6 +18,7 @@ public class Booking extends Booking_Base {
         setBuyerNif(buyerNif);
         setBuyerIban(buyerIban);
         setProviderNif(room.getHotel().getNif());
+        setProviderIban(room.getHotel().getIban());
         setProcessor(room.getHotel().getProcessor());
         setTime(DateTime.now());
 
