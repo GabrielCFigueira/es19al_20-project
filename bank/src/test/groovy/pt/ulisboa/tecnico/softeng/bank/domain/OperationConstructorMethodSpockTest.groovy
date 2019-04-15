@@ -23,7 +23,7 @@ class OperationConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
 		with(operation) {
 			getReference().startsWith(bank.getCode())
 			getReference().length() > Bank.CODE_SIZE
-			//getType() == "DEPOSIT"
+			getType() == "DEPOSIT"
 			getAccount() == account
 			getValue() == 1000
 			getTime() != null
