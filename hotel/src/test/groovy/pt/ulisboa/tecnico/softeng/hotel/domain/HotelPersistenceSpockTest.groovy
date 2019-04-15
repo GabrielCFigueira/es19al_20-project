@@ -60,6 +60,7 @@ class HotelPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
         assert booking.getBuyerIban().equals(CLIENT_IBAN)
         assert booking.getBuyerNif().equals(CLIENT_NIF)
         assert booking.getProviderNif().equals(HOTEL_NIF)
+        assert booking.getProviderIban().equals(HOTEL_IBAN)
         assert booking.getPrice() == 80.0
         assert booking.getRoom() == room
         assert booking.getTime() != null

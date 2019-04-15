@@ -4,7 +4,6 @@ import pt.ulisboa.tecnico.softeng.bank.domain.Account
 import pt.ulisboa.tecnico.softeng.bank.domain.Bank
 import pt.ulisboa.tecnico.softeng.bank.domain.Client
 import pt.ulisboa.tecnico.softeng.bank.domain.SpockRollbackTestAbstractClass
-import pt.ulisboa.tecnico.softeng.bank.domain.Operation.Type
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 import spock.lang.Unroll
 
@@ -29,8 +28,8 @@ class BankInterfaceGetOperationDataMethodSpockTest extends SpockRollbackTestAbst
 		then:
 		with(data) {
 			getReference() == reference
-			getIban() == account.getIBAN()
-			getType() == Type.DEPOSIT.name()
+			getSourceIban() == account.getIBAN()
+			getType() == "DEPOSIT"
 			getValue() == 100.0
 			getTime() != null
 		}

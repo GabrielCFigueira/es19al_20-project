@@ -45,6 +45,7 @@ class Booking {
 	String buyerNif;
 	String buyerIban;
 	String providerNif;
+	String providerIban;
 	String paymentReference;
 	String invoiceReference;
 	boolean cancelledInvoice;

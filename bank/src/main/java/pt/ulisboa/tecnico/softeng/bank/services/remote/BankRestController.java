@@ -22,7 +22,7 @@ public class BankRestController {
 	@RequestMapping(value = "/accounts/{iban}/processPayment", method = RequestMethod.POST)
 	public ResponseEntity<String> processPayment(@RequestBody BankOperationData bankOperationData) {
 		logger.info("processPayment iban:{}, amount:{}, transactionSource:{}, transactionReference:{}",
-				bankOperationData.getIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
+				bankOperationData.getSourceIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
 				bankOperationData.getTransactionReference());
 		try {
 			return new ResponseEntity<String>(BankInterface.processPayment(bankOperationData), HttpStatus.OK);

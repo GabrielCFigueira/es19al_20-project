@@ -43,7 +43,7 @@ public class Account extends Account_Base {
 
 		setBalance(getBalance() + amount);
 
-		return new Operation(Operation.Type.DEPOSIT, this, amount);
+		return new OperationDeposit(this, amount);
 	}
 
 	public Operation withdraw(double amount) {
@@ -53,7 +53,19 @@ public class Account extends Account_Base {
 
 		setBalance(getBalance() - amount);
 
-		return new Operation(Operation.Type.WITHDRAW, this, amount);
+		return new OperationWithdraw(this, amount);
+	}
+
+	public Operation transfer(double amount, Account account) {
+		if (amount <= 0 || amount > getBalance()) {
+			throw new BankException();
+		}
+
+		setBalance(getBalance() - amount);
+
+		account.setBalance(account.getBalance() + amount);
+
+		return new OperationTransfer(this, amount, account.getIBAN());
 	}
 
 }
