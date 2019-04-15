@@ -2,8 +2,6 @@ package pt.ulisboa.tecnico.softeng.bank.domain;
 
 import org.joda.time.DateTime;
 
-import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
-
 public abstract class Operation extends Operation_Base {
 	protected Operation(){ }
 
@@ -29,5 +27,7 @@ public abstract class Operation extends Operation_Base {
 	private void checkArguments(Account account, double value){ }
 
 	public abstract String revert();
+
+	public abstract String getType();
 
 }

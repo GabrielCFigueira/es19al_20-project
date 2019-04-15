@@ -28,4 +28,8 @@ public class OperationDeposit extends OperationDeposit_Base {
         }
     }
 
+    public String getType(){
+        return "DEPOSIT";
+    }
+
 }

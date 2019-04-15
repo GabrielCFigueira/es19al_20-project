@@ -38,4 +38,8 @@ public class OperationTransfer extends OperationTransfer_Base {
             throw new BankException();
         }
     }
+
+    public String getType(){
+        return "TRANSFER";
+    }
 }

@@ -27,4 +27,8 @@ public class OperationWithdraw extends OperationWithdraw_Base {
             throw new BankException();
         }
     }
+
+    public String getType(){
+        return "WITHDRAW";
+    }
 }
