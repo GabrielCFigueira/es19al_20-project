@@ -3,11 +3,13 @@ package pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects;
 import org.joda.time.DateTime;
 
 import pt.ulisboa.tecnico.softeng.bank.domain.Operation;
+import pt.ulisboa.tecnico.softeng.bank.domain.OperationTransfer;
 
 public class BankOperationData {
 	private String reference;
 	private String type;
-	private String iban;
+	private String sourceIban;
+	private String targetIban;
 	private Double value;
 	private DateTime time;
 	private String transactionSource;
@@ -18,8 +20,10 @@ public class BankOperationData {
 
 	public BankOperationData(Operation operation) {
 		this.reference = operation.getReference();
-		this.type = operation.getType().name();
-		this.iban = operation.getAccount().getIBAN();
+		this.type = operation.getType();
+		this.sourceIban = operation.getAccount().getIBAN();
+		if(operation instanceof OperationTransfer)
+			this.targetIban = ((OperationTransfer)operation).getTargetIban();
 		this.value = operation.getValue();
 		this.time = operation.getTime();
 		this.transactionSource = operation.getTransactionSource();
@@ -27,7 +31,7 @@ public class BankOperationData {
 	}
 
 	public BankOperationData(String iban, double value, String transactionSource, String transactionReference) {
-		this.iban = iban;
+		this.sourceIban = iban;
 		this.value = value;
 		this.transactionSource = transactionSource;
 		this.transactionReference = transactionReference;
@@ -49,13 +53,23 @@ public class BankOperationData {
 		this.type = type;
 	}
 
-	public String getIban() {
-		return this.iban;
+	/*--------- New functionality ---------*/
+	public String getSourceIban() {
+		return this.sourceIban;
 	}
 
-	public void setIban(String iban) {
-		this.iban = iban;
+	public void setSourceIban(String iban) {
+		this.sourceIban = iban;
 	}
+
+	public String getTargetIban() {
+		return this.targetIban;
+	}
+
+	public void setTargetIban(String iban) {
+		this.targetIban = iban;
+	}
+	/*-------------------------------------*/
 
 	public Double getValue() {
 		return this.value;
