@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.*;
 
 public class Adventure extends Adventure_Base {
     public enum State {
@@ -18,6 +18,25 @@ public class Adventure extends Adventure_Base {
         this(broker, begin, end, client, margin, false);
     }
 
+    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,boolean reserveRoom) {
+        checkArguments(broker, begin, end, client, margin);
+
+        setID(broker.getCode() + Integer.toString(broker.getCounter()));
+        setBegin(begin);
+        setEnd(end);
+        setMargin(margin);
+        setRentVehicle(rentVehicle);
+        setClient(client);
+
+        broker.addAdventure(this);
+        setBroker(broker);
+
+        setCurrentAmount(0.0);
+        setTime(DateTime.now());
+
+        setState(State.RESERVE_ACTIVITY);
+        setReserveRoom(reserveRoom);
+    }
 
     public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
@@ -36,12 +55,17 @@ public class Adventure extends Adventure_Base {
         setTime(DateTime.now());
 
         setState(State.RESERVE_ACTIVITY);
-        setVehicleType(new VehicleType(this,Type.CAR));
+        new RoomType(this,HotelInterface.Type.SINGLE);
+        setReserveRoom(true);
+        setVehicleType(new VehicleType(this,CarInterface.Type.CAR));
     }
 
     public void delete() {
         setBroker(null);
         setClient(null);
+        if (getRoomType()!= null){
+            getRoomType().delete();
+        }
         if(getVehicleType()!=null)
             getVehicleType().delete();
 
