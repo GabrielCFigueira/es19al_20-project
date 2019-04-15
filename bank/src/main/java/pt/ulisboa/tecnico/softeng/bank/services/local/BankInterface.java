@@ -120,7 +120,7 @@ public class BankInterface {
 		}
 
 		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			Account account = bank.getAccount(bankOperationData.getIban());
+			Account account = bank.getAccount(bankOperationData.getSourceIban());
 			if (account != null) {
 				Operation newOperation = account.withdraw(bankOperationData.getValue());
 				newOperation.setTransactionSource(bankOperationData.getTransactionSource());
