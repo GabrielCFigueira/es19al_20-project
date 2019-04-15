@@ -84,6 +84,7 @@ class ActivityPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
 			booking.getBuyerNif() == BUYER_NIF
 			booking.getIban() == BUYER_IBAN
 			booking.getProviderNif() == NIF
+			booking.getProviderIban() == IBAN
 			booking.getAmount() == AMOUNT
 			booking.getAdventureId() == ADVENTURE_ID
 			booking.getDate() == begin

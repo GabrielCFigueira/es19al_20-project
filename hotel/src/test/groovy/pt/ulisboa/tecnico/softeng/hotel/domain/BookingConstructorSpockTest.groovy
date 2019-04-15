@@ -19,12 +19,10 @@ class BookingConstructorSpockTest extends SpockRollbackTestAbstractClass {
     @Shared
     def IBAN_BUYER = 'IBAN_BUYER'
     def room
-    /*Change to work with new providerIban variable*/
-    def hotel
 
     @Override
     def populate4Test() {
-        hotel = new Hotel('XPTO123', 'Londres', 'NIF', 'IBAN', 20.0, 30.0, new Processor(new BankInterface(), new TaxInterface()))
+        def hotel = new Hotel('XPTO123', 'Londres', 'NIF', 'IBAN', 20.0, 30.0, new Processor(new BankInterface(), new TaxInterface()))
         this.room = new Room(hotel, '01', Room.Type.SINGLE)
     }
 
@@ -38,11 +36,6 @@ class BookingConstructorSpockTest extends SpockRollbackTestAbstractClass {
         booking.getArrival().equals(ARRIVAL)
         booking.getDeparture().equals(DEPARTURE)
         booking.getPrice() == ROOM_PRICE * 2
-
-        /*Change to work with new providerIban variable*/
-        booking.getProviderNif() == hotel.getNif()
-        booking.getProviderIban() == hotel.getIban()
-
     }
 
     def 'arrival and departure in same day'() {

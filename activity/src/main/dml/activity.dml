@@ -54,6 +54,7 @@ class Booking {
 	String reference;
 	String Type;
 	String providerNif;
+	String providerIban;
 	String buyerNif;
 	String iban;
 	int age;
