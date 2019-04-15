@@ -5,8 +5,7 @@ enum pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type as VTyp
 class Broker {
 	String code;
 	String name;
-	String nifAsSeller;
-	String nifAsBuyer;
+	String nif;
 	String iban;
 	int counter;
 }

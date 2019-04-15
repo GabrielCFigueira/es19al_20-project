@@ -20,7 +20,7 @@ public class ReserveActivityState extends ReserveActivityState_Base {
         try {
             RestActivityBookingData result = activityInterface
                     .reserveActivity(new RestActivityBookingData(getAdventure().getBegin(), getAdventure().getEnd(),
-                            getAdventure().getAge(), getAdventure().getBroker().getNifAsBuyer(),
+                            getAdventure().getAge(), getAdventure().getBroker().getNif(),
                             getAdventure().getBroker().getIban(), getAdventure().getID()));
 
             getAdventure().setActivityConfirmation(result.getReference());

@@ -16,7 +16,7 @@ class ReserveActivityStateProcessMethodSpockTest extends SpockRollbackTestAbstra
     @Override
     def populate4Test() {
         activityInterface = Mock(ActivityInterface)
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", NIF_AS_BUYER, BROKER_IBAN,
                             activityInterface, new HotelInterface(), new CarInterface(), new BankInterface(),
                             new TaxInterface())
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)

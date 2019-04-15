@@ -12,7 +12,7 @@ class BulkRoomBookingProcessBookingMethodSpockTest extends SpockRollbackTestAbst
     @Override
     def populate4Test() {
         hotelInterface = Mock(HotelInterface)
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", NIF_AS_BUYER, BROKER_IBAN,
                 new ActivityInterface(), hotelInterface, new CarInterface(), new BankInterface(), new TaxInterface())
         bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, BEGIN, END, NIF_AS_BUYER, IBAN_BUYER)
     }

@@ -27,8 +27,8 @@ public class BrokerController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String brokerSubmit(Model model, @ModelAttribute BrokerData brokerData) {
-		logger.info("brokerSubmit name:{}, code:{}, nifAsSeller:{}, nifAsBuyer:{}, iban:{}", brokerData.getName(),
-				brokerData.getCode(), brokerData.getNifAsSeller(), brokerData.getNifAsBuyer(), brokerData.getIban());
+		logger.info("brokerSubmit name:{}, code:{}, nif:{}, iban:{}", brokerData.getName(),
+				brokerData.getCode(), brokerData.getNif(), brokerData.getIban());
 
 		try {
 			BrokerInterface.createBroker(brokerData);

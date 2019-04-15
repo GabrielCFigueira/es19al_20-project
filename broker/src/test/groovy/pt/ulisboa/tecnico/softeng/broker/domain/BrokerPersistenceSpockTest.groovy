@@ -7,7 +7,7 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
 
     @Override
     def whenCreateInDatabase() {
-        def broker = new Broker(BROKER_CODE, BROKER_NAME, BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        def broker = new Broker(BROKER_CODE, BROKER_NAME, NIF_AS_BUYER, BROKER_IBAN,
                 new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), new TaxInterface())
         def client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         new Adventure(broker, this.BEGIN, this.END, client, MARGIN, true)
@@ -28,8 +28,8 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         broker.getName().equals(BROKER_NAME)
         broker.getAdventureSet().size() == 1
         broker.getRoomBulkBookingSet().size() == 1
-        broker.getNifAsBuyer().equals(NIF_AS_BUYER)
-        broker.getNifAsSeller().equals(BROKER_NIF_AS_SELLER)
+        broker.getNif().equals(NIF_AS_BUYER)
+       // broker.getNifAsSeller().equals(BROKER_NIF_AS_SELLER)
         broker.getIban().equals(BROKER_IBAN)
 
         def adventures = new ArrayList<>(broker.getAdventureSet())
