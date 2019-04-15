@@ -1,4 +1,4 @@
-# Adventure Builder [![Build Status](https://travis-ci.com/tecnico-softeng/prototype-2019.svg?token=xDPBAaQ2epnFt9PRstYY&branch=master)](https://travis-ci.com/tecnico-softeng/prototype-2019)[![codecov](https://codecov.io/gh/tecnico-softeng/prototype-2019/branch/master/graph/badge.svg?token=bB74DA0VHo)](https://codecov.io/gh/tecnico-softeng/prototype-2019)
+# Adventure Builder [![Build Status](https://travis-ci.com/tecnico-softeng/es19al_20-project.svg?token=xDPBAaQ2epnFt9PRstYY&branch=develop)](https://travis-ci.com/tecnico-softeng/es19al_20-project)[![codecov](https://codecov.io/gh/tecnico-softeng/es19al_20-project/branch/develop/graph/badge.svg?token=79nNutGvkY)](https://codecov.io/gh/tecnico-softeng/es19al_20-project)
 
 
 To run tests execute: mvn clean install
@@ -9,12 +9,12 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 Ordene a tabela por ordem crescente da data de término.
 
-|   Issue id | Owner (ist number)      | Owner (github username)                 | PRs id (with link)                                            | Date               |  
+|   Issue id | Owner (ist number)      | Owner (github username)                 | PRs id (with link)                                            | Date               |
 | ---------- | ----------------------- | --------------------------------------- | ------------------------------------------------------------- | ------------------ |
-|  129       |  86461/86431/86451      |  LivioCosta/HenriqueFSilva/JoaoPmargaco | https://github.com/tecnico-softeng/es19al_20-project/pull/136 | 15/04/2019         |
-|            |                         |                                         |                                                               |                    |
-|            |                         |                                         |                                                               |                    |
-|            |                         |                                         |                                                               |                    |
+| 130        | 86451                   | JoaoPmargaco                            | https://github.com/tecnico-softeng/es19al_20-project/pull/135 | 15/04/2019         |
+| 128        | 86499                   | PedroMatias98                           | https://github.com/tecnico-softeng/es19al_20-project/pull/134 | 15/04/2019         |
+| 127        | 86410                   | DiogoFariaFernandes                     | https://github.com/tecnico-softeng/es19al_20-project/pull/133 | 15/04/2019         |
+| 129        | 86461/86431/86451       |  LivioCosta/HenriqueFSilva/JoaoPmargaco | https://github.com/tecnico-softeng/es19al_20-project/pull/136 | 15/04/2019         |
 |            |                         |                                         |                                                               |                    |
 |            |                         |                                         |                                                               |                    |
 |            |                         |                                         |                                                               |                    |

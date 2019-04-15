@@ -1,10 +1,13 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
+enum pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type as Type;
+
+enum pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type as VType;
+
 class Broker {
 	String code;
 	String name;
-	String nifAsSeller;
-	String nifAsBuyer;
+	String nif;
 	String iban;
 	int counter;
 }
@@ -36,6 +39,7 @@ class Adventure {
 	double margin;
     double currentAmount;
     DateTime time;
+	boolean reserveRoom;
 }
 
 relation BrokerHasAdventures {
@@ -127,5 +131,31 @@ relation BulkRoomBookingHasReferences {
 	}
 	Reference playsRole reference {
 		multiplicity 0..*;
+	}
+}
+
+class RoomType {
+	Type type;
+}
+
+relation AdventureHasRoomType {
+	Adventure playsRole adventure {
+		multiplicity 1..1;
+	}
+	RoomType playsRole roomType {
+		multiplicity 0..1;
+	}
+}
+
+class VehicleType {
+	VType type;
+}
+
+relation AdventureHasVehicle {
+	Adventure playsRole adventure {
+		multiplicity 0..1;
+	}
+	VehicleType playsRole vehicleType {
+		multiplicity 0..1;
 	}
 }

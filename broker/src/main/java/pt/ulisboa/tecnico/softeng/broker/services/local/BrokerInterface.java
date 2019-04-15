@@ -31,7 +31,7 @@ public class BrokerInterface {
 
     @Atomic(mode = TxMode.WRITE)
     public static void createBroker(BrokerData brokerData) {
-        new Broker(brokerData.getCode(), brokerData.getName(), brokerData.getNifAsSeller(), brokerData.getNifAsBuyer(),
+        new Broker(brokerData.getCode(), brokerData.getName(), brokerData.getNif(),
                 brokerData.getIban(), new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), new TaxInterface());
     }
 

@@ -5,6 +5,8 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBoo
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException
 import spock.lang.Unroll
+import org.joda.time.LocalDate
+import static pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type
 
 class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
     def broker
@@ -16,7 +18,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
     @Override
     def populate4Test() {
         hotelInterface = Mock(HotelInterface)
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", NIF_AS_BUYER, BROKER_IBAN,
                 new ActivityInterface(), hotelInterface, new CarInterface(), new BankInterface(), new TaxInterface())
         def bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, BEGIN, END, NIF_AS_BUYER, CLIENT_IBAN)
         new Reference(bulk, REF_ONE)
@@ -138,6 +140,63 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adventure.getState().getValue() == Adventure.State.UNDO
         and: 'the room is confirmation is null'
         adventure.getRoomConfirmation() == null
+    }
+
+/*Tests for RoomType refactoring*/
+    def 'reserveAdventureWithDurationOfOneDay'(){
+        given: 'an adventure which includes reserving'
+        def begin = new LocalDate(2016, 12, 19);
+        def end = new LocalDate(2016, 12, 20);
+        def adv = new Adventure(broker, begin, end, client, MARGIN,true,true);
+        def roomType = new RoomType(adv,Type.SINGLE);
+        and: 'in book room state'
+        adv.setState(Adventure.State.BOOK_ROOM)
+        and: 'a successful room booking'
+        hotelInterface.reserveRoom(_) >> bookingData
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the adventure state doesnt progress due to adventures duration'
+        adv.getCurrentAmount() == 80.0
+    }
+
+    def 'reserveAdventureWithFalseReserveRoomFlag'(){
+        given: 'an adventure which includes reserving'
+        def begin = new LocalDate(2016, 12, 19);
+        def end = new LocalDate(2016, 12, 21);
+        def adv = new Adventure(broker, begin, end, client, MARGIN,true,false);
+        def roomType = new RoomType(adv,Type.SINGLE);
+        and: 'in book room state'
+        adv.setState(Adventure.State.BOOK_ROOM)
+        and: 'a successful room booking'
+        hotelInterface.reserveRoom(_) >> bookingData
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the adventure state doesnt progress due to adventures reserveRoom flag'
+        adv.getCurrentAmount() == 80.0
+    }
+
+    def 'sucessfulReserveAdventureWithTrueReserveRoomFlag'(){
+        given: 'an adventure which includes reserving'
+        def begin = new LocalDate(2016, 12, 19);
+        def end = new LocalDate(2016, 12, 21);
+        def adv = new Adventure(broker, begin, end, client, MARGIN,true,true);
+        def roomType = new RoomType(adv,Type.SINGLE);
+        and: 'in book room state'
+        adv.setState(Adventure.State.BOOK_ROOM)
+        and: 'a successful room booking'
+        hotelInterface.reserveRoom(_) >> bookingData
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the adventure state progresses to rent vehicle state'
+        adv.getState().getValue() == Adventure.State.RENT_VEHICLE
+        and: 'the room is confirmed'
+        adv.getRoomConfirmation() == ROOM_CONFIRMATION
     }
 
 }

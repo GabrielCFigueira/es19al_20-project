@@ -24,7 +24,7 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
         hotelInterface = Mock(HotelInterface)
         carInterface = Mock(CarInterface)
 
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", NIF_AS_BUYER, BROKER_IBAN,
                 activityInterface, hotelInterface, carInterface, bankInterface,
                 new TaxInterface())
 

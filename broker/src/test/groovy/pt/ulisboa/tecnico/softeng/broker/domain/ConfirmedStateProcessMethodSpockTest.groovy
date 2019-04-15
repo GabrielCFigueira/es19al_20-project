@@ -31,7 +31,7 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
         taxInterface = Mock(TaxInterface)
 
 
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, BROKER_NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_BUYER, BROKER_IBAN,
                 activityInterface, hotelInterface, carInterface, bankInterface, taxInterface)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
