@@ -9,11 +9,11 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBoo
 import java.util.Objects;
 
 public class Broker extends Broker_Base {
-    private final ActivityInterface activityInterface;
-    private final HotelInterface hotelInterface;
-    private final CarInterface carInterface;
-    private final BankInterface bankInterface;
-    private final TaxInterface taxInterface;
+    private ActivityInterface activityInterface = new ActivityInterface();
+    private HotelInterface hotelInterface = new HotelInterface();
+    private CarInterface carInterface = new CarInterface();
+    private BankInterface bankInterface = new BankInterface();
+    private TaxInterface taxInterface = new TaxInterface();
 
     public Broker(String code, String name, String nifAsSeller, String nifAsBuyer, String iban,
                   ActivityInterface activityInterface, HotelInterface hotelInterface, CarInterface carInterface,

@@ -14,8 +14,8 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.exceptions.TaxExcepti
 public class Processor extends Processor_Base {
 	private static final String TRANSACTION_SOURCE = "ACTIVITY";
 
-	private final BankInterface bankInterface;
-	private final TaxInterface taxInterface;
+	private BankInterface bankInterface = new BankInterface();
+	private TaxInterface taxInterface = new TaxInterface();
 
 	public Processor(BankInterface bankInterface, TaxInterface taxInterface) {
 		this.bankInterface = bankInterface;
