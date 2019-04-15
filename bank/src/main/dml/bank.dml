@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.bank.domain;
 
-enum pt.ulisboa.tecnico.softeng.bank.domain.Operation.Type as OperationType;
-
 class Bank {
 	String name;
 	String code;
@@ -57,12 +55,18 @@ relation ClientHasAccounts {
 class Operation {
 	String reference;
 	String cancellation;
-	OperationType type;
 	double value;
 	DateTime time;
 	String transactionSource;
 	String transactionReference;
 }
+
+class OperationTransfer extends Operation {
+    String targetIban;
+}
+
+class OperationDeposit extends Operation;
+class OperationWithdraw extends Operation;
 
 relation BankHasOperation {
 	Bank playsRole bank {
