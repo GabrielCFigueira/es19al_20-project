@@ -24,7 +24,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
 
     @Override
     def populate4Test() {
-        hotel = new Hotel('XPTO123', 'Lisboa', NIF_HOTEL, 'IBAN', 20.0, 30.0, new Processor(new BankInterface(), new TaxInterface()))
+        hotel = new Hotel('XPTO123', 'Lisboa', NIF_HOTEL, 'IBAN', 20000, 30000, new Processor(new BankInterface(), new TaxInterface()))
         room = new Room(hotel, '01', Type.SINGLE)
         booking = room.reserve(Type.SINGLE, ARRIVAL, DEPARTURE, NIF_BUYER, IBAN_BUYER)
     }
@@ -43,7 +43,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
         data.getRoomType().equals(room.getType().name())
         data.getArrival() == booking.getArrival()
         data.getDeparture() == booking.getDeparture()
-        data.getPrice() == booking.getPrice()
+        (long) data.getPrice() * 1000 == booking.getPrice()
     }
 
     def 'success cancellation'() {
@@ -63,7 +63,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
         data.getRoomType().equals(room.getType().name())
         data.getArrival() == booking.getArrival()
         data.getDeparture() == booking.getDeparture()
-        data.getPrice() == booking.getPrice()
+        (long) data.getPrice() * 1000 == booking.getPrice()
     }
 
     @Unroll('invalid #reference')

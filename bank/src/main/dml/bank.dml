@@ -31,7 +31,7 @@ relation BankHasClients {
 
 class Account {
 	String IBAN;
-	double balance;
+	long balance;
 }
 
 relation BankHasAccounts {
@@ -55,7 +55,7 @@ relation ClientHasAccounts {
 class Operation {
 	String reference;
 	String cancellation;
-	double value;
+	long value;
 	DateTime time;
 	String transactionSource;
 	String transactionReference;

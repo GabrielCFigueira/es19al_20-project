@@ -31,7 +31,7 @@ class ActivityInterfaceGetActivityReservationDataMethodSpockTest extends SpockRo
 
 		provider = new ActivityProvider(CODE,NAME,'NIF','IBAN', processor)
 		def activity = new Activity(provider,'Bush Walking',18,80,3)
-		offer = new ActivityOffer(activity,begin,end,30)
+		offer = new ActivityOffer(activity,begin,end,30000)
 
 		activityInterface = new ActivityInterface()
 	}

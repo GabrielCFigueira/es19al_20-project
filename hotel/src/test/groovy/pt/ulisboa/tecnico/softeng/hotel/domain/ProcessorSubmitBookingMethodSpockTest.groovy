@@ -35,7 +35,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
         taxInterface = Mock(TaxInterface)
         def processor = new Processor(bankInterface, taxInterface)
 
-        hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20.0, 30.0, processor)
+        hotel = new Hotel("XPTO123", "Lisboa", NIF_HOTEL, "IBAN", 20000, 30000, processor)
         room = new Room(hotel, "01", Room.Type.SINGLE)
         booking = new Booking(room, arrival, departure, NIF_BUYER, IBAN_BUYER)
         booking2 = new Booking(room, arrivalTwo, departureTwo, NIF_BUYER, IBAN_BUYER)

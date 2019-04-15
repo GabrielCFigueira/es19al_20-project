@@ -54,7 +54,7 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         adventure.getRentVehicle()
         adventure.getTime() != null
         adventure.getMargin() == MARGIN
-        adventure.getCurrentAmount() == 0.0
+        adventure.getCurrentAmount() == 0
         adventure.getClient().getAdventureSet().size() == 1
 
         adventure.getState().getValue() == Adventure.State.RESERVE_ACTIVITY

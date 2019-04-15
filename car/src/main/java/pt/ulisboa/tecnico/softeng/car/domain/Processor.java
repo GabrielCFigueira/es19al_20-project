@@ -45,7 +45,7 @@ public class Processor extends Processor_Base {
 					try {
 						renting.setPaymentReference(
 								this.bankInterface.processPayment(new RestBankOperationData(renting.getClientIban(),
-										renting.getPrice(), TRANSACTION_SOURCE, renting.getReference())));
+										(double) renting.getPrice() / 1000, TRANSACTION_SOURCE, renting.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(renting);
 						continue;
@@ -53,7 +53,7 @@ public class Processor extends Processor_Base {
 				}
 
 				RestInvoiceData invoiceData = new RestInvoiceData(renting.getVehicle().getRentACar().getNif(),
-						renting.getClientNif(), renting.getType(), renting.getPrice(), renting.getBegin(),
+						renting.getClientNif(), renting.getType(), (double) renting.getPrice() / 1000, renting.getBegin(),
 						renting.getTime());
 				try {
 					renting.setInvoiceReference(this.taxInterface.submitInvoice(invoiceData));

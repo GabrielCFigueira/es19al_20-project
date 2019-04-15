@@ -18,7 +18,7 @@ class ActivityOfferMatchDateMethodSpockTest extends SpockRollbackTestAbstractCla
 		def processor = new Processor(new BankInterface(), new TaxInterface())
 		def provider = new ActivityProvider('XtremX','ExtremeAdventure','NIF','IBAN',processor)
 		def activity = new Activity(provider,'Bush Walking',18,80,3)
-		offer=new ActivityOffer(activity,begin,end,30)
+		offer=new ActivityOffer(activity,begin,end,30000)
 	}
 
 	@Unroll('success: #theb, #thee ==> #res')

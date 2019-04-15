@@ -38,9 +38,11 @@ public class BookRoomState extends BookRoomState_Base {
                     return;
                 }
             }
+        
 
             getAdventure().setRoomConfirmation(bookingData.getReference());
-            getAdventure().incAmountToPay(bookingData.getPrice());
+            getAdventure().incAmountToPay((long) (bookingData.getPrice()*1000));
+
         }
         if (getAdventure().shouldRentVehicle()) {
             getAdventure().setState(State.RENT_VEHICLE);

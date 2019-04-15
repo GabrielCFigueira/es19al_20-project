@@ -15,7 +15,7 @@ class ActivityPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
 	def BUYER_IBAN = 'IBAN2'
 	def BUYER_NIF = 'NIF2'
 	def CAPACITY = 25
-	def AMOUNT = 30.0
+	def AMOUNT = 30000
 	def begin = new LocalDate(2017,04,01)
 	def end = new LocalDate(2017,04,15)
 

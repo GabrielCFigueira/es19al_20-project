@@ -45,7 +45,7 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
         BEGIN | END   | MARGIN | AGE | 'normal'
         BEGIN | END   | MARGIN | 18  | '18 years old'
         BEGIN | END   | MARGIN | 100 | '100 years old'
-        BEGIN | END   | 1      | AGE | 'margin 1'
+        BEGIN | END   | 1000   | AGE | 'margin 1000'
         BEGIN | BEGIN | MARGIN | AGE | 'begin begin'
     }
 
@@ -68,7 +68,7 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
         broker | BEGIN | BEGIN.minusDays(1) | 20  | MARGIN | 'end date before begin date'
         broker | BEGIN | END                | 17  | MARGIN | 'client is 17 years old'
         broker | BEGIN | END                | 20  | 0      | 'margin is zero'
-        broker | BEGIN | END                | 20  | -100   | 'margin is negative'
+        broker | BEGIN | END                | 20  | -100000| 'margin is negative'
         broker | BEGIN | END                | -1  | MARGIN | 'client is null'
     }
 

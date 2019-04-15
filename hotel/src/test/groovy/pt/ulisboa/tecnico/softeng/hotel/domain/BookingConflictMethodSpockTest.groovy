@@ -17,7 +17,7 @@ class BookingConflictMethodSpockTest extends SpockRollbackTestAbstractClass {
 
     @Override
     def populate4Test() {
-        def hotel = new Hotel('XPTO123', 'Londres', NIF_HOTEL, 'IBAN', 20.0, 30.0, new Processor(new BankInterface(), new TaxInterface()))
+        def hotel = new Hotel('XPTO123', 'Londres', NIF_HOTEL, 'IBAN', 20000, 30000, new Processor(new BankInterface(), new TaxInterface()))
         room = new Room(hotel, '01', Room.Type.SINGLE)
     }
 

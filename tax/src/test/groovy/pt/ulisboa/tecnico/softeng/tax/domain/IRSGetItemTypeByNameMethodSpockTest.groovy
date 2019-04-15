@@ -4,7 +4,7 @@ import spock.lang.Unroll
 
 class IRSGetItemTypeByNameMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def FOOD = 'FOOD'
-	def VALUE = 16
+	def VALUE = 16000
 	def irs
 
 	@Override

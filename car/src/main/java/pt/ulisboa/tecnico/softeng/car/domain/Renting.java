@@ -27,7 +27,7 @@ public class Renting extends Renting_Base {
 
 		setVehicle(vehicle);
 	}
-
+	
 	public void delete() {
 		setVehicle(null);
 		setProcessor(null);

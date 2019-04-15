@@ -19,7 +19,7 @@ public class TaxPaymentState extends TaxPaymentState_Base {
         TaxInterface taxInterface = getAdventure().getBroker().getTaxInterface();
         try {
             RestInvoiceData invoiceData = new RestInvoiceData(getAdventure().getBroker().getNif(),
-                    getAdventure().getClient().getNif(), "ADVENTURE", getAdventure().getAmount(),
+                    getAdventure().getClient().getNif(), "ADVENTURE", (double) getAdventure().getAmount() / 1000,
                     getAdventure().getBegin(), getAdventure().getTime());
             getAdventure().setInvoiceReference(taxInterface.submitInvoice(invoiceData));
         } catch (TaxException be) {

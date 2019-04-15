@@ -36,7 +36,7 @@ class RentACarInterfaceCancelRentingMethodSpockTest extends SpockRollbackTestAbs
 
 		rentACar = new RentACar(RENT_A_CAR_NAME, NIF, IBAN, processor)
 
-		car = new Car(PLATE_CAR,10,10,rentACar)
+		car = new Car(PLATE_CAR,10,10000,rentACar)
 
 		renting = car.rent(DRIVING_LICENSE, BEGIN, END, NIF, IBAN_BUYER, ADVENTURE_ID)
 	}

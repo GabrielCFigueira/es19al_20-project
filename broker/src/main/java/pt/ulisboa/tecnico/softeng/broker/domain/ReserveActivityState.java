@@ -24,7 +24,7 @@ public class ReserveActivityState extends ReserveActivityState_Base {
                             getAdventure().getBroker().getIban(), getAdventure().getID()));
 
             getAdventure().setActivityConfirmation(result.getReference());
-            getAdventure().incAmountToPay(result.getPrice());
+            getAdventure().incAmountToPay((long) (result.getPrice() * 1000));
         } catch (ActivityException ae) {
             getAdventure().setState(State.UNDO);
             return;

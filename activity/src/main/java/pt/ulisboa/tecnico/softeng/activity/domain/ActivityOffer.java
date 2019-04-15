@@ -6,7 +6,7 @@ import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 
 public class ActivityOffer extends ActivityOffer_Base {
 
-	public ActivityOffer(Activity activity, LocalDate begin, LocalDate end, double amount) {
+	public ActivityOffer(Activity activity, LocalDate begin, LocalDate end, long amount) {
 		checkArguments(activity, begin, end, amount);
 
 		setBegin(begin);
@@ -27,7 +27,7 @@ public class ActivityOffer extends ActivityOffer_Base {
 		deleteDomainObject();
 	}
 
-	private void checkArguments(Activity activity, LocalDate begin, LocalDate end, double amount) {
+	private void checkArguments(Activity activity, LocalDate begin, LocalDate end, long amount) {
 		if (activity == null || begin == null || end == null) {
 			throw new ActivityException();
 		}
@@ -36,7 +36,7 @@ public class ActivityOffer extends ActivityOffer_Base {
 			throw new ActivityException();
 		}
 
-		if (amount < 1) {
+		if (amount < 1000) {
 			throw new ActivityException();
 		}
 	}
@@ -51,7 +51,7 @@ public class ActivityOffer extends ActivityOffer_Base {
 		return count;
 	}
 
-	public double getPrice() {
+	public long getPrice() {
 		return getAmount();
 	}
 

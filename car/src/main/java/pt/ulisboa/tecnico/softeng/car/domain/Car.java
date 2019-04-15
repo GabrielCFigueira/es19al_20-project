@@ -4,7 +4,7 @@ import org.joda.time.LocalDate;
 
 public class Car extends Car_Base {
 
-	public Car(String plate, int kilometers, double price, RentACar rentACar) {
+	public Car(String plate, int kilometers, long price, RentACar rentACar) {
         checkArguments(plate, kilometers, rentACar);
 
         setPlate(plate.toUpperCase());

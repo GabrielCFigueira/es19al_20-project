@@ -17,7 +17,7 @@ trait SharedDefinitions {
     @Shared def DRIVING_LICENSE = "IMT1234"
     @Shared def AGE = 20
     @Shared def NUMBER_OF_BULK = 20
-    @Shared def MARGIN = 0.3
+    @Shared def MARGIN = 300
     @Shared def CLIENT_IBAN = "BK011234567"
 
     @Shared def REFERENCE = "REFERENCE"

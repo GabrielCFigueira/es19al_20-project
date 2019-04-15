@@ -33,7 +33,7 @@ public class ActivityOfferData {
 		this.begin = offer.getBegin();
 		this.end = offer.getEnd();
 		this.capacity = offer.getCapacity();
-		this.amount = offer.getAmount();
+		this.amount = (double) offer.getAmount() / 1000;
 		this.reservations = offer.getBookingSet().stream().map(b -> new RestActivityBookingData(b))
 				.collect(Collectors.toList());
 	}

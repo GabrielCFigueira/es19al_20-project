@@ -27,7 +27,7 @@ class RentingConstructorSpockTest extends SpockRollbackTestAbstractClass {
 		def processor = new Processor(bankInterface, taxInterface)
 
 		def rentACar = new RentACar(RENT_A_CAR_NAME, NIF,IBAN, processor)
-		car = new Car(PLATE_CAR, 10, 10, rentACar)
+		car = new Car(PLATE_CAR, 10, 10000, rentACar)
 	}
 
 	def 'success'() {

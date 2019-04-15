@@ -35,7 +35,7 @@ class RentACarInterfaceRentMethodSpockTest extends SpockRollbackTestAbstractClas
 
     def 'rent a car has car available'() {
         given: 'given a car available'
-        car = new Car(PLATE_CAR, 10, 10, rentACar)
+        car = new Car(PLATE_CAR, 10, 10000, rentACar)
 
         when: 'when renting the car'
         def reference = rentACarInterface.rent(Car, DRIVING_LICENSE, NIF, IBAN_BUYER, BEGIN, END, ADVENTURE_ID)

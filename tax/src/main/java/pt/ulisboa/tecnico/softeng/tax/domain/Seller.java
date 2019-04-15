@@ -26,12 +26,12 @@ public class Seller extends Seller_Base {
 		super.delete();
 	}
 
-	public double toPay(int year) {
+	public long toPay(int year) {
 		if (year < 1970) {
 			throw new TaxException();
 		}
 
-		double result = 0;
+		long result = 0;
 		for (Invoice invoice : getInvoiceSet()) {
 			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
 				result = result + invoice.getIva();
@@ -54,7 +54,7 @@ public class Seller extends Seller_Base {
 		return null;
 	}
 
-	public Map<Integer, Double> getToPayPerYear() {
+	public Map<Integer, Long> getToPayPerYear() {
 		return getInvoiceSet().stream().map(i -> i.getDate().getYear()).distinct()
 				.collect(Collectors.toMap(y -> y, y -> toPay(y)));
 	}

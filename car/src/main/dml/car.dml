@@ -20,7 +20,7 @@ relation DomainRootHasRentACarApplication {
 class Vehicle {
     String plate;
     Integer kilometers;
-    double price;
+    long price;
 }
 
 class Car extends Vehicle;
@@ -44,7 +44,7 @@ class Renting {
 	int kilometers;
 	String clientNif;
 	String clientIban;
-	double price;
+	long price;
 	String paymentReference;
 	String invoiceReference;
 	LocalDate cancellationDate;

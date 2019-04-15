@@ -24,9 +24,9 @@ class SellerToPayMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 	def 'success'() {
 		given:
-		new Invoice(100, date, itemType, seller, buyer)
-		new Invoice(100, date, itemType, seller, buyer)
-		new Invoice(50, date, itemType, seller, buyer)
+		new Invoice(100000, date, itemType, seller, buyer)
+		new Invoice(100000, date, itemType, seller, buyer)
+		new Invoice(50000, date, itemType, seller, buyer)
 
 		when:
 		def value = seller.toPay(year)
@@ -36,7 +36,7 @@ class SellerToPayMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 		where:
 		year | toPay
-		2018 | 25.0
+		2018 | 25000
 		2015 | 0
 
 	}
@@ -44,13 +44,13 @@ class SellerToPayMethodSpockTest extends SpockRollbackTestAbstractClass {
 	def 'no invoices'() {
 		expect:
 		def value  =  seller.toPay(2018)
-		0.00f  ==  value
+		0  ==  value
 	}
 
 	def 'before 1970'() {
 		when:
-		new Invoice(100, new LocalDate(1969, 02, 13), itemType, seller, buyer)
-		new Invoice(50, new LocalDate(1969, 02, 13), itemType, seller, buyer)
+		new Invoice(100000, new LocalDate(1969, 02, 13), itemType, seller, buyer)
+		new Invoice(50000, new LocalDate(1969, 02, 13), itemType, seller, buyer)
 
 		seller.toPay(1969)
 
@@ -60,27 +60,27 @@ class SellerToPayMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 	def 'equal 1970'() {
 		when:
-		new Invoice(100, new LocalDate(1970, 02, 13), itemType, seller, buyer)
-		new Invoice(50, new LocalDate(1970, 02, 13), itemType, seller, buyer)
+		new Invoice(100000, new LocalDate(1970, 02, 13), itemType, seller, buyer)
+		new Invoice(50000, new LocalDate(1970, 02, 13), itemType, seller, buyer)
 
 		def value = seller.toPay(1970)
 
 		then:
-		15.0  ==  value
+		15000  ==  value
 	}
 
 	def 'ignore cancelled'() {
 		when:
-		new Invoice(100, date, itemType, seller, buyer)
+		new Invoice(100000, date, itemType, seller, buyer)
 		def invoice = new Invoice(100, date, itemType, seller, buyer)
 
-		new Invoice(50, date, itemType, seller, buyer)
+		new Invoice(50000, date, itemType, seller, buyer)
 		invoice.cancel()
 
 		def value = seller.toPay(2018)
 
 		then:
-		15.0  ==  value
+		15000  ==  value
 	}
 
 }

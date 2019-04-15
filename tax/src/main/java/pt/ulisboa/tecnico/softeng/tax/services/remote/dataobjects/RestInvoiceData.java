@@ -42,9 +42,9 @@ public class RestInvoiceData {
 		this.sellerNif = invoice.getSeller().getNif();
 		this.buyerNif = invoice.getBuyer().getNif();
 		this.itemType = invoice.getItemType().getName();
-		this.value = invoice.getValue();
+		this.value = (double) invoice.getValue() / 1000;
 		this.date = invoice.getDate();
-		this.iva = invoice.getIva();
+		this.iva = (double) invoice.getIva() / 1000;
 		this.time = invoice.getTime();
 	}
 

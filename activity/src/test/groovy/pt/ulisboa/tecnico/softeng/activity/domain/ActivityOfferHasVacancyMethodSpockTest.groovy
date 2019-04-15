@@ -27,7 +27,7 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 		def begin = new LocalDate(2016, 12, 19)
 		def end = new LocalDate(2016, 12, 21)
 
-		offer = new ActivityOffer(activity, begin, end, 30)
+		offer = new ActivityOffer(activity, begin, end, 30000)
 	}
 
 
@@ -49,8 +49,10 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 	}
 
 	def 'has cancelled bookings'() {
+		print("\nola\n")
 		given:
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
+		print("\nola\n")
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
 		def booking = new Booking(provider, offer, NIF, IBAN)
 		provider.getProcessor().submitBooking(booking)

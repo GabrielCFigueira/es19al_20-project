@@ -40,7 +40,7 @@ public class RestActivityBookingData {
 		this.age = booking.getAge();
 		this.adventureId = booking.getAdventureId();
 		this.cancellationDate = booking.getCancellationDate();
-		this.price = booking.getAmount();
+		this.price = (double) booking.getAmount() / 1000;
 		this.paymentReference = booking.getPaymentReference();
 		this.invoiceReference = booking.getInvoiceReference();
 	}

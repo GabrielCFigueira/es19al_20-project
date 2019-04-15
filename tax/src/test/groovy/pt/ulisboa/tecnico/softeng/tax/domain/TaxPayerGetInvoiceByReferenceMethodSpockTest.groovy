@@ -8,7 +8,7 @@ class TaxPayerGetInvoiceByReferenceMethodSpockTest extends SpockRollbackTestAbst
 	def SELLER_NIF = '123456789'
 	def BUYER_NIF = '987654321'
 	def FOOD = 'FOOD'
-	def VALUE = 16
+	def VALUE = 16000
 	def TAX = 23
 	def date = new LocalDate(2018,02,13)
 	def seller

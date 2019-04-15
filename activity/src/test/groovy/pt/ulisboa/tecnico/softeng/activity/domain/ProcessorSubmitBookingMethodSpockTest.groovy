@@ -12,7 +12,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
     def CANCEL_PAYMENT_REFERENCE = 'CancelPaymentReference'
     def INVOICE_REFERENCE = 'InvoiceReference'
     def PAYMENT_REFERENCE = 'PaymentReference'
-    def AMOUNT = 30
+    def AMOUNT = 30000
     def IBAN = 'IBAN'
     def NIF = '123456789'
 

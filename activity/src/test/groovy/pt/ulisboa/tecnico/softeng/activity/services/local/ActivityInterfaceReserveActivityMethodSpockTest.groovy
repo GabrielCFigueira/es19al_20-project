@@ -52,7 +52,7 @@ class ActivityInterfaceReserveActivityMethodSpockTest extends SpockRollbackTestA
         def activity = new Activity(provider1, "XtremX", MIN_AGE, MAX_AGE, CAPACITY)
         new ActivityOffer(activity,
                 new LocalDate(2018, 02, 19),
-                new LocalDate(2018, 12, 20), 30)
+                new LocalDate(2018, 12, 20), 30000)
 
         when: 'a reserve is invoked'
         def bookingData = activityInterface.reserveActivity(activityBookingData)

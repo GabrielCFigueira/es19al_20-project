@@ -11,10 +11,13 @@ Ordene a tabela por ordem crescente da data de término.
 
 |   Issue id | Owner (ist number)      | Owner (github username)                 | PRs id (with link)                                            | Date               |
 | ---------- | ----------------------- | --------------------------------------- | ------------------------------------------------------------- | ------------------ |
-| 130        | 86451                   | JoaoPmargaco                            | https://github.com/tecnico-softeng/es19al_20-project/pull/135 | 15/04/2019         |
-| 128        | 86499                   | PedroMatias98                           | https://github.com/tecnico-softeng/es19al_20-project/pull/134 | 15/04/2019         |
+| 126        | 86426/87650             | GabrielCFigueira/DiogoEusebio           | https://github.com/tecnico-softeng/es19al_20-project/pull/132 | 15/04/2019         |
 | 127        | 86410                   | DiogoFariaFernandes                     | https://github.com/tecnico-softeng/es19al_20-project/pull/133 | 15/04/2019         |
+| 128        | 86499                   | PedroMatias98                           | https://github.com/tecnico-softeng/es19al_20-project/pull/134 | 15/04/2019         |
 | 129        | 86461/86431/86451       |  LivioCosta/HenriqueFSilva/JoaoPmargaco | https://github.com/tecnico-softeng/es19al_20-project/pull/136 | 15/04/2019         |
+| 130        | 86451                   | JoaoPmargaco                            | https://github.com/tecnico-softeng/es19al_20-project/pull/135 | 15/04/2019         |
+| 131        | 86426                   | GabrielCFigueira                        | https://github.com/tecnico-softeng/es19al_20-project/pull/139 | 15/04/2019         |
+
 |            |                         |                                         |                                                               |                    |
 |            |                         |                                         |                                                               |                    |
 |            |                         |                                         |                                                               |                    |

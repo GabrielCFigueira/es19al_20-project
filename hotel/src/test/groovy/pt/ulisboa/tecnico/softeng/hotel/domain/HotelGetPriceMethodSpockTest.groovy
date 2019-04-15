@@ -5,8 +5,8 @@ import pt.ulisboa.tecnico.softeng.hotel.services.remote.BankInterface
 import pt.ulisboa.tecnico.softeng.hotel.services.remote.TaxInterface
 
 class HotelGetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
-    def PRICE_SINGLE = 20.0
-    def PRICE_DOUBLE = 30.0
+    def PRICE_SINGLE = 20000
+    def PRICE_DOUBLE = 30000
     def hotel
 
     @Override

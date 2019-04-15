@@ -15,7 +15,7 @@ class TaxInterfaceCancelInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 	def SELLER_NIF = '123456789'
 	def BUYER_NIF = '987654321'
 	def FOOD = 'FOOD'
-	def VALUE = 16
+	def VALUE = 16000
 	def date = new LocalDate(2018,02,13)
 	def irs
 	def reference
@@ -29,7 +29,7 @@ class TaxInterfaceCancelInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 		def buyer = new Buyer(irs,BUYER_NIF,'Manuel Comprado','Anywhere')
 		def itemType = new ItemType(irs,FOOD,VALUE)
 
-		invoice = new Invoice(30.0, date, itemType, seller, buyer)
+		invoice = new Invoice(30000, date, itemType, seller, buyer)
 		reference = invoice.getReference()
 	}
 

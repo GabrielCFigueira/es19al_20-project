@@ -24,7 +24,7 @@ class ActivityProviderFindOfferMethodSpockTest extends SpockRollbackTestAbstract
 		def processor = new Processor(new BankInterface(), new TaxInterface())
 		provider = new ActivityProvider('XtremX','ExtremeAdventure','NIF','IBAN',processor)
 		activity = new Activity(provider,'Bush Walking', MIN_AGE, MAX_AGE, CAPACITY)
-		offer = new ActivityOffer(activity, begin, end,30)
+		offer = new ActivityOffer(activity, begin, end, 30000)
 	}
 
 	@Unroll('success: #theb, #thee, #age')
@@ -99,7 +99,7 @@ class ActivityProviderFindOfferMethodSpockTest extends SpockRollbackTestAbstract
 
 	def 'two match activity offers'() {
 		given:
-		new ActivityOffer(activity, begin, end, 30)
+		new ActivityOffer(activity, begin, end, 30000)
 
 		when:
 		def offers = provider.findOffer( begin, end, AGE)
@@ -110,7 +110,7 @@ class ActivityProviderFindOfferMethodSpockTest extends SpockRollbackTestAbstract
 
 	def 'one match activity offer and one not match'() {
 		given:
-		new ActivityOffer(activity, begin, end.plusDays(1),30)
+		new ActivityOffer(activity, begin, end.plusDays(1),30000)
 
 		when:
 		def offers = provider.findOffer(begin, end, AGE)
@@ -122,7 +122,7 @@ class ActivityProviderFindOfferMethodSpockTest extends SpockRollbackTestAbstract
 	def 'one match activity offer and other no capacity'() {
 		given:
 		def otherActivity = new Activity(provider, 'Bush Walking', MIN_AGE, MAX_AGE, 1)
-		def otherActivityOffer = new ActivityOffer(otherActivity, begin, end, 30)
+		def otherActivityOffer = new ActivityOffer(otherActivity, begin, end, 30000)
 
 		when:
 		new Booking(provider,otherActivityOffer,'123456789','IBAN')

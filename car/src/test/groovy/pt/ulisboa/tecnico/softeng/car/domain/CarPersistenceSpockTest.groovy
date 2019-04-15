@@ -26,8 +26,8 @@ class CarPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
         def processor = new Processor(bankInterface, taxInterface)
 
         def rentACar = new RentACar(NAME1, NIF, IBAN, processor)
-        def car = new Car(PLATE_CAR1, 10, 10, rentACar)
-        def motorcycle = new Motorcycle(PLATE_CAR2, 20, 5, rentACar)
+        def car = new Car(PLATE_CAR1, 10, 10000, rentACar)
+        def motorcycle = new Motorcycle(PLATE_CAR2, 20, 5000, rentACar)
         car.rent(DRIVING_LICENSE, date1, date2, NIF, IBAN_BUYER, ADVENTURE_ID)
     }
 
@@ -48,12 +48,12 @@ class CarPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
             if (vehicle instanceof Car) {
                 assert vehicle.getPlate().equals(PLATE_CAR1.toUpperCase())
                 assert vehicle.getKilometers().intValue() == 10
-                assert vehicle.getPrice() == 10
+                assert vehicle.getPrice() == 10000
             }
             if (vehicle instanceof Motorcycle) {
                 assert vehicle.getPlate().equals(PLATE_CAR2.toUpperCase())
                 assert vehicle.getKilometers().intValue() == 20
-                assert vehicle.getPrice() == 5
+                assert vehicle.getPrice() == 5000
             }
         }
 

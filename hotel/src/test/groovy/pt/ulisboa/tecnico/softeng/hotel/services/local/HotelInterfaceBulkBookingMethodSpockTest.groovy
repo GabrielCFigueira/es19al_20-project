@@ -37,7 +37,7 @@ class HotelInterfaceBulkBookingMethodSpockTest extends SpockRollbackTestAbstract
     def populate4Test() {
         bankInterfaceOne = Mock(BankInterface)
         taxInterfaceOne = Mock(TaxInterface)
-        hotel = new Hotel('XPTO123', 'Paris', 'NIF', 'IBAN', 20.0, 30.0, new Processor(bankInterfaceOne, taxInterfaceOne))
+        hotel = new Hotel('XPTO123', 'Paris', 'NIF', 'IBAN', 20000, 30000, new Processor(bankInterfaceOne, taxInterfaceOne))
         new Room(hotel, '01', Type.DOUBLE)
         new Room(hotel, '02', Type.SINGLE)
         new Room(hotel, '03', Type.DOUBLE)
@@ -45,7 +45,7 @@ class HotelInterfaceBulkBookingMethodSpockTest extends SpockRollbackTestAbstract
 
         bankInterfaceTwo = Mock(BankInterface)
         taxInterfaceTwo = Mock(TaxInterface)
-        hotel = new Hotel('XPTO124', 'Paris', 'NIF2', 'IBAN2', 25.0, 35.0, new Processor(bankInterfaceTwo, taxInterfaceTwo))
+        hotel = new Hotel('XPTO124', 'Paris', 'NIF2', 'IBAN2', 25000, 35000, new Processor(bankInterfaceTwo, taxInterfaceTwo))
         new Room(hotel, '01', Type.DOUBLE)
         new Room(hotel, '02', Type.SINGLE)
         new Room(hotel, '03', Type.DOUBLE)
@@ -90,7 +90,7 @@ class HotelInterfaceBulkBookingMethodSpockTest extends SpockRollbackTestAbstract
         for (def hotel : FenixFramework.getDomainRoot().getHotelSet()) {
             hotel.delete()
         }
-        hotel = new Hotel('XPTO124', 'Paris', 'NIF', 'IBAN', 27.0, 37.0, new Processor(Mock(BankInterface), Mock(TaxInterface)))
+        hotel = new Hotel('XPTO124', 'Paris', 'NIF', 'IBAN', 27000, 37000, new Processor(Mock(BankInterface), Mock(TaxInterface)))
 
         when: 'doing a bulkbooking'
         HotelInterface.bulkBooking(3, ARRIVAL, DEPARTURE, NIF_BUYER, IBAN_BUYER, BULK_ID)

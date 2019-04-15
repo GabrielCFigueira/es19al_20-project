@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class Buyer extends Buyer_Base {
-	private final static int PERCENTAGE = 5;
+	private final static long PERCENTAGE = 5;
 
 	public Buyer(IRS irs, String NIF, String name, String address) {
 		checkArguments(irs, NIF, name, address);
@@ -27,12 +27,12 @@ public class Buyer extends Buyer_Base {
 		super.delete();
 	}
 
-	public double taxReturn(int year) {
+	public long taxReturn(int year) {
 		if (year < 1970) {
 			throw new TaxException();
 		}
 
-		double result = 0;
+		long result = 0;
 		for (Invoice invoice : getInvoiceSet()) {
 			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
 				result = result + invoice.getIva() * PERCENTAGE / 100;
@@ -55,7 +55,7 @@ public class Buyer extends Buyer_Base {
 		return null;
 	}
 
-	public Map<Integer, Double> getTaxReturnPerYear() {
+	public Map<Integer, Long> getTaxReturnPerYear() {
 		return getInvoiceSet().stream().map(i -> i.getDate().getYear()).distinct()
 				.collect(Collectors.toMap(y -> y, y -> taxReturn(y)));
 	}

@@ -8,7 +8,7 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException
 import spock.lang.Unroll
 
 class BankInterfaceGetOperationDataMethodSpockTest extends SpockRollbackTestAbstractClass {
-	def AMOUNT=100
+	def AMOUNT=100000
 	def bank
 	def account
 	def reference

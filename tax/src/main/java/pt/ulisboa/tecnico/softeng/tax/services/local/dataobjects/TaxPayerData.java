@@ -30,10 +30,10 @@ public class TaxPayerData {
 		this.type = taxPayer instanceof Buyer ? Type.BUYER : Type.SELLER;
 		if (taxPayer instanceof Seller) {
 			seller = (Seller) taxPayer;
-			this.taxes = seller.getToPayPerYear();
+			this.taxes = convertToDouble(seller.getToPayPerYear());
 		} else {
 			buyer = (Buyer) taxPayer;
-			this.taxes = buyer.getTaxReturnPerYear();
+			this.taxes = convertToDouble(buyer.getTaxReturnPerYear());
 		}
 	}
 
@@ -75,6 +75,13 @@ public class TaxPayerData {
 
 	public void setTaxes(Map<Integer, Double> taxes) {
 		this.taxes = taxes;
+	}
+
+	private Map<Integer, Double> convertToDouble(Map<Integer, Long> longMap) {
+		Map<Integer, Double> res = new TreeMap<Integer, Double>(); //FIXME treemap?
+		for (int i : longMap.keySet())
+			res.put(i, (double) longMap.get(i) / 1000);
+		return res;
 	}
 
 }

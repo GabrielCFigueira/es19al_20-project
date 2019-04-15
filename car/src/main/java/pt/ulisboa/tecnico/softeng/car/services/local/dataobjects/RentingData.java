@@ -39,7 +39,7 @@ public class RentingData {
 		this.paymentReference = renting.getPaymentReference();
 		this.invoiceReference = renting.getInvoiceReference();
 		this.cancellationReference = renting.getCancellationReference();
-		this.price = renting.getPrice();
+		this.price = (double) renting.getPrice() / 1000;
 		this.adventureId = renting.getAdventureId();
 	}
 

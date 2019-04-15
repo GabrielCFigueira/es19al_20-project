@@ -48,14 +48,14 @@ public class Processor extends Processor_Base {
 					try {
 						booking.setPaymentReference(
 								bankInterface.processPayment(new RestBankOperationData(booking.getBuyerIban(),
-										booking.getPrice(), TRANSACTION_SOURCE, booking.getReference())));
+										(double) booking.getPrice() / 1000, TRANSACTION_SOURCE, booking.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(booking);
 						continue;
 					}
 				}
 				RestInvoiceData invoiceData = new RestInvoiceData(booking.getProviderNif(), booking.getBuyerNif(),
-						Booking.getType(), booking.getPrice(), booking.getArrival(), booking.getTime());
+						Booking.getType(), (double) booking.getPrice() / 1000, booking.getArrival(), booking.getTime());
 				try {
 					booking.setInvoiceReference(taxInterface.submitInvoice(invoiceData));
 				} catch (TaxException | RemoteAccessException ex) {

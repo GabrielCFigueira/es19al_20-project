@@ -38,8 +38,8 @@ class ActivityOfferConstructorMethodSpockTest extends SpockRollbackTestAbstractC
 
 		where:
 		the_beg | the_end | amount
-		begin   | end     | 30
-		begin   | begin   | 30
+		begin   | end     | 30000
+		begin   | begin   | 30000
 	}
 
 	@Unroll('exception: #the_beg, #the_end')
@@ -52,10 +52,10 @@ class ActivityOfferConstructorMethodSpockTest extends SpockRollbackTestAbstractC
 
 		where:
 		act      | the_beg | the_end               | amnt
-		null     | begin   | end                   | 30
-		activity | null    | end                   | 30
-		activity | begin   | null                  | 30
-		activity | begin   | begin.minusDays(1)    | 30
+		null     | begin   | end                   | 30000
+		activity | null    | end                   | 30000
+		activity | begin   | null                  | 30000
+		activity | begin   | begin.minusDays(1)    | 30000
 		activity | begin   | end                   | 0
 	}
 }

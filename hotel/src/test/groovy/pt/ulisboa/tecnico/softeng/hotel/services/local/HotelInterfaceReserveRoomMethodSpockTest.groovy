@@ -25,7 +25,7 @@ class HotelInterfaceReserveRoomMethodSpockTest extends SpockRollbackTestAbstract
 
     @Override
     def populate4Test() {
-        hotel = new Hotel('XPTO123', 'Lisboa', NIF_HOTEL, IBAN_HOTEL, 20.0, 30.0, new Processor(new BankInterface(), new TaxInterface()))
+        hotel = new Hotel('XPTO123', 'Lisboa', NIF_HOTEL, IBAN_HOTEL, 20000, 30000, new Processor(new BankInterface(), new TaxInterface()))
         room = new Room(hotel, '01', Room.Type.SINGLE)
     }
 

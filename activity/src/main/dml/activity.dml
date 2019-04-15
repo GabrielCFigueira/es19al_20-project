@@ -38,7 +38,7 @@ class ActivityOffer {
 	LocalDate begin;
 	LocalDate end;
 	int capacity;
-	double amount;
+	long amount;
 }
 
 relation ActivityHasActivityOffers {
@@ -58,7 +58,7 @@ class Booking {
 	String buyerNif;
 	String iban;
 	int age;
-	double amount;
+	long amount;
 	LocalDate date;
 	String paymentReference;
 	String invoiceReference;

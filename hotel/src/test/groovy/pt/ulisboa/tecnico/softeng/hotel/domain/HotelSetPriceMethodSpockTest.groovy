@@ -8,13 +8,13 @@ import spock.lang.Unroll
 
 class HotelSetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
     @Shared
-    def PRICE = 25.0
+    def PRICE = 25000
 
     def hotel
 
     @Override
     def populate4Test() {
-        hotel = new Hotel('XPTO123', 'Lisboa', 'NIF', 'IBAN', PRICE + 5.0, PRICE + 10.0, new Processor(new BankInterface(), new TaxInterface()))
+        hotel = new Hotel('XPTO123', 'Lisboa', 'NIF', 'IBAN', PRICE + 5000, PRICE + 10000, new Processor(new BankInterface(), new TaxInterface()))
     }
 
     def 'success single'() {
@@ -23,7 +23,7 @@ class HotelSetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
 
         then:
         hotel.getPrice(Room.Type.SINGLE) == PRICE
-        hotel.getPrice(Room.Type.DOUBLE) == PRICE + 10.0
+        hotel.getPrice(Room.Type.DOUBLE) == PRICE + 10000
     }
 
     def 'success double'() {
@@ -32,7 +32,7 @@ class HotelSetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
 
         then:
         hotel.getPrice(Room.Type.DOUBLE) == PRICE
-        hotel.getPrice(Room.Type.SINGLE) == PRICE + 5.0
+        hotel.getPrice(Room.Type.SINGLE) == PRICE + 5000
     }
 
     @Unroll('one of the following argument is invalid: #type | #price')
@@ -45,7 +45,7 @@ class HotelSetPriceMethodSpockTest extends SpockRollbackTestAbstractClass {
 
         where:
         type             | price
-        Room.Type.SINGLE | -1.0
-        Room.Type.DOUBLE | -1.0
+        Room.Type.SINGLE | -1000
+        Room.Type.DOUBLE | -1000
     }
 }

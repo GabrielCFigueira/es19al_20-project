@@ -39,7 +39,7 @@ class ProcessorSubmitRentingMethodSpockTest extends SpockRollbackTestAbstractCla
         def processor = new Processor(bankInterface, taxInterface)
 
         rentACar = new RentACar(RENT_A_CAR_NAME, NIF, IBAN, processor)
-        car = new Car(PLATE_CAR, 10, 10, rentACar)
+        car = new Car(PLATE_CAR, 10, 10000, rentACar)
         rentingOne = new Renting(DRIVING_LICENSE, date0, date1, car, NIF_CUSTOMER, IBAN_CUSTOMER)
         rentingTwo = new Renting(DRIVING_LICENSE, date2, date3, car, NIF_CUSTOMER, IBAN_CUSTOMER)
     }

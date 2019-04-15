@@ -47,7 +47,7 @@ class TaxInterfaceSubmitInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 			getSeller().getNif() == SELLER_NIF
 			getBuyer().getNif() == BUYER_NIF
 			getItemType().getName() == FOOD
-			160.0 == getValue()
+			160000 == getValue()
 			getDate() == date
 		}
 	}

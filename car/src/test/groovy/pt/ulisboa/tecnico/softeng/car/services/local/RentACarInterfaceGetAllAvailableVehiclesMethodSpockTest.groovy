@@ -48,9 +48,9 @@ class RentACarInterfaceGetAllAvailableVehiclesMethodSpockTest extends SpockRollb
 
 	def 'only cars'() {
 		given:
-		def car1 = new Car(PLATE_CAR1,10,10, rentACar1)
+		def car1 = new Car(PLATE_CAR1,10,10000, rentACar1)
 		car1.rent(DRIVING_LICENSE,date1,date2,NIF,IBAN_BUYER,ADVENTURE_ID)
-		def car2 = new Car(PLATE_CAR2,10,10, rentACar2)
+		def car2 = new Car(PLATE_CAR2,10,10000, rentACar2)
 		def motorcycle = new Motorcycle(PLATE_MOTORCYCLE,10,10, rentACar1)
 
 		when:
@@ -64,8 +64,8 @@ class RentACarInterfaceGetAllAvailableVehiclesMethodSpockTest extends SpockRollb
 
 	def 'only available cars'() {
 		given: 'creating two cars, and rentingOne one'
-		def car1 = new Car(PLATE_CAR1, 10, 10, rentACar1)
-		def car2 = new Car(PLATE_CAR2, 10, 10, rentACar2)
+		def car1 = new Car(PLATE_CAR1, 10, 10000, rentACar1)
+		def car2 = new Car(PLATE_CAR2, 10, 10000, rentACar2)
 		car1.rent(DRIVING_LICENSE, date1, date2, NIF, IBAN_BUYER, ADVENTURE_ID)
 
 		when: 'when fetching available cars'
@@ -78,8 +78,8 @@ class RentACarInterfaceGetAllAvailableVehiclesMethodSpockTest extends SpockRollb
 
 	def 'only motorcycles'() {
 		given: 'creating one car, and one motorcycle'
-		def car = new Car(PLATE_CAR1,10,10, rentACar1)
-		def motorcycle = new Motorcycle(PLATE_MOTORCYCLE,10,10, rentACar1)
+		def car = new Car(PLATE_CAR1,10,10000, rentACar1)
+		def motorcycle = new Motorcycle(PLATE_MOTORCYCLE,10,10000, rentACar1)
 
 		when: 'when fetching available motorcycle'
 		def cars = rentACarInterface.getAllAvailableMotorcycles(date3,date4)

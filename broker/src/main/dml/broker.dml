@@ -36,8 +36,8 @@ class Adventure {
 	String invoiceReference;
 	boolean invoiceCancelled;
 	boolean rentVehicle;
-	double margin;
-    double currentAmount;
+	long margin;
+    long currentAmount;
     DateTime time;
 	boolean reserveRoom;
 }

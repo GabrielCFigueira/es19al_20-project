@@ -5,7 +5,7 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class OperationDeposit extends OperationDeposit_Base {
     
-    public OperationDeposit(Account account, double value) {
+    public OperationDeposit(Account account, long value) {
         checkArguments(account, value);
 
         setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
@@ -22,7 +22,7 @@ public class OperationDeposit extends OperationDeposit_Base {
         return getAccount().withdraw(getValue()).getReference();
     }
 
-    private void checkArguments(Account account, double value){
+    private void checkArguments(Account account, long value){
         if (account == null || value <= 0) {
             throw new BankException();
         }

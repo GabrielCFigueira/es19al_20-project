@@ -8,8 +8,8 @@ class Hotel {
 	int counter;
 	String nif;
 	String iban;
-	double priceSingle;
-	double priceDouble;
+	long priceSingle;
+	long priceDouble;
 }
 
 relation DomainRootHasHotels {
@@ -41,7 +41,7 @@ class Booking {
 	LocalDate cancellationDate;
 	LocalDate arrival;
 	LocalDate departure;
-	double price;
+	long price;
 	String buyerNif;
 	String buyerIban;
 	String providerNif;

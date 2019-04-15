@@ -33,7 +33,7 @@ class RentACarInterfaceGetRentingDataMethodSpockTest extends SpockRollbackTestAb
         def processor = new Processor(bankInterface, taxInterface)
 
         def rentACar1 = new RentACar(NAME1, NIF, IBAN, processor)
-        car = new Car(PLATE_CAR1, 10, 10, rentACar1)
+        car = new Car(PLATE_CAR1, 10, 10000, rentACar1)
     }
 
     def 'success'() {

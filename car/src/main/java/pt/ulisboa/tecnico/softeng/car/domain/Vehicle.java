@@ -19,7 +19,7 @@ public abstract class Vehicle extends Vehicle_Base {
 	protected Vehicle() {
 	}
 
-	public Vehicle(String plate, int kilometers, double price, RentACar rentACar) {
+	public Vehicle(String plate, int kilometers, long price, RentACar rentACar) {
 		logger.debug("Vehicle plate: {}", plate);
 		checkArguments(plate, kilometers, rentACar);
 

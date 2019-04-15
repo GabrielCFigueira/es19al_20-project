@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 public abstract class Operation extends Operation_Base {
 	protected Operation(){ }
 
-	public Operation(Account account, double value) {
+	public Operation(Account account, long value) {
 		checkArguments(account, value);
 
 		setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
@@ -24,7 +24,7 @@ public abstract class Operation extends Operation_Base {
 		deleteDomainObject();
 	}
 
-	private void checkArguments(Account account, double value){ }
+	private void checkArguments(Account account, long value){ }
 
 	public abstract String revert();
 

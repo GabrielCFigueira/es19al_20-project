@@ -31,7 +31,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         bookingData.setArrival(BEGIN)
         bookingData.setDeparture(END)
         bookingData.setReference(ROOM_CONFIRMATION)
-        bookingData.setPrice(80.0)
+        bookingData.setPrice(80)
 
         adventure.setState(Adventure.State.BOOK_ROOM)
     }
@@ -158,7 +158,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adv.process()
 
         then: 'the adventure state doesnt progress due to adventures duration'
-        adv.getCurrentAmount() == 80.0
+        adv.getCurrentAmount() == 80000
     }
 
     def 'reserveAdventureWithFalseReserveRoomFlag'(){
@@ -176,7 +176,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adv.process()
 
         then: 'the adventure state doesnt progress due to adventures reserveRoom flag'
-        adv.getCurrentAmount() == 80.0
+        adv.getCurrentAmount() == 80000
     }
 
     def 'sucessfulReserveAdventureWithTrueReserveRoomFlag'(){

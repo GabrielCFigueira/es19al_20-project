@@ -12,7 +12,7 @@ public class AccountData {
 
 	public AccountData(Account account) {
 		this.iban = account.getIBAN();
-		this.balance = account.getBalance();
+		this.balance = (double) account.getBalance() / 1000;
 	}
 
 	public String getIban() {

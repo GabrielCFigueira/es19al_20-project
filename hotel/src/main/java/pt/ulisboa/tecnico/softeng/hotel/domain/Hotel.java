@@ -13,7 +13,7 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 public class Hotel extends Hotel_Base {
 	static final int CODE_SIZE = 7;
 
-	public Hotel(String code, String name, String nif, String iban, double priceSingle, double priceDouble, Processor processor) {
+	public Hotel(String code, String name, String nif, String iban, long priceSingle, long priceDouble, Processor processor) {
 		checkArguments(code, name, nif, iban, priceSingle, priceDouble);
 
 		setCode(code);
@@ -40,8 +40,8 @@ public class Hotel extends Hotel_Base {
 		deleteDomainObject();
 	}
 
-	private void checkArguments(String code, String name, String nif, String iban, double priceSingle,
-			double priceDouble) {
+	private void checkArguments(String code, String name, String nif, String iban, long priceSingle,
+			long priceDouble) {
 		if (code == null || name == null || isEmpty(code) || isEmpty(name) || nif == null || isEmpty(nif)
 				|| iban == null || isEmpty(iban) || priceSingle < 0 || priceDouble < 0) {
 
@@ -88,7 +88,7 @@ public class Hotel extends Hotel_Base {
 		return availableRooms;
 	}
 
-	public double getPrice(Room.Type type) {
+	public long getPrice(Room.Type type) {
 		if (type == null) {
 			throw new HotelException();
 		} else {
@@ -96,7 +96,7 @@ public class Hotel extends Hotel_Base {
 		}
 	}
 
-	public void setPrice(Room.Type type, double price) {
+	public void setPrice(Room.Type type, long price) {
 		if (price < 0 || type == null) {
 			throw new HotelException();
 		} else if (type.equals(Room.Type.SINGLE)) {

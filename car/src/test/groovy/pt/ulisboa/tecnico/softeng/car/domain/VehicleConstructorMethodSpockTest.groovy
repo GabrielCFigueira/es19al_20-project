@@ -27,8 +27,8 @@ class VehicleConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 	def 'success'() {
 		when:
-		def car = new Car(PLATE_CAR, 10, 20, rentACar)
-		def motorcycle = new Motorcycle(PLATE_MOTORCYCLE, 30, 40, rentACar)
+		def car = new Car(PLATE_CAR, 10, 20000, rentACar)
+		def motorcycle = new Motorcycle(PLATE_MOTORCYCLE, 30, 40000, rentACar)
 
 		then:
 		with(rentACar) {
@@ -39,13 +39,13 @@ class VehicleConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 		with(car) {
 			getPlate() == PLATE_CAR
 			getKilometers() == 10
-			getPrice() == 20.0
+			getPrice() == 20000
 		}
 
 		with(motorcycle) {
 			getPlate() == PLATE_MOTORCYCLE
 			getKilometers() == 30
-			getPrice() == 40.0
+			getPrice() == 40000
 		}
 	}
 
@@ -59,20 +59,20 @@ class VehicleConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 		where:
 		plate       | km | price | rac
-		PLATE_CAR   | 0  | 10    | null
-		PLATE_CAR   | -1 | 10    | rentACar
-		'AA-XX-aaa' | 10 | 10    | rentACar
-		'AA-XX-a'   | 10 | 10    | rentACar
-		null        | 10 | 10    | rentACar
-		''          | 10 | 10    | rentACar
+		PLATE_CAR   | 0  | 10000 | null
+		PLATE_CAR   | -1 | 10000 | rentACar
+		'AA-XX-aaa' | 10 | 10000 | rentACar
+		'AA-XX-a'   | 10 | 10000 | rentACar
+		null        | 10 | 10000 | rentACar
+		''          | 10 | 10000 | rentACar
 	}
 
 	def 'duplicated plate'() {
 		given: 'a car'
-		new Car(PLATE_CAR, 0, 10, rentACar)
+		new Car(PLATE_CAR, 0, 10000, rentACar)
 
 		when: 'creating another car with the same plate'
-		new Car(PLATE_CAR, 0, 10, rentACar)
+		new Car(PLATE_CAR, 0, 10000, rentACar)
 
 		then: 'throws an exception'
 		thrown(CarException)
@@ -80,13 +80,13 @@ class VehicleConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 	def 'duplicated plate different rent a car'() {
 		given: 'create a car in rent-a-car'
-		new Car(PLATE_CAR, 0, 10, rentACar)
+		new Car(PLATE_CAR, 0, 10000, rentACar)
 		and: 'another rent a car'
 		def rentACar2 = new RentACar(RENT_A_CAR_NAME + '2', NIF + "1", IBAN,
 				new Processor(new BankInterface(), new TaxInterface()))
 
 		when: 'creating a car in the other rent-a-car with the same plate'
-		new Car(PLATE_CAR, 2, 10, rentACar2)
+		new Car(PLATE_CAR, 2, 10000, rentACar2)
 
 		then: 'throws an exception'
 		thrown(CarException)

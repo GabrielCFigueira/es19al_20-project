@@ -21,7 +21,7 @@ class HotelPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
 
     @Override
     def whenCreateInDatabase() {
-        def hotel = new Hotel(HOTEL_CODE, HOTEL_NAME, HOTEL_NIF, HOTEL_IBAN, 10.0, 20.0, new Processor(new BankInterface(), new TaxInterface()))
+        def hotel = new Hotel(HOTEL_CODE, HOTEL_NAME, HOTEL_NIF, HOTEL_IBAN, 10000, 20000, new Processor(new BankInterface(), new TaxInterface()))
         new Room(hotel, ROOM_NUMBER, Type.DOUBLE)
         hotel.reserveRoom(Type.DOUBLE, arrival, departure, CLIENT_NIF, CLIENT_IBAN, ADVENTURE_ID)
     }
@@ -37,8 +37,8 @@ class HotelPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
         assert hotel.getCode().equals(HOTEL_CODE)
         assert hotel.getIban().equals(HOTEL_IBAN)
         assert hotel.getNif().equals(HOTEL_NIF)
-        assert hotel.getPriceSingle() == 10.0
-        assert hotel.getPriceDouble() == 20.0
+        assert hotel.getPriceSingle() == 10000
+        assert hotel.getPriceDouble() == 20000
         assert hotel.getRoomSet().size() == 1
         Processor processor = hotel.getProcessor();
         assert processor != null
@@ -61,7 +61,7 @@ class HotelPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
         assert booking.getBuyerNif().equals(CLIENT_NIF)
         assert booking.getProviderNif().equals(HOTEL_NIF)
         assert booking.getProviderIban().equals(HOTEL_IBAN)
-        assert booking.getPrice() == 80.0
+        assert booking.getPrice() == 80000
         assert booking.getRoom() == room
         assert booking.getTime() != null
         assert booking.getProcessor() != null

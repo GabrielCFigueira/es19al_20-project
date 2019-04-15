@@ -11,7 +11,7 @@ import spock.lang.Unroll
 class BookingContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 	@Shared def provider
 	@Shared def offer
-	@Shared def AMOUNT = 30
+	@Shared def AMOUNT = 30000
 	@Shared def IBAN = 'IBAN'
 	@Shared def NIF = '123456789'
 
@@ -38,7 +38,7 @@ class BookingContructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 			getReference().length() > ActivityProvider.CODE_SIZE
 			getBuyerNif() == NIF
 			getIban() == IBAN
-			getAmount() == 30
+			getAmount() == 30000
 		}
 		offer.getNumberActiveOfBookings() == 1
 	}
