@@ -4,16 +4,13 @@ import org.joda.time.DateTime;
 
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
-public class Operation extends Operation_Base {
-	public static enum Type {
-		DEPOSIT, WITHDRAW
-	};
+public abstract class Operation extends Operation_Base {
+	protected Operation(){ }
 
-	public Operation(Type type, Account account, double value) {
-		checkArguments(type, account, value);
+	public Operation(Account account, double value) {
+		checkArguments(account, value);
 
 		setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
-		setType(type);
 		setValue(value);
 		setTime(DateTime.now());
 
@@ -29,24 +26,8 @@ public class Operation extends Operation_Base {
 		deleteDomainObject();
 	}
 
-	private void checkArguments(Type type, Account account, double value) {
-		if (type == null || account == null || value <= 0) {
-			throw new BankException();
-		}
-	}
+	private void checkArguments(Account account, double value){ }
 
-	public String revert() {
-		setCancellation(getReference() + "_CANCEL");
-		switch (getType()) {
-		case DEPOSIT:
-			return getAccount().withdraw(getValue()).getReference();
-		case WITHDRAW:
-			return getAccount().deposit(getValue()).getReference();
-		default:
-			throw new BankException();
-
-		}
-
-	}
+	public abstract String revert();
 
 }
