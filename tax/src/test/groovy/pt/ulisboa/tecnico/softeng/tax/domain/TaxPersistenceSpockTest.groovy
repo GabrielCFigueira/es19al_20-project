@@ -14,8 +14,8 @@ class TaxPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
 	@Override
 	def whenCreateInDatabase() {
 		def irs = IRS.getIRSInstance()
-		def seller = new Seller(irs, SELLER_NIF,'José Vendido','Somewhere')
-		def buyer = new Buyer(irs, BUYER_NIF,'Manuel Comprado','Anywhere')
+		def seller = new TaxPayer(irs, SELLER_NIF,'José Vendido','Somewhere')
+		def buyer = new TaxPayer(irs, BUYER_NIF,'Manuel Comprado','Anywhere')
 		def it = new ItemType(irs, FOOD,VALUE)
 		new Invoice(VALUE, date, it, seller, buyer)
 	}
@@ -37,18 +37,11 @@ class TaxPersistenceSpockTest extends SpockPersistenceTestAbstractClass {
 		assert 2 == irs.getTaxPayerSet().size()
 
 		def taxPayer1 = new ArrayList<>(irs.getTaxPayerSet()).get(0)
-		if (taxPayer1 instanceof Seller) {
-			assert SELLER_NIF == taxPayer1.getNif()
-		} else {
-			assert  BUYER_NIF == taxPayer1.getNif()
-		}
+		assert  BUYER_NIF == taxPayer1.getNif()
+
 
 		def taxPayer2 = new ArrayList<>(irs.getTaxPayerSet()).get(1)
-		if (taxPayer2 instanceof Seller) {
-			assert SELLER_NIF == taxPayer2.getNif()
-		} else {
-			assert BUYER_NIF == taxPayer2.getNif()
-		}
+		assert SELLER_NIF == taxPayer2.getNif()
 
 		assert 1 == irs.getItemTypeSet().size()
 

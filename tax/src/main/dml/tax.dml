@@ -19,8 +19,6 @@ class TaxPayer {
     String address;
 }
 
-class Buyer extends TaxPayer;
-class Seller extends TaxPayer;
 
 
 relation IRSHasTaxPayers {
@@ -74,21 +72,21 @@ relation ItemTypeHasInvoices {
 	}
 }
 
-relation SellerHasInvoices {
-    Seller playsRole seller {
+
+relation TaxPayerAsSellerHasInvoices {
+    TaxPayer playsRole seller {
 		multiplicity 1..1;
 	}
-    Invoice playsRole invoice {
+    Invoice playsRole invoiceSeller {
         multiplicity 0..*;
     }
 }
 
-relation BuyerHasInvoices {
-    Buyer playsRole buyer {
+relation TaxPayerAsBuyerHasInvoices {
+    TaxPayer playsRole buyer {
 		multiplicity 1..1;
 	}
-    Invoice playsRole invoice {
+    Invoice playsRole invoiceBuyer {
         multiplicity 0..*;
     }
 }
-

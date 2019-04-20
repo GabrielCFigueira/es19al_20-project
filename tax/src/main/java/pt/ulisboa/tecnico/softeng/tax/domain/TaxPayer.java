@@ -1,14 +1,13 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public abstract class TaxPayer extends TaxPayer_Base {
+public class TaxPayer extends TaxPayer_Base {
+	private final static int PERCENTAGE = 5;
 	protected TaxPayer() {
-		// this is a FenixFramework artifact; if not present, compilation fails.
-		// the empty constructor is used by the base class to materialize objects from
-		// the database, and in this case the classes Seller_Base and Buyer_Base, which
-		// extend this class, have the empty constructor, which need to be present in
-		// their superclass
 		super();
 	}
 
@@ -24,8 +23,43 @@ public abstract class TaxPayer extends TaxPayer_Base {
 
 	public void delete() {
 		setIrs(null);
+		for (Invoice invoice : getInvoiceSellerSet()) {
+			invoice.delete();
+		}
+
+		for (Invoice invoice : getInvoiceBuyerSet()) {
+			invoice.delete();
+		}
 
 		deleteDomainObject();
+	}
+
+	public long toPay(int year) {
+		if (year < 1970) {
+			throw new TaxException();
+		}
+
+		long result = 0;
+		for (Invoice invoice : getInvoiceSellerSet()) {
+			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
+				result = result + invoice.getIva();
+			}
+		}
+		return result;
+	}
+
+	public long taxReturn(int year) {
+		if (year < 1970) {
+			throw new TaxException();
+		}
+
+	  long result = 0;
+		for (Invoice invoice : getInvoiceBuyerSet()) {
+			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
+				result = result + invoice.getIva() * PERCENTAGE / 100;
+			}
+		}
+		return result;
 	}
 
 	protected void checkArguments(IRS irs, String NIF, String name, String address) {
@@ -47,5 +81,34 @@ public abstract class TaxPayer extends TaxPayer_Base {
 
 	}
 
-	public abstract Invoice getInvoiceByReference(String invoiceReference);
+	public Invoice getInvoiceByReference(String invoiceReference) {
+		if (invoiceReference == null || invoiceReference.isEmpty()) {
+			throw new TaxException();
+		}
+
+		for (Invoice invoice : getInvoiceSellerSet()) {
+			if (invoice.getReference().equals(invoiceReference)) {
+				return invoice;
+			}
+		}
+
+		for (Invoice invoice : getInvoiceBuyerSet()) {
+			if (invoice.getReference().equals(invoiceReference)) {
+				return invoice;
+			}
+		}
+
+		return null;
+	}
+
+	public Map<Integer, Long> getToPayPerYear() {
+		return getInvoiceSellerSet().stream().map(i -> i.getDate().getYear()).distinct()
+				.collect(Collectors.toMap(y -> y, y -> toPay(y)));
+	}
+
+	public Map<Integer, Long> getTaxReturnPerYear() {
+		return getInvoiceBuyerSet().stream().map(i -> i.getDate().getYear()).distinct()
+				.collect(Collectors.toMap(y -> y, y -> taxReturn(y)));
+	}
+
 }

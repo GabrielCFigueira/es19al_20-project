@@ -29,7 +29,6 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         broker.getAdventureSet().size() == 1
         broker.getRoomBulkBookingSet().size() == 1
         broker.getNif().equals(NIF_AS_BUYER)
-       // broker.getNifAsSeller().equals(BROKER_NIF_AS_SELLER)
         broker.getIban().equals(BROKER_IBAN)
 
         def adventures = new ArrayList<>(broker.getAdventureSet())

@@ -20,8 +20,8 @@ class TaxPayerGetInvoiceByReferenceMethodSpockTest extends SpockRollbackTestAbst
 	def populate4Test() {
 		def irs = IRS.getIRSInstance()
 
-		seller = new Seller(irs,SELLER_NIF,'José Vendido','Somewhere')
-		buyer = new Buyer(irs,BUYER_NIF,'Manuel Comprado','Anywhere')
+		seller = new TaxPayer(irs,SELLER_NIF,'José Vendido','Somewhere')
+		buyer = new TaxPayer(irs,BUYER_NIF,'Manuel Comprado','Anywhere')
 		itemType = new ItemType(irs,FOOD,TAX)
 		invoice = new Invoice(VALUE,date,itemType,seller,buyer)
 	}

@@ -23,7 +23,7 @@ public class InvoiceController {
 		logger.info("invoiceForm nif:{}", nif);
 		model.addAttribute("invoice", new InvoiceData());
 		model.addAttribute("payer", TaxInterface.getTaxPayerDataByNif(nif));
-		model.addAttribute("invoices", TaxInterface.getInvoiceDataList(nif));
+		model.addAttribute("invoices", TaxInterface.getBuyerInvoiceDataList(nif).addAll(TaxInterface.getSellerInvoiceDataList(nif)));
 		return "invoicesView";
 	}
 
@@ -39,7 +39,7 @@ public class InvoiceController {
 			model.addAttribute("error", "Error: it was not possible to create the invoice");
 			model.addAttribute("invoice", invoiceData);
 			model.addAttribute("payer", TaxInterface.getTaxPayerDataByNif(nif));
-			model.addAttribute("invoices", TaxInterface.getInvoiceDataList(nif));
+			model.addAttribute("invoices", TaxInterface.getBuyerInvoiceDataList(nif).addAll(TaxInterface.getSellerInvoiceDataList(nif)));
 			return "invoicesView";
 		}
 

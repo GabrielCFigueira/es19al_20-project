@@ -12,8 +12,8 @@ class IRSGetTaxPayerByNIFMethodSpockTest extends SpockRollbackTestAbstractClass 
 	def populate4Test() {
 		irs = IRS.getIRSInstance()
 
-		new Seller(irs, SELLER_NIF,'José Vendido','Somewhere')
-		new Buyer(irs, BUYER_NIF,'Manuel Comprado','Anywhere')
+		new TaxPayer(irs, SELLER_NIF,'José Vendido','Somewhere')
+		new TaxPayer(irs, BUYER_NIF,'Manuel Comprado','Anywhere')
 	}
 
 	@Unroll('success #label')

@@ -16,7 +16,6 @@ public class BrokerData {
 	private String name;
 	private String code;
 	private String nif;
-	//private String nifAsBuyer;
 	private String iban;
 	private List<ClientData> clients = new ArrayList<>();
 	private List<AdventureData> adventures = new ArrayList<>();
@@ -68,14 +67,6 @@ public class BrokerData {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	/*public String getNifAsSeller() {
-		return this.nifAsSeller;
-	}
-
-	public void setNifAsSeller(String nifAsSeller) {
-		this.nifAsSeller = nifAsSeller;
-	}*/
 
 	public String getNif() {
 		return this.nif;

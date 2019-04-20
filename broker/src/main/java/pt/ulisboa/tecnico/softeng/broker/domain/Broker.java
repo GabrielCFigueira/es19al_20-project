@@ -59,10 +59,6 @@ public class Broker extends Broker_Base {
             throw new BrokerException();
         }
 
-        /*if (nifAsSeller.equals(nifAsBuyer)) {
-            throw new BrokerException();
-        }*/
-
         for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
             if (broker.getCode().equals(code)) {
                 throw new BrokerException();
