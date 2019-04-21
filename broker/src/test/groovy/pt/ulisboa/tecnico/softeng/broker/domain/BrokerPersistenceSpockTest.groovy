@@ -10,7 +10,7 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         def broker = new Broker(BROKER_CODE, BROKER_NAME, NIF_AS_BUYER, BROKER_IBAN,
                 new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), new TaxInterface())
         def client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        new Adventure(broker, this.BEGIN, this.END, client, MARGIN, true)
+        new Adventure(broker, this.BEGIN, this.END, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
 
         def bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, this.BEGIN, this.END, NIF_AS_BUYER, CLIENT_IBAN)
 
@@ -50,11 +50,12 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         adventure.getRentingCancellation() == null
         adventure.getInvoiceReference() == null
         !adventure.getInvoiceCancelled()
-        adventure.getRentVehicle()
         adventure.getTime() != null
         adventure.getMargin() == MARGIN
         adventure.getCurrentAmount() == 0
         adventure.getClient().getAdventureSet().size() == 1
+        adventure.getVehicleType() == CarInterface.Type.CAR
+        adventure.getRoomType() == HotelInterface.Type.SINGLE
 
         adventure.getState().getValue() == Adventure.State.RESERVE_ACTIVITY
         adventure.getState().getNumOfRemoteErrors() == 0

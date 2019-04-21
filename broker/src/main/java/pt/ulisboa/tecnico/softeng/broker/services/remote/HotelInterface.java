@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class HotelInterface {
     public enum Type {
-        SINGLE, DOUBLE
+        SINGLE, DOUBLE, NONE
     }
 
     private static final Logger logger = LoggerFactory.getLogger(HotelInterface.class);

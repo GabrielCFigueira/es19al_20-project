@@ -24,7 +24,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         new Reference(bulk, REF_ONE)
         new Reference(bulk, REF_TWO)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+        adventure = new Adventure(broker, BEGIN, END, client, MARGIN, CarInterface.Type.NONE, HotelInterface.Type.SINGLE)
 
         bookingData = new RestRoomBookingData()
         bookingData.setRoomType(SINGLE)
@@ -64,7 +64,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'success book room move to renting'() {
         given: 'an adventure wich includes renting'
-        def adv = new Adventure(broker, BEGIN, END, client, MARGIN, true)
+        def adv = new Adventure(broker, BEGIN, END, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'in book room state'
         adv.setState(Adventure.State.BOOK_ROOM)
         and: 'a successful room booking'
@@ -142,13 +142,11 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adventure.getRoomConfirmation() == null
     }
 
-/*Tests for RoomType refactoring*/
     def 'reserveAdventureWithDurationOfOneDay'(){
         given: 'an adventure which includes reserving'
         def begin = new LocalDate(2016, 12, 19);
         def end = new LocalDate(2016, 12, 20);
-        def adv = new Adventure(broker, begin, end, client, MARGIN,true,true);
-        def roomType = new RoomType(adv,Type.SINGLE);
+        def adv = new Adventure(broker, begin, end, client, MARGIN,CarInterface.Type.CAR, HotelInterface.Type.SINGLE);
         and: 'in book room state'
         adv.setState(Adventure.State.BOOK_ROOM)
         and: 'a successful room booking'
@@ -165,8 +163,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         given: 'an adventure which includes reserving'
         def begin = new LocalDate(2016, 12, 19);
         def end = new LocalDate(2016, 12, 21);
-        def adv = new Adventure(broker, begin, end, client, MARGIN,true,false);
-        def roomType = new RoomType(adv,Type.SINGLE);
+        def adv = new Adventure(broker, begin, end, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE);
         and: 'in book room state'
         adv.setState(Adventure.State.BOOK_ROOM)
         and: 'a successful room booking'
@@ -183,8 +180,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         given: 'an adventure which includes reserving'
         def begin = new LocalDate(2016, 12, 19);
         def end = new LocalDate(2016, 12, 21);
-        def adv = new Adventure(broker, begin, end, client, MARGIN,true,true);
-        def roomType = new RoomType(adv,Type.SINGLE);
+        def adv = new Adventure(broker, begin, end, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE);
         and: 'in book room state'
         adv.setState(Adventure.State.BOOK_ROOM)
         and: 'a successful room booking'

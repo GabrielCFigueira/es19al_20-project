@@ -54,7 +54,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
     @Unroll
     def 'success sequence with car #car, hotel #hotel'() {
         given: 'an adventure with rent vehicle as #car'
-        def adventure = new Adventure(broker, ARRIVAL, end, client, MARGIN, car)
+        def adventure = new Adventure(broker, ARRIVAL, end, client, MARGIN, car, hotel)
         and: 'an activity reservation'
         activityInterface.reserveActivity(_) >> bookingActivityData
 
@@ -88,16 +88,16 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
         adventure.getState().getValue() == State.CONFIRMED
 
         where:
-        cycles | car   | hotel | end
-        6      | true  | true  | DEPARTURE
-        5      | false | true  | DEPARTURE
-        5      | true  | false | ARRIVAL
-        4      | false | false | ARRIVAL
+        cycles | car                    | hotel                       | end
+        6      | CarInterface.Type.CAR  | HotelInterface.Type.SINGLE  | DEPARTURE
+        5      | CarInterface.Type.NONE | HotelInterface.Type.SINGLE  | DEPARTURE
+        5      | CarInterface.Type.CAR  | HotelInterface.Type.NONE    | ARRIVAL
+        4      | CarInterface.Type.NONE | HotelInterface.Type.NONE    | ARRIVAL
     }
 
     def 'unsuccess sequence fail activity'() {
         given: 'an adventure'
-        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
+        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'an activity exception'
         activityInterface.reserveActivity(_) >> { throw new ActivityException() }
 
@@ -110,7 +110,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'unsuccess sequence fail hotel'() {
         given: 'an adventure'
-        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN)
+        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN,CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'an activity reservation'
         activityInterface.reserveActivity(_) >> bookingActivityData
         and: 'an hotel exception'
@@ -127,7 +127,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'unsuccess sequence fail car'() {
         given: 'an adventure with rent vehicle'
-        def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, true)
+        def adventure = new Adventure(broker, ARRIVAL, ARRIVAL, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'an activity reservation'
         activityInterface.reserveActivity(_) >> bookingActivityData
         and: 'a car exception'
@@ -144,7 +144,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'unsuccess sequence fail payment'() {
         given: 'an adventure with rent vehicle'
-        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
+        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'an activity reservation'
         activityInterface.reserveActivity(_) >> bookingActivityData
         and: 'a room booking'
@@ -167,7 +167,7 @@ class AdventureSequenceSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'unsuccess sequence fail tax'() {
         given: 'an adventure with rent vehicle'
-        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, true)
+        def adventure = new Adventure(broker, ARRIVAL, DEPARTURE, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
         and: 'an activity reservation'
         activityInterface.reserveActivity(_) >> bookingActivityData
         and: 'a room booking'

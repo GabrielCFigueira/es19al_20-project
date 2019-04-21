@@ -13,61 +13,33 @@ public class Adventure extends Adventure_Base {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
+    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, long margin, CarInterface.Type vehicleType, HotelInterface.Type roomType) {
+        checkArguments(broker, begin, end, client, margin);
+
+        setID(broker.getCode() + Integer.toString(broker.getCounter()));
+        setBegin(begin);
+        setEnd(end);
+        setMargin(margin);
+        setClient(client);
+
+        broker.addAdventure(this);
+        setBroker(broker);
+
+        setCurrentAmount(0);
+        setTime(DateTime.now());
+
+        setState(State.RESERVE_ACTIVITY);
+        setRoomType(roomType);
+        setVehicleType(vehicleType);
+    }
 
     public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, long margin) {
-        this(broker, begin, end, client, margin, false);
-    }
-
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, long margin, boolean rentVehicle,boolean reserveRoom) {
-        checkArguments(broker, begin, end, client, margin);
-
-        setID(broker.getCode() + Integer.toString(broker.getCounter()));
-        setBegin(begin);
-        setEnd(end);
-        setMargin(margin);
-        setRentVehicle(rentVehicle);
-        setClient(client);
-
-        broker.addAdventure(this);
-        setBroker(broker);
-
-        setCurrentAmount(0);
-        setTime(DateTime.now());
-
-        setState(State.RESERVE_ACTIVITY);
-        setReserveRoom(reserveRoom);
-    }
-
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, long margin, boolean rentVehicle) {
-        checkArguments(broker, begin, end, client, margin);
-
-        setID(broker.getCode() + Integer.toString(broker.getCounter()));
-        setBegin(begin);
-        setEnd(end);
-        setMargin(margin);
-        setRentVehicle(rentVehicle);
-        setClient(client);
-
-        broker.addAdventure(this);
-        setBroker(broker);
-
-        setCurrentAmount(0);
-        setTime(DateTime.now());
-
-        setState(State.RESERVE_ACTIVITY);
-        new RoomType(this,HotelInterface.Type.SINGLE);
-        setReserveRoom(true);
-        setVehicleType(new VehicleType(this,CarInterface.Type.CAR));
+        this(broker, begin, end, client, margin, CarInterface.Type.NONE, HotelInterface.Type.NONE);
     }
 
     public void delete() {
         setBroker(null);
         setClient(null);
-        if (getRoomType()!= null){
-            getRoomType().delete();
-        }
-        if(getVehicleType()!=null)
-            getVehicleType().delete();
 
         getState().delete();
 
@@ -107,10 +79,6 @@ public class Adventure extends Adventure_Base {
 
     public long getAmount() {
         return getCurrentAmount() * (1000 + getMargin()) /1000;
-    }
-
-    public boolean shouldRentVehicle() {
-        return getRentVehicle();
     }
 
     public void setState(State state) {

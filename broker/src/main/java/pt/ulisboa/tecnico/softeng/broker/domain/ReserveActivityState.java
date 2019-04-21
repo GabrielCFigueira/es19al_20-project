@@ -5,6 +5,7 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestActivityBookingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 
 public class ReserveActivityState extends ReserveActivityState_Base {
     public static final int MAX_REMOTE_ERRORS = 5;
@@ -37,7 +38,7 @@ public class ReserveActivityState extends ReserveActivityState_Base {
         }
 
         if (getAdventure().getBegin().equals(getAdventure().getEnd())) {
-            if (getAdventure().shouldRentVehicle()) {
+            if (getAdventure().getVehicleType() != CarInterface.Type.NONE) {
                 getAdventure().setState(State.RENT_VEHICLE);
             } else {
                 getAdventure().setState(State.PROCESS_PAYMENT);

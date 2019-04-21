@@ -34,7 +34,7 @@ class ConfirmedStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
         broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_BUYER, BROKER_IBAN,
                 activityInterface, hotelInterface, carInterface, bankInterface, taxInterface)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+        adventure = new Adventure(broker, BEGIN, END, client, MARGIN, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
 
         adventure.setState(Adventure.State.CONFIRMED)
     }

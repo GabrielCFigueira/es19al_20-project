@@ -15,7 +15,7 @@ public class CarInterface {
     private static final String ENDPOINT = "http://localhost:8084";
 
     public static enum Type {
-        CAR, MOTORCYCLE
+        CAR, MOTORCYCLE, NONE
     }
 
     public RestRentingData rentCar(Type vehicleType, String drivingLicense, String nif, String iban,

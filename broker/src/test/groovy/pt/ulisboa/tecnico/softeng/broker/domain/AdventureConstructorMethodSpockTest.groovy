@@ -21,7 +21,7 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
         client = getClientWithAge(age)
 
         when: 'an adventure is created'
-        def adventure = new Adventure(broker, begin, end, client, margin)
+        def adventure = new Adventure(broker, begin, end, client, margin, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
 
         then: 'all its attributes are correctly set'
         adventure.getBroker() == broker
@@ -55,7 +55,7 @@ class AdventureConstructorMethodSpockTest extends SpockRollbackTestAbstractClass
         client = getClientWithAge(age)
 
         when: 'an adventure is created with invalid arguments'
-        new Adventure(brok, begin, end, client, margin)
+        new Adventure(brok, begin, end, client, margin, CarInterface.Type.CAR, HotelInterface.Type.SINGLE)
 
         then: 'an exception is thrown'
         thrown(BrokerException)

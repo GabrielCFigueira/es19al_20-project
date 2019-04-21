@@ -45,7 +45,7 @@ public class AdventureController {
 			@ModelAttribute AdventureData adventureData) {
 		logger.info("adventureSubmit brokerCode:{}, clientNif:{}, begin:{}, end:{},margin:{}, age:{}, vehicle:{}",
 				brokerCode, clientNif, adventureData.getBegin(), adventureData.getEnd(), adventureData.getMargin(),
-				adventureData.getAge(), adventureData.getVehicle());
+				adventureData.getAge(), adventureData.getVehicleType());
 
 		try {
 			BrokerInterface.createAdventure(brokerCode, clientNif, adventureData);

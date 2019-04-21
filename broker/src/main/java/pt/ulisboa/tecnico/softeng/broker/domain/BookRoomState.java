@@ -2,7 +2,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
-import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
@@ -18,13 +18,13 @@ public class BookRoomState extends BookRoomState_Base {
 
     @Override
     public void process() {
-        RestRoomBookingData bookingData = getAdventure().getBroker().getRoomBookingFromBulkBookings(getAdventure().getRoomType().getType().toString(), getAdventure().getBegin(), getAdventure().getEnd());
+        RestRoomBookingData bookingData = getAdventure().getBroker().getRoomBookingFromBulkBookings(getAdventure().getRoomType().toString(), getAdventure().getBegin(), getAdventure().getEnd());
 
-        if (getAdventure().getReserveRoom() != false || Days.daysBetween(getAdventure().getBegin(),getAdventure().getEnd()).getDays() > 1){ //Check if its possible to reserve a room or adventure has duration of one day
+        if (getAdventure().getRoomType() != HotelInterface.Type.NONE || Days.daysBetween(getAdventure().getBegin(),getAdventure().getEnd()).getDays() > 1){ //Check if its possible to reserve a room or adventure has duration of one day
             if (bookingData == null) {
                 HotelInterface hotelInterface = getAdventure().getBroker().getHotelInterface();
                 try {
-                    bookingData = hotelInterface.reserveRoom(new RestRoomBookingData(getAdventure().getRoomType().getType(),
+                    bookingData = hotelInterface.reserveRoom(new RestRoomBookingData(getAdventure().getRoomType(),
                             getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getBroker().getNif(),
                             getAdventure().getBroker().getIban(), getAdventure().getID()));
                 } catch (HotelException he) {
@@ -44,7 +44,7 @@ public class BookRoomState extends BookRoomState_Base {
             getAdventure().incAmountToPay((long) (bookingData.getPrice()*1000));
 
         }
-        if (getAdventure().shouldRentVehicle()) {
+        if (getAdventure().getVehicleType() !=  CarInterface.Type.NONE) {
             getAdventure().setState(State.RENT_VEHICLE);
         } else {
             getAdventure().setState(State.PROCESS_PAYMENT);

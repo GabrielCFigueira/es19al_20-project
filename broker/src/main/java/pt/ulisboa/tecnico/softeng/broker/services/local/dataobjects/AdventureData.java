@@ -4,6 +4,8 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 public class AdventureData {
 	private String id;
@@ -14,7 +16,8 @@ public class AdventureData {
 	private Integer age;
 	private String iban;
 	private Double margin;
-	private Boolean vehicle;
+	private CarInterface.Type vehicleType;
+	private HotelInterface.Type roomType;
 	private Double amount;
 	private Adventure.State state;
 
@@ -35,7 +38,6 @@ public class AdventureData {
 		this.age = adventure.getAge();
 		this.iban = adventure.getIban();
 		this.margin = (double) adventure.getMargin() / 1000;
-		this.vehicle = adventure.getRentVehicle();
 		this.state = adventure.getState().getValue();
 
 		this.paymentConfirmation = adventure.getPaymentConfirmation();
@@ -44,6 +46,9 @@ public class AdventureData {
 		this.roomCancellation = adventure.getRoomCancellation();
 		this.activityConfirmation = adventure.getActivityConfirmation();
 		this.activityCancellation = adventure.getActivityCancellation();
+
+		this.vehicleType = adventure.getVehicleType();
+		this.roomType = adventure.getRoomType();
 	}
 
 	public String getId() {
@@ -158,12 +163,20 @@ public class AdventureData {
 		this.margin = margin;
 	}
 
-	public Boolean getVehicle() {
-		return this.vehicle;
+	public CarInterface.Type getVehicleType() {
+		return this.vehicleType;
 	}
 
-	public void setVehicle(Boolean vehicle) {
-		this.vehicle = vehicle;
+	public void setVehicleType(CarInterface.Type vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public HotelInterface.Type getRoomType() {
+		return this.roomType;
+	}
+
+	public void setRoomType(HotelInterface.Type roomType) {
+		this.roomType = roomType;
 	}
 
 }
