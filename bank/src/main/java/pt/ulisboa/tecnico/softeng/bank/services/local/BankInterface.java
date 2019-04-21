@@ -98,7 +98,7 @@ public class BankInterface {
 			throw new BankException();
 		}
 
-		account.deposit((long) (amount * 1000));
+		account.deposit((long) Math.round(amount * 1000));
 	}
 
 	@Atomic(mode = TxMode.WRITE)
@@ -108,7 +108,7 @@ public class BankInterface {
 			throw new BankException();
 		}
 
-		account.withdraw((long) (amount * 1000));
+		account.withdraw((long) Math.round(amount * 1000));
 	}
 
 	@Atomic(mode = TxMode.WRITE)
@@ -135,7 +135,7 @@ public class BankInterface {
 				if(sourceAccount.getIBAN().equals(targetAccount.getIBAN()))
 					throw new BankException();
 
-				Operation newOperation = sourceAccount.transfer((long) (bankOperationData.getValue() * 1000), targetAccount);
+				Operation newOperation = sourceAccount.transfer((long) Math.round(bankOperationData.getValue() * 1000), targetAccount);
 				newOperation.setTransactionSource(bankOperationData.getTransactionSource());
 				newOperation.setTransactionReference(bankOperationData.getTransactionReference());
 				return newOperation.getReference();

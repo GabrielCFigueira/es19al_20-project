@@ -78,7 +78,11 @@ public class Adventure extends Adventure_Base {
     }
 
     public long getAmount() {
-        return getCurrentAmount() * (1000 + getMargin()) /1000;
+        long res = getCurrentAmount() * (1000 + getMargin());
+        if (res % 1000 >= 500)
+            return res / 1000 + 1;
+        else
+            return res / 1000;
     }
 
     public void setState(State state) {

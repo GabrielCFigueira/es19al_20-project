@@ -35,7 +35,7 @@ public class RentACarInterface {
     public List<VehicleData> getVehicles(final String code) {
         final RentACar rentACar = getRentACar(code);
         return rentACar.getVehicleSet().stream().map(v -> new VehicleData(getVehicleType(v), v.getPlate(),
-                v.getKilometers(), v.getPrice(), toRentACarData(v.getRentACar()))).collect(Collectors.toList());
+                v.getKilometers(), (double) v.getPrice() / 1000, toRentACarData(v.getRentACar()))).collect(Collectors.toList());
     }
 
     @Atomic(mode = Atomic.TxMode.READ)
@@ -117,9 +117,9 @@ public class RentACarInterface {
 
         final RentACar rentACar = getRentACar(code);
         if (vehicleData.getType() == Vehicle.Type.CAR) {
-            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), (long) (vehicleData.getPrice() * 1000), rentACar);
+            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), (long) Math.round(vehicleData.getPrice() * 1000), rentACar);
         } else {
-            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), (long) (vehicleData.getPrice() * 1000), rentACar);
+            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), (long) Math.round(vehicleData.getPrice() * 1000), rentACar);
         }
     }
 
@@ -157,7 +157,7 @@ public class RentACarInterface {
     @Atomic(mode = Atomic.TxMode.READ)
     public VehicleData getVehicleData(final String code, final String plate) {
         final Vehicle v = getVehicle(code, plate);
-        return new VehicleData(getVehicleType(v), v.getPlate(), v.getKilometers(), v.getPrice(), getRentACarData(code));
+        return new VehicleData(getVehicleType(v), v.getPlate(), v.getKilometers(), (double) v.getPrice() / 1000, getRentACarData(code));
     }
 
     private Vehicle getVehicle(final String code, final String plate) {

@@ -54,9 +54,15 @@ public class TaxPayer extends TaxPayer_Base {
 		}
 
 	  long result = 0;
+	  long individualInvoice = 0;
 		for (Invoice invoice : getInvoiceBuyerSet()) {
 			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
-				result = result + invoice.getIva() * PERCENTAGE / 100;
+				individualInvoice = invoice.getIva() * PERCENTAGE;
+				if (individualInvoice % 100 >= 50)
+					individualInvoice /= 100 + 1;
+				else
+					individualInvoice /= 100;
+				result = result + individualInvoice;
 			}
 		}
 		return result;

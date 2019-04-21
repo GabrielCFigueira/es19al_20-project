@@ -66,7 +66,7 @@ public class TaxPayerData {
 	}
 
 	private Map<Integer, Double> convertToDouble(Map<Integer, Long> longMap) {
-		Map<Integer, Double> res = new TreeMap<Integer, Double>(); //FIXME treemap?
+		Map<Integer, Double> res = new TreeMap<Integer, Double>();
 		for (int i : longMap.keySet())
 			res.put(i, (double) longMap.get(i) / 1000);
 		return res;

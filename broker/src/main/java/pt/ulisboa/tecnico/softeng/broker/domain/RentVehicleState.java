@@ -25,7 +25,7 @@ public class RentVehicleState extends RentVehicleState_Base {
                     getAdventure().getBegin(), getAdventure().getEnd(), getAdventure().getID());
 
             getAdventure().setRentingConfirmation(rentingData.getReference());
-            getAdventure().incAmountToPay((long) (rentingData.getPrice() * 1000));
+            getAdventure().incAmountToPay((long) Math.round(rentingData.getPrice() * 1000));
         } catch (CarException ce) {
             getAdventure().setState(State.UNDO);
             return;

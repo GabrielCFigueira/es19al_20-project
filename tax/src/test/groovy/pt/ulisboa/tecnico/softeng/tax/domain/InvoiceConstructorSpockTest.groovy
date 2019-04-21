@@ -59,7 +59,7 @@ class InvoiceConstructorSpockTest extends SpockRollbackTestAbstractClass {
         VALUE  | date                        | true  | 'S'  | null | 'null buyer'
         VALUE  | date                        | false | 'S'  | 'B'  | 'null item'
         0      | date                        | true  | 'S'  | 'B'  | '0 value'
-        -2360  | date                        | true  | 'S'  | 'B'  | 'negative value'
+        -23600 | date                        | true  | 'S'  | 'B'  | 'negative value'
         VALUE  | null                        | true  | 'S'  | 'B'  | 'null date'
         VALUE  | new LocalDate(1969, 12, 31) | true  | 'S'  | 'B'  | 'incorrect date'
     }

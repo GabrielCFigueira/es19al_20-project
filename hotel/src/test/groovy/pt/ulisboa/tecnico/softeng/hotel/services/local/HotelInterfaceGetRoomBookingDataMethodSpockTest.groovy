@@ -43,7 +43,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
         data.getRoomType().equals(room.getType().name())
         data.getArrival() == booking.getArrival()
         data.getDeparture() == booking.getDeparture()
-        (long) data.getPrice() * 1000 == booking.getPrice()
+        (long) Math.round(data.getPrice() * 1000) == booking.getPrice()
     }
 
     def 'success cancellation'() {
@@ -63,7 +63,7 @@ class HotelInterfaceGetRoomBookingDataMethodSpockTest extends SpockRollbackTestA
         data.getRoomType().equals(room.getType().name())
         data.getArrival() == booking.getArrival()
         data.getDeparture() == booking.getDeparture()
-        (long) data.getPrice() * 1000 == booking.getPrice()
+        (long) Math.round(data.getPrice() * 1000) == booking.getPrice()
     }
 
     @Unroll('invalid #reference')

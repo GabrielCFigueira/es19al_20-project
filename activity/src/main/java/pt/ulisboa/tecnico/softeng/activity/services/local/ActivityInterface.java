@@ -82,7 +82,7 @@ public class ActivityInterface {
 		}
 
 		new ActivityOffer(activity, offer.getBegin(), offer.getEnd(),
-				offer.getAmount() != null ? (long) (offer.getAmount() * 1000) : -1);
+				offer.getAmount() != null ? (long) Math.round(offer.getAmount() * 1000) : -1);
 	}
 
 	@Atomic(mode = TxMode.WRITE)

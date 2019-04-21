@@ -98,7 +98,7 @@ public class TaxInterface {
 			seller = taxPayer;
 		}
 
-		new Invoice((long) (invoiceData.getValue() * 1000), invoiceData.getDate(), itemType, seller, buyer);
+		new Invoice((long) Math.round(invoiceData.getValue() * 1000), invoiceData.getDate(), itemType, seller, buyer);
 	}
 
 	@Atomic(mode = TxMode.WRITE)
@@ -112,7 +112,7 @@ public class TaxInterface {
 		TaxPayer buyer = IRS.getIRSInstance().getTaxPayerByNIF(invoiceData.getBuyerNif());
 		ItemType itemType = IRS.getIRSInstance().getItemTypeByName(invoiceData.getItemType());
 
-		invoice = new Invoice((long) (invoiceData.getValue() * 1000), invoiceData.getDate(), itemType, seller, buyer,
+		invoice = new Invoice((long) Math.round(invoiceData.getValue() * 1000), invoiceData.getDate(), itemType, seller, buyer,
 				invoiceData.getTime());
 
 		return invoice.getReference();
@@ -144,7 +144,7 @@ public class TaxInterface {
 				.filter(i -> i.getBuyer().getNif().equals(invoiceData.getBuyerNif())
 					  && i.getSeller().getNif().equals(invoiceData.getSellerNif())
 						&& i.getItemType().getName().equals(invoiceData.getItemType())
-						&& i.getValue() == (long) (invoiceData.getValue() * 1000)
+						&& i.getValue() == (long) Math.round(invoiceData.getValue() * 1000)
 						&& i.getTime().getMillis() == invoiceData.getTime().getMillis())
 				.findFirst();
 

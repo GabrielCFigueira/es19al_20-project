@@ -49,10 +49,8 @@ class ActivityOfferHasVacancyMethodSpockTest extends SpockRollbackTestAbstractCl
 	}
 
 	def 'has cancelled bookings'() {
-		print("\nola\n")
 		given:
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
-		print("\nola\n")
 		provider.getProcessor().submitBooking(new Booking(provider, offer, NIF, IBAN))
 		def booking = new Booking(provider, offer, NIF, IBAN)
 		provider.getProcessor().submitBooking(booking)
