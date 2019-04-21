@@ -114,40 +114,31 @@ public class BankInterface {
 	@Atomic(mode = TxMode.WRITE)
 	public static String processPayment(BankOperationData bankOperationData) {
 
+		if(bankOperationData.getTransactionSource().equals("REVERT"))
+			throw new BankException();
+
 		Operation operation = getOperationBySourceAndReference(bankOperationData.getTransactionSource(),
 				bankOperationData.getTransactionReference());
-		if (operation != null) {
+
+		if (operation != null)
 			return operation.getReference();
-		}
-		Account sourceAccount;
-		for (Bank sourceBank : FenixFramework.getDomainRoot().getBankSet()) {
-			sourceAccount = sourceBank.getAccount(bankOperationData.getSourceIban());
-			if(sourceAccount != null) {
 
-				/*Is a transfer operation*/
-				Account targetAccount;
-				if (!bankOperationData.getTargetIban().isEmpty()) {
-					for (Bank targetBank : FenixFramework.getDomainRoot().getBankSet()) {
-						targetAccount = targetBank.getAccount(bankOperationData.getTargetIban());
-						if (targetAccount != null) {
+		Account sourceAccount = null;
+		Account targetAccount = null;
+		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+			if(sourceAccount == null)
+				sourceAccount = bank.getAccount(bankOperationData.getSourceIban());
+			if(targetAccount == null)
+				targetAccount = bank.getAccount(bankOperationData.getTargetIban());
 
-							/*Trying to transfer to same account*/
-							if(sourceAccount.getIBAN().equals(targetAccount.getIBAN()))
-								throw new BankException();
+			if(sourceAccount != null && targetAccount != null) {
+				if(sourceAccount.getIBAN().equals(targetAccount.getIBAN()))
+					throw new BankException();
 
-							Operation newOperation = sourceAccount.transfer((long) (bankOperationData.getValue() * 1000), targetAccount);
-							newOperation.setTransactionSource(bankOperationData.getTransactionSource());
-							newOperation.setTransactionReference(bankOperationData.getTransactionReference());
-							return newOperation.getReference();
-						}
-					}
-				}
-				/*Is a withdraw operation*/
-				Operation newOperation = sourceAccount.withdraw((long) (bankOperationData.getValue() * 1000));
+				Operation newOperation = sourceAccount.transfer((long) (bankOperationData.getValue() * 1000), targetAccount);
 				newOperation.setTransactionSource(bankOperationData.getTransactionSource());
 				newOperation.setTransactionReference(bankOperationData.getTransactionReference());
 				return newOperation.getReference();
-
 			}
 		}
 		throw new BankException();

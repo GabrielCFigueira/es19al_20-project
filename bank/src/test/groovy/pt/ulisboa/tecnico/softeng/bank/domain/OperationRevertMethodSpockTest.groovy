@@ -83,7 +83,14 @@ class OperationRevertMethodSpockTest extends SpockRollbackTestAbstractClass {
 
 		when: 'when reverting the operation twice'
 		def newReference = operation.revert()
-		def newerReference = operation.revert()
+		def secOperation = this.bank.getOperation(newReference)
+		def transactionRef = secOperation.getTransactionSource()
+
+		then: 'the reference changes to revert'
+		transactionRef == 'REVERT'
+
+		when:
+		def newerReference = secOperation.revert()
 
 		then: 'it should throw an exception'
 		thrown(BankException)

@@ -54,7 +54,6 @@ public class BankOperationData {
 		this.type = type;
 	}
 
-	/*--------- New functionality ---------*/
 	public String getSourceIban() {
 		return this.sourceIban;
 	}
@@ -70,7 +69,6 @@ public class BankOperationData {
 	public void setTargetIban(String iban) {
 		this.targetIban = iban;
 	}
-	/*-------------------------------------*/
 
 	public Double getValue() {
 		return this.value;

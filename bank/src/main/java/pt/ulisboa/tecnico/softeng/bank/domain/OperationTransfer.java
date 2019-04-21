@@ -20,14 +20,16 @@ public class OperationTransfer extends OperationTransfer_Base {
     }
 
     public String revert(){
-        if(getCancellation() != null && getCancellation().contains("_CANCEL"))
+        if(getTransactionSource() != null && getTransactionSource().equals("REVERT"))
             throw new BankException();
 
-        setCancellation(getReference() + "_CANCEL");
         for(Bank bank : FenixFramework.getDomainRoot().getBankSet()){
             Account account = bank.getAccount(this.getTargetIban());
             if (account != null) {
-                return account.transfer(getValue(), this.getAccount()).getReference();
+                Operation revertOperation = account.transfer(getValue(), this.getAccount());
+                revertOperation.setTransactionSource("REVERT");
+                revertOperation.setTransactionReference(getReference());
+                return revertOperation.getReference();
             }
         }
         throw new BankException();

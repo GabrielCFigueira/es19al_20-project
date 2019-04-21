@@ -15,23 +15,23 @@ public class BankInterface {
 
     public String processPayment(RestBankOperationData bankOperationData) {
         logger.info("processPayment iban:{}, amount:{}, transactionSource:{}, transactionReference:{}",
-                bankOperationData.getIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
+                bankOperationData.getSourceIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
                 bankOperationData.getTransactionReference());
 
         RestTemplate restTemplate = new RestTemplate();
         try {
             return restTemplate.postForObject(
-                    ENDPOINT + "/rest/banks/accounts/" + bankOperationData.getIban() + "/processPayment",
+                    ENDPOINT + "/rest/banks/accounts/" + bankOperationData.getSourceIban() + "/processPayment",
                     bankOperationData, String.class);
         } catch (HttpClientErrorException e) {
             logger.info(
                     "processPayment HttpClientErrorException  iban:{}, amount:{}, transactionSource:{}, transactionReference:{}",
-                    bankOperationData.getIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
+                    bankOperationData.getSourceIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
                     bankOperationData.getTransactionReference());
             throw new BankException();
         } catch (Exception e) {
             logger.info("processPayment Exception iban:{}, amount:{}, transactionSource:{}, transactionReference:{}",
-                    bankOperationData.getIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
+                    bankOperationData.getSourceIban(), bankOperationData.getValue(), bankOperationData.getTransactionSource(),
                     bankOperationData.getTransactionReference());
             throw new RemoteAccessException();
         }

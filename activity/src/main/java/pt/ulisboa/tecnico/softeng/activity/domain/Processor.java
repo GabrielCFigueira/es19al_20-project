@@ -44,7 +44,7 @@ public class Processor extends Processor_Base {
 				if (booking.getPaymentReference() == null) {
 					try {
 						booking.setPaymentReference(this.bankInterface.processPayment(new RestBankOperationData(
-								booking.getIban(), (double) booking.getAmount() / 1000, TRANSACTION_SOURCE, booking.getReference())));
+								booking.getIban(), booking.getProviderIban(), (double) booking.getAmount() / 1000, TRANSACTION_SOURCE, booking.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(booking);
 						continue;
