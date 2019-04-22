@@ -14,12 +14,24 @@ import pt.ulisboa.tecnico.softeng.car.services.remote.exceptions.TaxException;
 public class Processor extends Processor_Base {
 	private static final String TRANSACTION_SOURCE = "CAR";
 
-	private BankInterface bankInterface = new BankInterface();
-	private TaxInterface taxInterface = new TaxInterface();
+	private BankInterface bankInterface;
+	private TaxInterface taxInterface;
 
 	public Processor(BankInterface bankInterface, TaxInterface taxInterface) {
 		this.bankInterface = bankInterface;
 		this.taxInterface = taxInterface;
+	}
+
+	private BankInterface getBankInterface() {
+		if (this.bankInterface == null)
+			this.bankInterface = new BankInterface();
+		return this.bankInterface;
+	}
+
+	private TaxInterface getTaxInterface() {
+		if (this.taxInterface == null)
+			this.taxInterface = new TaxInterface();
+		return this.taxInterface;
 	}
 
 	public void delete() {
@@ -44,7 +56,7 @@ public class Processor extends Processor_Base {
 				if (renting.getPaymentReference() == null) {
 					try {
 						renting.setPaymentReference(
-								this.bankInterface.processPayment(new RestBankOperationData(renting.getClientIban(), getRentACar().getIban(),
+								getBankInterface().processPayment(new RestBankOperationData(renting.getClientIban(), getRentACar().getIban(),
 										(double) renting.getPrice() / 1000, TRANSACTION_SOURCE, renting.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(renting);
@@ -56,7 +68,7 @@ public class Processor extends Processor_Base {
 						renting.getClientNif(), renting.getType(), (double) renting.getPrice() / 1000, renting.getBegin(),
 						renting.getTime());
 				try {
-					renting.setInvoiceReference(this.taxInterface.submitInvoice(invoiceData));
+					renting.setInvoiceReference(getTaxInterface().submitInvoice(invoiceData));
 				} catch (TaxException | RemoteAccessException ex) {
 					failedToProcess.add(renting);
 				}
@@ -64,9 +76,9 @@ public class Processor extends Processor_Base {
 				try {
 					if (renting.getCancelledPaymentReference() == null) {
 						renting.setCancelledPaymentReference(
-								this.bankInterface.cancelPayment(renting.getPaymentReference()));
+								getBankInterface().cancelPayment(renting.getPaymentReference()));
 					}
-					this.taxInterface.cancelInvoice(renting.getInvoiceReference());
+					getTaxInterface().cancelInvoice(renting.getInvoiceReference());
 					renting.setCancelledInvoice(true);
 				} catch (BankException | TaxException | RemoteAccessException ex) {
 					failedToProcess.add(renting);

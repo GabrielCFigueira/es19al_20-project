@@ -9,11 +9,11 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBoo
 import java.util.Objects;
 
 public class Broker extends Broker_Base {
-    private ActivityInterface activityInterface = new ActivityInterface();
-    private HotelInterface hotelInterface = new HotelInterface();
-    private CarInterface carInterface = new CarInterface();
-    private BankInterface bankInterface = new BankInterface();
-    private TaxInterface taxInterface = new TaxInterface();
+    private ActivityInterface activityInterface;
+    private HotelInterface hotelInterface;
+    private CarInterface carInterface;
+    private BankInterface bankInterface;
+    private TaxInterface taxInterface;
 
     public Broker(String code, String name, String nif, String iban,
                   ActivityInterface activityInterface, HotelInterface hotelInterface, CarInterface carInterface,
@@ -103,26 +103,34 @@ public class Broker extends Broker_Base {
                 filter(Objects::nonNull).findAny().orElse(null);
     }
 
+    public BankInterface getBankInterface() {
+		if (this.bankInterface == null)
+			this.bankInterface = new BankInterface();
+		return this.bankInterface;
+	}
 
-    public ActivityInterface getActivityInterface() {
-        return this.activityInterface;
-    }
-
-    public HotelInterface getHotelInterface() {
-        return this.hotelInterface;
-    }
+	public TaxInterface getTaxInterface() {
+		if (this.taxInterface == null)
+			this.taxInterface = new TaxInterface();
+		return this.taxInterface;
+	}
 
     public CarInterface getCarInterface() {
-        return this.carInterface;
-    }
+		if (this.carInterface == null)
+			this.carInterface = new CarInterface();
+		return this.carInterface;
+	}
 
-    public BankInterface getBankInterface() {
-        return this.bankInterface;
-    }
+    public HotelInterface getHotelInterface() {
+		if (this.hotelInterface == null)
+			this.hotelInterface = new HotelInterface();
+		return this.hotelInterface;
+	}
 
-
-    public TaxInterface getTaxInterface() {
-        return this.taxInterface;
-    }
+    public ActivityInterface getActivityInterface() {
+		if (this.activityInterface == null)
+			this.activityInterface = new ActivityInterface();
+		return this.activityInterface;
+	}
 
 }

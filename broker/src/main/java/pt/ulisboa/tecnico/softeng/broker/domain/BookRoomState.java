@@ -20,7 +20,7 @@ public class BookRoomState extends BookRoomState_Base {
     public void process() {
         RestRoomBookingData bookingData = getAdventure().getBroker().getRoomBookingFromBulkBookings(getAdventure().getRoomType().toString(), getAdventure().getBegin(), getAdventure().getEnd());
 
-        if (getAdventure().getRoomType() != HotelInterface.Type.NONE || Days.daysBetween(getAdventure().getBegin(),getAdventure().getEnd()).getDays() > 1){ //Check if its possible to reserve a room or adventure has duration of one day
+        if (getAdventure().getRoomType() != HotelInterface.Type.NONE || Days.daysBetween(getAdventure().getBegin(),getAdventure().getEnd()).getDays() > 1){
             if (bookingData == null) {
                 HotelInterface hotelInterface = getAdventure().getBroker().getHotelInterface();
                 try {

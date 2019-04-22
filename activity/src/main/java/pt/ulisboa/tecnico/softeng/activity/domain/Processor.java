@@ -14,12 +14,24 @@ import pt.ulisboa.tecnico.softeng.activity.services.remote.exceptions.TaxExcepti
 public class Processor extends Processor_Base {
 	private static final String TRANSACTION_SOURCE = "ACTIVITY";
 
-	private BankInterface bankInterface = new BankInterface();
-	private TaxInterface taxInterface = new TaxInterface();
+	private BankInterface bankInterface;
+	private TaxInterface taxInterface;
 
 	public Processor(BankInterface bankInterface, TaxInterface taxInterface) {
 		this.bankInterface = bankInterface;
 		this.taxInterface = taxInterface;
+	}
+
+	private BankInterface getBankInterface() {
+		if (this.bankInterface == null)
+			this.bankInterface = new BankInterface();
+		return this.bankInterface;
+	}
+
+	private TaxInterface getTaxInterface() {
+		if (this.taxInterface == null)
+			this.taxInterface = new TaxInterface();
+		return this.taxInterface;
 	}
 
 	public void delete() {
@@ -43,7 +55,7 @@ public class Processor extends Processor_Base {
 			if (!booking.isCancelled()) {
 				if (booking.getPaymentReference() == null) {
 					try {
-						booking.setPaymentReference(this.bankInterface.processPayment(new RestBankOperationData(
+						booking.setPaymentReference(getBankInterface().processPayment(new RestBankOperationData(
 								booking.getIban(), booking.getProviderIban(), (double) booking.getAmount() / 1000, TRANSACTION_SOURCE, booking.getReference())));
 					} catch (BankException | RemoteAccessException ex) {
 						failedToProcess.add(booking);
@@ -53,7 +65,7 @@ public class Processor extends Processor_Base {
 				RestInvoiceData invoiceData = new RestInvoiceData(booking.getProviderNif(), booking.getBuyerNif(),
 						booking.getType(), (double) booking.getAmount() / 1000, booking.getDate(), booking.getTime());
 				try {
-					booking.setInvoiceReference(this.taxInterface.submitInvoice(invoiceData));
+					booking.setInvoiceReference(getTaxInterface().submitInvoice(invoiceData));
 				} catch (TaxException | RemoteAccessException ex) {
 					failedToProcess.add(booking);
 				}
@@ -61,9 +73,9 @@ public class Processor extends Processor_Base {
 				try {
 					if (booking.getCancelledPaymentReference() == null) {
 						booking.setCancelledPaymentReference(
-								this.bankInterface.cancelPayment(booking.getPaymentReference()));
+								getBankInterface().cancelPayment(booking.getPaymentReference()));
 					}
-					this.taxInterface.cancelInvoice(booking.getInvoiceReference());
+					getTaxInterface().cancelInvoice(booking.getInvoiceReference());
 					booking.setCancelledInvoice(true);
 				} catch (BankException | TaxException | RemoteAccessException ex) {
 					failedToProcess.add(booking);
