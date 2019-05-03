@@ -27,7 +27,7 @@
         <label>NIF: </label> <input class="form-control input-sm" type="text"
                                     size="9" th:field="*{nif}"/> <label>IBAN: </label> <input
             class="form-control input-sm" type="text" size="20"
-            th:field="*{sourceIban}"/> <input class="btn btn-primary btn-sm"
+            th:field="*{iban}"/> <input class="btn btn-primary btn-sm"
                                               type="submit" value="Submit"/>
     </form>
     <br/>
@@ -43,7 +43,7 @@
         <tr th:each="booking: ${offer.reservations}">
 
             <td th:text="${booking.nif}">132452623</td>
-            <td th:text="${booking.sourceIban}">PT 89265897 8745982</td>
+            <td th:text="${booking.iban}">PT 89265897 8745982</td>
         </tr>
         </tbody>
     </table>
