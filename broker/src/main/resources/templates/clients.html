@@ -26,7 +26,7 @@
         <label>NIF: </label> <input class="form-control input-sm" type="text"
                                     size="9" th:field="*{nif}"/> <label>IBAN: </label> <input
             class="form-control input-sm" type="text" size="20"
-            th:field="*{sourceIban}"/> <label>Age: </label> <input
+            th:field="*{iban}"/> <label>Age: </label> <input
             class="form-control input-sm" type="number" min="1" max="120"
             th:field="*{age}"/> <label>Driving License: </label> <input
             class="form-control input-sm" type="text"
@@ -48,7 +48,7 @@
         <tbody>
         <tr th:each="client: ${broker.clients}">
             <td th:text="${client.nif}">1234567789</td>
-            <td th:text="${client.sourceIban}">IBAN 7338498 785893</td>
+            <td th:text="${client.iban}">IBAN 7338498 785893</td>
             <td th:text="${client.age}">35</td>
             <td th:text="${client.drivingLicense}">PT678988890</td>
             <td>

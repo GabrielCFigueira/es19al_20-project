@@ -21,7 +21,7 @@
         <label>Code: </label> <input class="form-control input-sm" type="text" size="6" min="6" max="6"
                                      th:field="*{code}"/>
         <label>NIF: </label> <input class="form-control input-sm" type="text" size="9" th:field="*{nif}"/>
-        <label>IBAN: </label> <input class="form-control input-sm" type="text" size="20" th:field="*{sourceIban}"/>
+        <label>IBAN: </label> <input class="form-control input-sm" type="text" size="20" th:field="*{iban}"/>
         <input class="btn btn-primary btn-sm" type="submit" value="Submit"/>
     </form>
     <br/>
@@ -41,7 +41,7 @@
             <td th:text="${provider.name}">Advyyyy++</td>
             <td th:text="${provider.code}">PR11</td>
             <td th:text="${provider.nif}">123456789</td>
-            <td th:text="${provider.sourceIban}">PT kjkh 111111</td>
+            <td th:text="${provider.iban}">PT kjkh 111111</td>
             <td><a
                     th:href="@{/providers/{code}/activities(code=${provider.code})}">Activities</a></td>
         </tr>
