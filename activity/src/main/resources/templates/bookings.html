@@ -24,26 +24,44 @@
     <form class="form-inline"
           th:action="@{/providers/{codeProvider}/activities/{codeActivity}/offers/{externalId}/bookings(codeProvider=${offer.codeProvider},codeActivity=${offer.codeActivity},externalId=${offer.externalId})}"
           th:object="${booking}" method="post">
-        <label>NIF: </label> <input class="form-control input-sm" type="text"
-                                    size="9" th:field="*{nif}"/> <label>IBAN: </label> <input
-            class="form-control input-sm" type="text" size="20"
-            th:field="*{iban}"/> <input class="btn btn-primary btn-sm"
-                                              type="submit" value="Submit"/>
+        <label>NIF: </label> <input class="form-control input-sm" type="text" size="9" th:field="*{nif}"/>
+        <label>IBAN: </label> <input class="form-control input-sm" type="text" size="20" th:field="*{iban}"/>
+        <label>Age: </label> <input class="form-control input-sm" type="number" size="3" th:field="*{age}"/>
+        <input class="btn btn-primary btn-sm" type="submit" value="Submit"/>
     </form>
     <br/>
     <h3>Bookings</h3>
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Reference</th>
             <th>NIF</th>
             <th>IBAN</th>
+            <th>Age</th>
+            <th>DateTime</th>
+            <th>Amount</th>
+            <th>Cancellation</th>
+            <th>CancellationDate</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="booking: ${offer.reservations}">
 
+            <td th:text="${booking.reference}">132452623</td>
             <td th:text="${booking.nif}">132452623</td>
             <td th:text="${booking.iban}">PT 89265897 8745982</td>
+            <td th:text="${booking.age}">20</td>
+            <td th:text="${booking.begin}">12-12-2019</td>
+            <td th:text="${booking.price}/1000">12.2</td>
+            <td th:text="${booking.cancellation}">132452623CANCEL</td>
+            <td th:text="${booking.cancellationDate}">132452623</td>
+            <td th:if="${booking.cancellation == null}">
+                <a th:href="@{/providers/{codeProvider}/activities/{codeActivity}/offers/{externalId}/bookings/{reference}/cancel(codeProvider=${offer.codeProvider},codeActivity=${offer.codeActivity},externalId=${offer.externalId},reference=${booking.reference})}">Cancel</a>
+            </td>
+            <td th:unless="${booking.cancellation == null}">
+                <b><i>Canceled</i></b>
+            </td>
         </tr>
         </tbody>
     </table>

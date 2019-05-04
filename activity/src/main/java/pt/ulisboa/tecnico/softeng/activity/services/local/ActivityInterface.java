@@ -114,7 +114,7 @@ public class ActivityInterface {
 			throw new ActivityException();
 		}
 
-		new Booking(offer.getActivity().getActivityProvider(), offer, bookingData.getNif(), bookingData.getIban());
+		new Booking(offer.getActivity().getActivityProvider(), offer, bookingData.getAge(), bookingData.getNif(), bookingData.getIban());
 	}
 
 	@Atomic(mode = TxMode.WRITE)

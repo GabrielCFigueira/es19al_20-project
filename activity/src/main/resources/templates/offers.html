@@ -31,7 +31,8 @@
 					<th>Begin</th>
  					<th>End</th>
  					<th>Amount</th>
- 					<th>Capacity</th>
+					<th>Capacity</th>
+					<th>Available</th>
  					<th>Bookings</th>
 				</tr>
 			</thead>
@@ -40,7 +41,8 @@
 					<td th:text="${offer.begin}">12/12/2017</td>
  					<td th:text="${offer.end}">15/12/2107</td>
  					<td th:text="${offer.amount}">34.67</td>
- 					<td th:text="${offer.capacity}">20</td>
+					<td th:text="${offer.capacity}">20</td>
+					<td th:text="${offer.capacity - offer.reservations.size() + numOfCancelations}">10</td>
 				 	<td><a
 						th:href="@{/providers/{codeProvider}/activities/{codeActivity}/offers/{externalId}/bookings(codeProvider=${offer.codeProvider},codeActivity=${offer.codeActivity}, externalId=${offer.externalId})}">Bookings</a></td>
 				</tr>

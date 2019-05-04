@@ -45,8 +45,8 @@ public class BookingController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String bookingSubmit(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity,
 			@PathVariable String externalId, @ModelAttribute RestActivityBookingData booking) {
-		logger.info("offerSubmit codeProvider:{}, codeActivity:{}, externalId:{}", codeProvider, codeActivity,
-				externalId);
+		logger.info("offerSubmit codeProvider:{}, codeActivity:{}, externalId:{} NIF:{} IBAN:{} Age:{}", codeProvider, codeActivity,
+				externalId, booking.getNif(), booking.getIban(), booking.getAge());
 
 		try {
 			activityInterface.reserveActivity(externalId, booking);
@@ -59,6 +59,16 @@ public class BookingController {
 
 		return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers/" + externalId
 				+ "/bookings";
+	}
+
+	@RequestMapping(value = "/{reference}/cancel", method = RequestMethod.GET)
+	public String cancelReservation(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity, @PathVariable String externalId, @PathVariable String reference) {
+		logger.info("offerBookingsPage codeProvider:{}, codeActivity:{}, externalId:{} reference:{}", codeProvider, codeActivity,
+				externalId, reference);
+
+		activityInterface.cancelReservation(reference);
+
+		return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers/" + externalId+ "/bookings";
 	}
 
 }

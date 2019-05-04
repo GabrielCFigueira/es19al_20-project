@@ -14,6 +14,7 @@ import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityOfferData;
 import pt.ulisboa.tecnico.softeng.activity.services.local.dataobjects.ActivityProviderData;
+import pt.ulisboa.tecnico.softeng.activity.services.remote.dataobjects.RestActivityBookingData;
 
 @Controller
 @RequestMapping(value = "/providers/{codeProvider}/activities/{codeActivity}/offers")
@@ -36,6 +37,15 @@ public class ActivityOfferController {
 			return "providers";
 		} else {
 			model.addAttribute("offer", new ActivityOfferData());
+
+			int numOfCancelations = 0;
+			for(ActivityOfferData AOD: activityData.getOffers())
+				for(RestActivityBookingData RABD: AOD.getReservations())
+					if(RABD.getCancellation() != null)
+						numOfCancelations += 1;
+			
+			model.addAttribute("numOfCancelations", numOfCancelations);
+
 			model.addAttribute("activity", activityData);
 			return "offers";
 		}
