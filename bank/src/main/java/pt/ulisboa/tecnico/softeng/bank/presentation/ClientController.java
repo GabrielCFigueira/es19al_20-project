@@ -52,4 +52,20 @@ public class ClientController {
 
 		return "redirect:/banks/" + code + "/clients";
 	}
+
+
+	@RequestMapping(value = "/undo/{reference}", method = RequestMethod.GET)
+	public String accountUndo(Model model, @PathVariable String code,
+							  @PathVariable String reference) {
+		logger.info("accountUndo bankCode:{}, reference:{}", code, reference);
+
+		try {
+			BankInterface.cancelPayment(reference);
+			return "redirect:/banks/" + code + "/clients/";
+		} catch (BankException be) {
+			model.addAttribute("error", "Error: it was not possible to execute the operation");
+			return "account";
+		}
+
+	}
 }

@@ -52,19 +52,25 @@
 					<th>Target Iban</th>
 					<th>Value</th>
 					<th>Transaction Source</th>
-					<th>Transaction Reference</th> 
+					<th>Transaction Reference</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="operation: ${bank.operations}">
-					<td th:text="${operation.time}">2017/04/01</td>
+					<td th:text="${#dates.format(operation.time, 'yyyy-MM-dd HH:mm:ss')}">2017/04/01</td>
 					<td th:text="${operation.reference}">BK12344567</td>
 					<td th:text="${operation.type}">DEPOSIT</td>
 					<td th:text="${operation.sourceIban}">123456</td>
 					<td th:text="${operation.targetIban}">654321</td>
-					<td th:text="${operation.value}">200</td>
+					<td th:text="${operation.value/1000000}">200</td>
 					<td th:text="${operation.transactionSource}">me</td>
 					<td th:text="${operation.transactionReference}">1234</td>
+					<td>
+						<span th:if="${operation.transactionSource != 'REVERT' }">
+						<a
+							th:href="@{/banks/{code}/clients/undo/{reference}(code=${bank.code},reference=${operation.reference})}">Undo</a>
+						</span>
+					</td>
 				</tr>
 			</tbody>
 		</table>
