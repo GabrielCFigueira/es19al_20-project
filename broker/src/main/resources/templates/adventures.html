@@ -14,7 +14,7 @@
 <div class="container">
     <h2>
         Adventures of Client NIF(<span th:text="${client.nif}">12343545</span>),
-        IBAN(<span th:text="${client.sourceIban}">12343545</span>),
+        IBAN(<span th:text="${client.iban}">12343545</span>),
         Age(<span th:text="${client.age}">45</span>)
         DrivingLicense(<span th:text="${client.drivingLicense}">12343545</span>)
     </h2>
@@ -30,9 +30,18 @@
                                       type="date" th:field="*{begin}"/> <label>End: </label> <input
             class="form-control input-sm" type="date" th:field="*{end}"/> <label>Margin:
     </label> <input class="form-control input-sm" type="number" step="0.01"
-                    min="0.0" max="1.0" th:field="*{margin}"/> <label>Rent Vehicle:
-    </label> <input class="form-control" type="checkbox" th:field="*{vehicle}"/> <input
-            class="btn btn-primary input-sm" type="submit" value="Submit"/>
+                    min="0.0" max="1.0" th:field="*{margin}"/> 
+    <input class="form-control input-sm" type="hidden" th:value="${client.age}" th:attr="name='age'"/> 
+    <label>Type: </label> 
+            <select class="form-control" th:field="*{rentVehicle}" >
+                   <option th:each="type : ${T(pt.ulisboa.tecnico.softeng.broker.domain.Adventure.RentVehicle).values()}" th:value="${type}" th:text="${type}">
+                   </option>
+            </select> 
+    <label>Room: </label> <select class="form-control" th:field="*{bookRoom}" >
+            <option th:each="bookRoom : ${T(pt.ulisboa.tecnico.softeng.broker.domain.Adventure.BookRoom).values()}" th:value="${bookRoom}" th:text="${bookRoom}">
+            </option>
+        </select>
+    <input class="btn btn-primary input-sm" type="submit" value="Submit"/>
     </form>
     <br/>
     <h3>Adventures</h3>
@@ -61,7 +70,7 @@
             <td th:text="${adventure.begin}">begin</td>
             <td th:text="${adventure.end}">end</td>
             <td th:text="${adventure.margin}">0.15</td>
-            <td th:text="${adventure.vehicle}">true</td>
+            <td th:text="${adventure.rentVehicle}">true</td>
             <td th:text="${adventure.amount}">amount</td>
             <td th:text="${adventure.state}">state</td>
             <td th:text="${adventure.paymentConfirmation}">Payment
