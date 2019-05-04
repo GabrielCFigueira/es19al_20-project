@@ -42,7 +42,7 @@ public class AdventureController {
     @RequestMapping(method = RequestMethod.POST)
     public String submitAdventure(Model model, @PathVariable String brokerCode, @PathVariable String clientNif,
                                   @ModelAttribute AdventureData adventureData) {
-        logger.info("adventureSubmit brokerCode:{}, clientNif:{}, begin:{}, end:{},margin:{}, age:{}, room:{} vehicle:{}",
+        logger.info("adventureSubmit brokerCode:{}, clientNif:{}, begin:{}, end:{},margin:{}, age:{}, room:{} rentVehicle:{}",
                 brokerCode, clientNif, adventureData.getBegin(), adventureData.getEnd(), adventureData.getMargin(),
                 adventureData.getAge(), adventureData.getBookRoom() != null ? adventureData.getBookRoom().name() : "null",
                 adventureData.getRentVehicle() != null ? adventureData.getRentVehicle().name() : "null");

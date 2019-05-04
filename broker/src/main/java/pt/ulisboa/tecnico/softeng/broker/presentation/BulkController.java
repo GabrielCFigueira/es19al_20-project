@@ -1,5 +1,8 @@
 package pt.ulisboa.tecnico.softeng.broker.presentation;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.local.BrokerInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData.CopyDepth;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BulkData;
 
 @Controller
@@ -62,6 +67,39 @@ public class BulkController {
 		BrokerInterface.processBulk(brokerCode, bulkId);
 
 		return "redirect:/brokers/" + brokerCode + "/bulks";
+	}
+
+	@RequestMapping(value = "/{bulkId}/references", method = RequestMethod.GET)
+	public String showReferences(Model model, @PathVariable String brokerCode, @PathVariable String bulkId) {
+		logger.info("showReferences buldkId:{}", bulkId);
+
+		BulkData bulkData = null;
+		BrokerData brokerData = BrokerInterface.getBrokerDataByCode(brokerCode, CopyDepth.BULKS);
+		for(BulkData bd : brokerData.getBulks())
+			if(bd.getId().equals(bulkId)) {
+				bulkData = bd;
+				break;
+			}
+		
+		List<RestRoomBookingData> bookingData = new ArrayList<RestRoomBookingData>();
+		HotelInterface hotelInterface = new HotelInterface();
+		for(String reference : bulkData.getReferences())
+			bookingData.add(hotelInterface.getRoomBookingData(reference));
+			
+		model.addAttribute("listRoomBookingData", bookingData);
+		model.addAttribute("broker", brokerData);
+		model.addAttribute("bulk", bulkData);
+		return "references";
+	}
+
+	@RequestMapping(value = "/{bulkId}/references/{reference}/cancel", method = RequestMethod.GET)
+	public String cancelRoom(Model model, @PathVariable String brokerCode, @PathVariable String bulkId, @PathVariable String reference) {
+		logger.info("cancelRoom reference:{}", reference);
+
+		HotelInterface hotelInterface = new HotelInterface();
+		hotelInterface.cancelBooking(reference);
+			
+		return "redirect:/brokers/" + brokerCode + "/bulks/" + bulkId + "/references/";
 	}
 
 }

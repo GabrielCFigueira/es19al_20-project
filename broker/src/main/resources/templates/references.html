@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Brokers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2>
+        BulkRoomBooking Info
+    </h2>
+    <br/>
+    <a class="btn btn-default pull-right" th:href="@{/brokers/{code}/bulks(code=${broker.code})}">Bulks</a>
+
+    <br/>
+    <h3>List of Brokers</h3>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Cancellation</th>
+            <th>Hotel Name</th>
+            <th>Hotel Code</th>
+            <th>Room Number</th>
+            <th>Book Room</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Cancellation Date</th>
+            <th>Price</th>
+            <th>Payment Reference</th>
+            <th>Invoice Reference</th>
+            <th>Buyer NIF</th>
+            <th>Buyer IBAN</th>
+            <th>Adventure Id</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reference: ${listRoomBookingData}">
+            <td th:text="${reference.reference}"></td>
+            <td th:text="${reference.cancellation}"></td>
+            <td th:text="${reference.hotelName}"></td>
+            <td th:text="${reference.hotelCode}"></td>
+            <td th:text="${reference.roomNumber}"></td>
+            <td th:text="${reference.bookRoom}"></td>
+            <td th:text="${reference.arrival}"></td>
+            <td th:text="${reference.departure}"></td>
+            <td th:text="${reference.cancellationDate}"></td>
+            <td th:text="${reference.price / 1000}"></td>
+            <td th:text="${reference.paymentReference}"></td>
+            <td th:text="${reference.invoiceReference}"></td>
+            <td th:text="${reference.buyerNif}"></td>
+            <td th:text="${reference.buyerIban}"></td>
+            <td th:text="${reference.adventureId}"></td>
+            <td th:if="${reference.cancellation == null}">
+                <a th:href="@{/brokers/{code}/bulks/{id}/references/{reference}/cancel(code=${broker.code},id=${bulk.id},reference=${reference.reference})}">Cancel</a>
+            </td>
+            <td th:unless="${reference.cancellation == null}">
+                <b><i>Canceled</i></b>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
