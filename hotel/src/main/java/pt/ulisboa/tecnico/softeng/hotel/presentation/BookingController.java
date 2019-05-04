@@ -24,7 +24,7 @@ public class BookingController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String bookingForm(Model model, @PathVariable String code, @PathVariable String number) {
-		logger.info("bookingForm hotelCode:{}, roomNumber", code, number);
+		logger.info("bookingForm hotelCode:{}, roomNumber:{}", code, number);
 
 		RoomData roomData = hotelInterface.getRoomDataByNumber(code, number);
 
@@ -41,19 +41,39 @@ public class BookingController {
 		}
 	}
 
+	@RequestMapping(value= "/{reference}/Cancel", method = RequestMethod.GET)
+	public String bookingCancel(Model model, @PathVariable String code, @PathVariable String number, @PathVariable String reference) {
+		logger.info("bookingCancel hotelCode:{}, roomNumber:{}, reference:{}", code, number, reference);
+
+		try {
+
+			hotelInterface.cancelBooking(reference);
+			model.addAttribute("booking",hotelInterface.getRoomBookingData(reference));
+		} catch (HotelException he) {
+			model.addAttribute("error", "Error: it was not possible to cancel the booking");
+			/*
+			model.addAttribute("booking", booking);
+			model.addAttribute("room", hotelInterface.getRoomDataByNumber(code, number));
+			*/
+			return "bookings";
+		}
+
+		return "redirect:/hotels/" + code + "/rooms/" + number + "/bookings";
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public String bookingSubmit(Model model, @PathVariable String code, @PathVariable String number,
 			@ModelAttribute RoomBookingData booking) {
 		logger.info("bookingSubmit hotelCode:{}, roomNumber:{}, arrival:{}, departure:{}, nif:{}, iban:{}", code,
 				number, booking.getArrival(), booking.getDeparture(), booking.getBuyerNif(), booking.getBuyerIban());
-
 		try {
 
 			hotelInterface.createBooking(code, number, booking);
-		} catch (HotelException be) {
+		} catch (HotelException he) {
 			model.addAttribute("error", "Error: it was not possible to book the room");
 			model.addAttribute("booking", booking);
 			model.addAttribute("room", hotelInterface.getRoomDataByNumber(code, number));
+			model.addAttribute("");
 			return "bookings";
 		}
 
