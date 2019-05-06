@@ -26,7 +26,7 @@ public class TaxPayerController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String taxPayerSubmit(Model model, @ModelAttribute TaxPayerData taxPayerData) {
-        logger.info("taxPayerSubmit name:{}, address:{}, nif:{}, type:{}", taxPayerData.getName(),
+        logger.info("taxPayerSubmit name:{}, address:{}, nif:{}", taxPayerData.getName(),
                 taxPayerData.getAddress(), taxPayerData.getNif());
 
         try {

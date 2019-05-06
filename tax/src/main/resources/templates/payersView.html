@@ -20,12 +20,8 @@
 				type="text" th:field="*{name}" /> <label>Address: </label> <input
 				class="form-control input-sm" type="text" th:field="*{address}" />
 			<label>NIF: </label> <input class="form-control input-sm" type="text"
-				size="9" th:field="*{nif}" /> <label>Type: </label> <select
-				class="form-control" th:field="*{type}">
-				<option
-					th:each="type : ${T(pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData.Type).values()}"
-					th:value="${type}" th:text="${type}"></option>
-			</select> <input class="btn btn-primary btn-sm" type="submit" value="Submit" />
+				size="9" th:field="*{nif}" />
+			<input class="btn btn-primary btn-sm" type="submit" value="Submit" />
 		</form>
 		<br />
 		<h3>List of Tax Payers</h3>
@@ -35,8 +31,8 @@
 					<th>Name</th>
 					<th>Address</th>
 					<th>NIF</th>
-					<th>Type</th>
 					<th>Taxes</th>
+					<th>Returns</th>
 					<th>Invoices</th>
 				</tr>
 			</thead>
@@ -45,22 +41,34 @@
 					<td th:text="${payer.name}">João</td>
 					<td th:text="${payer.address}">Av</td>
 					<td th:text="${payer.nif}">1234556789</td>
-					<td th:text="${payer.type}">SELLER</td>
 					<th>
 						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th>Year</th>
-									<th><span th:switch="${payer.type}"> <span
-											th:case="${T(pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData.Type).BUYER}">Tax
-												Return</span> <span th:case="*">To Pay</span>
-									</span></th>
+									<th>Taxes</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="key: ${payer.getTaxes().keySet()}">
 									<td th:text="${key}">2018</td>
 									<td th:text="${payer.getTaxes().get(key)}">567.98</td>
+								</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Year</th>
+									<th>Returns</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="key: ${payer.getReturns().keySet()}">
+									<td th:text="${key}">2018</td>
+									<td th:text="${payer.getReturns().get(key)}">567.98</td>
 								</tr>
 							</tbody>
 						</table>
