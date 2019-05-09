@@ -86,10 +86,6 @@ public class RestRoomBookingData {
         return this.bookRoom;
     }
 
-    public String getRoomType(){
-        return this.bookRoom;
-    }
-
     public void setBookRoom(String bookRoom) {
         this.bookRoom = bookRoom;
     }
