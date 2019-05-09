@@ -12,6 +12,7 @@ import pt.ulisboa.tecnico.softeng.car.services.remote.BankInterface;
 import pt.ulisboa.tecnico.softeng.car.services.remote.TaxInterface;
 import pt.ulisboa.tecnico.softeng.car.services.remote.dataobjects.RestRentingData;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,16 @@ public class RentACarInterface {
         final RentACar rentACar = getRentACar(code);
         return rentACar.getVehicleSet().stream().map(v -> new VehicleData(getVehicleType(v), v.getPlate(),
                 v.getKilometers(), v.getPrice(), toRentACarData(v.getRentACar()))).collect(Collectors.toList());
+    }
+
+    @Atomic(mode = Atomic.TxMode.READ)
+    public List<RentingData> getPendingRentings(final String code) {
+        List<RentingData> dataList = new ArrayList<RentingData>();
+        for (Renting r: getRentACar(code).getProcessor().getRentingSet()){
+            dataList.add(new RentingData(r));
+        }
+        return dataList;
+
     }
 
     @Atomic(mode = Atomic.TxMode.READ)
@@ -171,9 +182,12 @@ public class RentACarInterface {
     }
 
     private RentACar getRentACar(final String code) {
+
         return FenixFramework.getDomainRoot().getRentACarSet().stream().filter(h -> h.getCode().equals(code))
                 .findFirst().orElseThrow(() -> new CarException());
+
     }
+
 
     private Vehicle.Type getVehicleType(final Vehicle vehicle) {
         if (vehicle instanceof Car) {

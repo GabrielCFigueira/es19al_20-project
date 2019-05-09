@@ -11,12 +11,11 @@
 <body>
 <div class="container">
     <h2>
-        Renting <span th:text="${renting.reference}">Reference</span> of Vehicle (<span th:text="${vehicle.type}">Car</span>): <span th:text="${vehicle.plate}">01</span>
+        Processor
     </h2>
-    <a class="btn btn-default pull-right" th:href="@{/rentacars/rentacar/{code}/vehicles/vehicle/{plate}/rentings(code=${rentacar.code},plate=${vehicle.plate})}">Rentings</a>
+    <a class="btn btn-default pull-right" th:href="@{/rentacars}">Rent-A-Cars</a>
     <br/>
-    <br/>
-    <h3>Rentings</h3>
+    <h3>List of Pending Requests </h3>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -33,6 +32,7 @@
         </tr>
         </thead>
         <tbody>
+        <tr th:each="renting : ${pending}">
             <td th:text="${renting.reference}">XPTO</td>
             <td th:text="${renting.plate}">XPTO</td>
             <td th:text="${renting.drivingLicense}">XPTO</td>
@@ -43,25 +43,9 @@
             <td th:text="${renting.invoiceReference}">XPTO</td>
             <td th:text="${renting.cancellationReference}">XPTO</td>
             <td th:text="${renting.price}">XPTO</td>
+        </tr>
         </tbody>
     </table>
-
-    <br/>
-
-    <p class="text-danger" th:text="${error}">Error</p>
-    <h3>Cancel</h3>
-    <form class="form-inline" th:action="@{/rentacars/rentacar/{code}/vehicles/vehicle/{plate}/rentings/{reference}/cancel(code=${rentacar.code},plate=${vehicle.plate},reference=${renting.reference})}" method="post">
-        Cancel Renting? <input class="btn btn-primary" type="submit" value="Submit" />
-    </form>
-    <br/>
-    <h3>Checkout</h3>
-    <p class="text-success" th:text="${notification}">Notification</p>
-    <form class="form-inline" th:action="@{/rentacars/rentacar/{code}/vehicles/vehicle/{plate}/rentings/{reference}/checkout(code=${rentacar.code},plate=${vehicle.plate},reference=${renting.reference})}" th:object="${renting}" method="post">
-        Checking out? <label>Kilometers: </label> <input class="form-control" type="number" step="1" min="0" th:field="*{kilometers}" />
-        <input class="btn btn-primary" type="submit" value="Submit" />
-    </form>
-    <br/>
-
 </div>
 </body>
 </html>

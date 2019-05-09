@@ -12,6 +12,9 @@ import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.car.services.local.RentACarInterface;
 import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.RentACarData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping(value = "/rentacars")
 public class RentACarController {
@@ -22,9 +25,14 @@ public class RentACarController {
 		logger.info("rentacar");
 
 		RentACarInterface rentACarInterface = new RentACarInterface();
+		Map<String,Integer> pendings = new HashMap<String,Integer>();
+		for(RentACarData rent: rentACarInterface.getRentACars()){
+			pendings.put(rent.getCode(),rentACarInterface.getPendingRentings(rent.getCode()).size());
+		}
 
 		model.addAttribute("rentacar", new RentACarData());
 		model.addAttribute("rentacars", rentACarInterface.getRentACars());
+		model.addAttribute("pendings", pendings);
 		return "rentacarsView";
 	}
 
@@ -34,6 +42,10 @@ public class RentACarController {
 				rentacarData.getIban());
 
 		RentACarInterface rentACarInterface = new RentACarInterface();
+		Map<String,Integer> pendings = new HashMap<String,Integer>();
+		for(RentACarData rent: rentACarInterface.getRentACars()){
+			pendings.put(rent.getCode(),rentACarInterface.getPendingRentings(rent.getCode()).size());
+		}
 
 		try {
 			rentACarInterface.createRentACar(rentacarData);
@@ -41,6 +53,7 @@ public class RentACarController {
 			model.addAttribute("error", "Error: it was not possible to create the Rent-A-Car");
 			model.addAttribute("rentacar", rentacarData);
 			model.addAttribute("rentacars", rentACarInterface.getRentACars());
+			model.addAttribute("pendings", pendings);
 			return "rentacarsView";
 		}
 

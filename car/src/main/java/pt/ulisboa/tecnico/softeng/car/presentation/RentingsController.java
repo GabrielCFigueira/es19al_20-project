@@ -23,27 +23,21 @@ public class RentingsController {
         logger.debug("rentingForm");
 
         RentACarInterface rentACarInterface = new RentACarInterface();
-        int cancels = 0;
-        VehicleData vehicleData = rentACarInterface.getVehicleByPlate(code, plate);
-        for (RentingData e: rentACarInterface.getRentings(code, plate)){
-            if(e.getCancellationReference()!=null)
-                if (e.getCancellationReference().contains("CANCEL"))
-                    cancels+=1;
-        }
+        VehicleData vehicleData = rentACarInterface.getVehicleByPlate(code,plate);
+
+
         if (vehicleData == null) {
             model.addAttribute("error", "Error: it does not exist a vehicle with plate " + plate);
             model.addAttribute("rentacar", rentACarInterface.getRentACarData(code));
             model.addAttribute("renting", new RentingData());
             model.addAttribute("rentings", rentACarInterface.getRentings(code, plate));
             model.addAttribute("vehicle", new VehicleData());
-            model.addAttribute("cancelNumber", cancels);
             return "vehiclesView";
         } else {
             model.addAttribute("rentacar", rentACarInterface.getRentACarData(code));
             model.addAttribute("renting", new RentingData());
             model.addAttribute("rentings", rentACarInterface.getRentings(code, plate));
             model.addAttribute("vehicle", vehicleData);
-            model.addAttribute("cancelNumber", cancels);
             return "rentingsView";
         }
     }
@@ -56,8 +50,7 @@ public class RentingsController {
         RentACarInterface rentACarInterface = new RentACarInterface();
 
         try {
-            logger.info("code={}, plate{}, getDrivingLicense{}, getBuyerNIF{}, getBuyerIBAN{}, getBegin{}, getEnd{}, getAdventureId{}", code, plate, renting.getDrivingLicense(), renting.getBuyerNIF(),
-                    renting.getBuyerIBAN(), renting.getBegin(), renting.getEnd(), renting.getAdventureId() );
+
             rentACarInterface.rent(code, plate, renting.getDrivingLicense(), renting.getBuyerNIF(),
                     renting.getBuyerIBAN(), renting.getBegin(), renting.getEnd(), renting.getAdventureId());
 

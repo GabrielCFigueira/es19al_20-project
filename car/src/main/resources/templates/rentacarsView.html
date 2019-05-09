@@ -32,6 +32,7 @@
             <th>NIF</th>
             <th>IBAN</th>
             <th>#Vehicles</th>
+            <th>Processor</th>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +43,11 @@
             <td>
                 <a th:href="@{/rentacars/rentacar/{code}/vehicles(code=${rentacar.code})}">
                     <span th:text="${rentacar.numVehicles}">Vehicles</span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/rentacars/code/{code}/processor(code=${rentacar.code})}">
+                    <span th:text="Pending">Pending</span>: <span th:text="${pendings.get(rentacar.code)}"></span>
                 </a>
             </td>
         </tr>
