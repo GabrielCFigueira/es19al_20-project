@@ -87,6 +87,7 @@ public class AccountController {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("restAccount", new RestBankOperationData());
 			return "account";
 		}
 	}
@@ -106,6 +107,7 @@ public class AccountController {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("restAccount", new RestBankOperationData());
 			return "account";
 		}
 
@@ -120,7 +122,9 @@ public class AccountController {
 		try {
 			restAccount.setValue(restAccount.getTempValue()*1000);
 			restAccount.setSourceIban(iban);
-			BankInterface.processPayment(restAccount);
+			if (BankInterface.processPayment(restAccount)!= null){
+				throw new BankException();
+			}
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
 			return "redirect:/banks/" + code + "/clients/" + id + "/accounts/" + iban + "/operations";
@@ -128,6 +132,7 @@ public class AccountController {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("restAccount", new RestBankOperationData());
 			return "account";
 		}
 

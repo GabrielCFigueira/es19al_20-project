@@ -109,4 +109,5 @@ public class RestBankOperationData {
     public void setSourceIban(String sourceIban) {
         this.sourceIban = sourceIban;
     }
+
 }

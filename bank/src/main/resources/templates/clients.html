@@ -62,11 +62,11 @@
 					<td th:text="${operation.type}">DEPOSIT</td>
 					<td th:text="${operation.sourceIban}">123456</td>
 					<td th:text="${operation.targetIban}">654321</td>
-					<td th:text="${operation.value/1000000}">200</td>
-					<td th:text="${operation.transactionSource}">me</td>
-					<td th:text="${operation.transactionReference}">1234</td>
+					<td th:text="${operation.value}">200</td>
+					<td th:text="${ (operation.transactionSource == 'REVERT' and operation.type != 'TRANSFER') ? 'NA' : operation.transactionSource}">me</td>
+					<td th:text="${ (operation.transactionSource == 'REVERT' and operation.type != 'TRANSFER') ? 'NA' : operation.transactionReference}">me</td>
 					<td>
-						<span th:if="${operation.transactionSource != 'REVERT' }">
+						<span th:if="${(operation.canRevert == null and operation.transactionSource == null and operation.type == 'WITHDRAW') or (operation.canRevert == null && operation.transactionSource == null and operation.type == 'DEPOSIT' and operation.value <= balance ) or ( operation.type == 'TRANSFER' and operation.transactionSource != null and !#strings.contains(operation.transactionSource, 'REVERT') and operation.value <= balance) }">
 						<a
 							th:href="@{/banks/{code}/clients/undo/{reference}(code=${bank.code},reference=${operation.reference})}">Undo</a>
 						</span>

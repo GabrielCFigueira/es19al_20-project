@@ -27,7 +27,7 @@
 			<label>Amount: </label> <input class="form-control" type="number" step="0.01" min="0.01" th:field="*{amount}" /> 
 			<input class="btn btn-primary" type="submit" value="Submit" />
 		</form>
-		
+
 		<h3>Withdraw</h3>
 		<form class="form-inline"
 			th:action="@{/banks/{code}/clients/{id}/accounts/{iban}/withdraw(code=${client.bankCode},id=${client.id},iban=${account.iban})}"
@@ -40,9 +40,9 @@
 		<form class="form-inline"
 			  th:action="@{/banks/{code}/clients/{id}/accounts/{iban}/transfer(code=${client.bankCode},id=${client.id},iban=${account.iban})}"
 			  th:object="${restAccount}" method="post">
-			<label>Amount: </label> <input class="form-control" type="number" step="0.01" min="0.01" th:field="*{tempValue}" />
-			<label>TargetIban: </label> <input class="form-control" type="text" th:field="*{targetIban}" />
-			<label>TransactionSource: </label> <input class="form-control" type="text" th:field="*{transactionSource}" />
+			<label>Amount: </label> <input class="form-control" type="number" step="0.01" min="0.01" th:field="*{tempValue}" /><br><br>
+			<label>TargetIban: </label> <input class="form-control" type="text" th:field="*{targetIban}" /><br><br>
+			<label>TransactionSource: </label> <input class="form-control" type="text" th:field="*{transactionSource}" /><br><br>
 			<label>transactionReference: </label> <input class="form-control" type="text" th:field="*{transactionReference}" />
 			<input class="btn btn-primary" type="submit" value="Submit" />
 		</form>

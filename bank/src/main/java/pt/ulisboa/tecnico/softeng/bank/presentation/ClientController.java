@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.bank.services.local.BankInterface;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData;
+import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
+
+
 
 @Controller
 @RequestMapping(value = "/banks/{code}/clients")
@@ -31,9 +34,43 @@ public class ClientController {
 			model.addAttribute("banks", BankInterface.getBanks());
 			return "banks";
 		}
+		long balance = 0;
 
+		for (BankOperationData data: bankData.getOperations()){
+			if (data.getType().equals("TRANSFER")){
+				for (BankOperationData revertData : bankData.getOperations()){
+					if (data.getTime().getDayOfMonth() == revertData.getTime().getDayOfMonth() && data.getTime().getHourOfDay() ==
+							revertData.getTime().getHourOfDay() && data.getTime().getMinuteOfHour() == revertData.getTime().getMinuteOfHour() &&
+							(data.getTime().getSecondOfMinute()==revertData.getTime().getSecondOfMinute() || data.getTime().getSecondOfMinute()==revertData.getTime().getSecondOfMinute()+1) && !revertData.getType().equals("TRANSFER")){
+						revertData.setTransactionSource("REVERT");
+					}
+				}
+			}
+		}
+
+		for (BankOperationData data: bankData.getOperations()){
+			if (data.getType().equals("TRANSFER") && data.getTransactionSource().equals("REVERT")){
+				for (BankOperationData revertData : bankData.getOperations()){
+						if (data.getTransactionReference().equals(revertData.getReference())){
+						revertData.setTransactionSource(revertData.getTransactionSource() +"(REVERT)");
+					}
+				}
+			}
+		}
+
+
+
+		for (BankOperationData data: bankData.getOperations()){
+			if (data.getType().equals("WITHDRAW") || data.getType().equals("TRANSFER") && !data.getTransactionSource().equals("REVERT")){
+				balance -= data.getValueLong();
+			}
+			else{
+				balance += data.getValueLong();
+			}
+		}
 		model.addAttribute("client", new ClientData());
 		model.addAttribute("bank", bankData);
+		model.addAttribute("balance",balance);
 		return "clients";
 	}
 
@@ -61,7 +98,9 @@ public class ClientController {
 
 		try {
 			BankInterface.cancelPayment(reference);
-			return "redirect:/banks/" + code + "/clients/";
+			BankData bankData = BankInterface.getBankDataByCode(code);
+
+			return "redirect:/banks/" + code + "/clients";
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			return "account";

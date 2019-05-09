@@ -13,6 +13,7 @@ public class BankOperationData {
     private DateTime time;
     private String transactionSource;
     private String transactionReference;
+    private String canRevert;
 
     public BankOperationData() {
     }
@@ -22,10 +23,11 @@ public class BankOperationData {
         this.type = operation.getType().name();
         this.sourceIban = operation.getSourceIban();
         this.targetIban = operation.getTargetIban();
-        this.value = new Double(operation.getValue()) * Bank.SCALE;
+        this.value = new Double(operation.getValue()) / Bank.SCALE;
         this.time = operation.getTime();
         this.transactionSource = operation.getTransactionSource();
         this.transactionReference = operation.getTransactionReference();
+        this.canRevert = operation.getCancellation();
     }
 
     public BankOperationData(String sourceIban, String targetIban, double value, String transactionSource, String transactionReference) {
@@ -80,10 +82,6 @@ public class BankOperationData {
         this.value = Long.valueOf(value).doubleValue() * Bank.SCALE;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
     public DateTime getTime() {
         return this.time;
     }
@@ -106,6 +104,14 @@ public class BankOperationData {
 
     public void setTransactionReference(String transactionReference) {
         this.transactionReference = transactionReference;
+    }
+
+    public String getCanRevert() {
+        return this.canRevert;
+    }
+
+    public void setCanRevert(String canRevert) {
+        this.canRevert = canRevert;
     }
 
 }
