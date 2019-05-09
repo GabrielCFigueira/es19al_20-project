@@ -40,7 +40,7 @@ public class BookRoomState extends BookRoomState_Base {
         getAdventure().incAmountToPay(bookingData.getPrice());
 
 
-        if (getAdventure().getRentVehicle() != Adventure.RentVehicle.CAR.NONE) {
+        if (getAdventure().getRentVehicle() != Adventure.RentVehicle.NONE) {
             getAdventure().setState(State.RENT_VEHICLE);
         } else {
             getAdventure().setState(State.PROCESS_PAYMENT);

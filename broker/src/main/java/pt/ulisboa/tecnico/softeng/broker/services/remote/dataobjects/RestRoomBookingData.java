@@ -78,6 +78,10 @@ public class RestRoomBookingData {
         this.roomNumber = roomNumber;
     }
 
+    public String getRoomType() {
+        return this.bookRoom;
+    }
+
     public String getBookRoom() {
         return this.bookRoom;
     }
