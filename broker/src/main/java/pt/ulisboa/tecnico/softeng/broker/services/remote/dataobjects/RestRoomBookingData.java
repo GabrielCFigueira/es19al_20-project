@@ -122,6 +122,10 @@ public class RestRoomBookingData {
         return this.price;
     }
 
+    public double getPriceAsDouble() {
+        return (double) getPrice() / 10000;
+    }
+
     public void setPrice(long price) {
         this.price = price;
     }
