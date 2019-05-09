@@ -35,6 +35,7 @@ Ordene a tabela por ordem crescente da data de término.
 | 178        | ist187650               | DiogoEusebio            | https://github.com/tecnico-softeng/es19al_20-project/pull/191 | 09/05/2019         |
 | 177        | ist186426               | GabrielCFigueira        | https://github.com/tecnico-softeng/es19al_20-project/pull/202 | 09/05/2019         |
 | 180        | ist186410               | DiogoFariaFernandes     | https://github.com/tecnico-softeng/es19al_20-project/pull/198 | 09/05/2019         |
+| 172        | ist186426               | GabrielCFigueira        | https://github.com/tecnico-softeng/es19al_20-project/pull/190 | 09/05/2019         |
 
 
 ### Infrastructure
