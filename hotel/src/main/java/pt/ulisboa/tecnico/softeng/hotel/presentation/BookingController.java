@@ -51,10 +51,7 @@ public class BookingController {
 			model.addAttribute("booking",hotelInterface.getRoomBookingData(reference));
 		} catch (HotelException he) {
 			model.addAttribute("error", "Error: it was not possible to cancel the booking");
-			/*
-			model.addAttribute("booking", booking);
 			model.addAttribute("room", hotelInterface.getRoomDataByNumber(code, number));
-			*/
 			return "bookings";
 		}
 

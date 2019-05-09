@@ -35,15 +35,11 @@
  					<th>NIF</th>
 					<th>IBAN</th>
 					<th>Price</th>
-				<!--<th>Date and Time of Reservation</th>-->
 					<th>Cancellation</th>
 					<th>Cancellation Date</th>
 					<th>Payment Reference</th>
 					<th>Invoice Reference</th>
-				<!--<th>Cancelled Invoice</th>-->
-				<!--<th>Cancelled Payment Reference</th>-->
 					<th>Adventure ID</th>
-				<!--<th>Bulk ID</th>-->
 				</tr>
 			</thead>
 			<tbody>
@@ -54,15 +50,11 @@
 					<td th:text="${booking.buyerNif}">123456779</td>
 					<td th:text="${booking.buyerIban}">CGD 1235 7487439 8498</td>
 					<td th:text="${booking.price}">49.99</td>
-				<!--<td th:text="${#dates.format(booking.time, 'yyyy-MM-dd HH:mm:ss')}">11/12/2016</td>-->
 					<td th:text="${booking.cancellation}">xpto3456CANCEL</td>
 					<td th:text="${booking.cancellationDate}">07/12/2016</td>
 					<td th:text="${booking.paymentReference}">Payment Reference</td>
 					<td th:text="${booking.invoiceReference}">Invoice Reference</td>
-				<!--<td th:text="${booking.cancelledInvoice}">Cancelled Invoice</t>-->
-				<!--<td th:text="${booking.cancelledPaymentReference}">Cancelled Payment Reference</td>-->
 					<td th:text="${booking.adventureId}">Adventure ID</td>
-				<!--<td th:text="${booking.bulkID}"></td>-->
 					<td>
 						<span th:if="${booking.cancellation == null}">
 							<a th:href="@{/hotels/{code}/rooms/{number}/bookings/{reference}/Cancel(code=${room.hotelCode},number=${room.number},reference=${booking.reference})}">Cancel booking</a>
