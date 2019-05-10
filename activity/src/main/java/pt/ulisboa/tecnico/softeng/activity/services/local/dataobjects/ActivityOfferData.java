@@ -21,6 +21,7 @@ public class ActivityOfferData {
 	private LocalDate end;
 	private Integer capacity;
 	private Double amount;
+	private Integer availableCapacity;
 	private List<RestActivityBookingData> reservations;
 
 	public ActivityOfferData() {
@@ -111,6 +112,14 @@ public class ActivityOfferData {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getAvailableCapacity() {
+		return this.availableCapacity;
+	}
+
+	public void setAvailableCapacity(Integer num) {
+		this.availableCapacity = num;
 	}
 
 }

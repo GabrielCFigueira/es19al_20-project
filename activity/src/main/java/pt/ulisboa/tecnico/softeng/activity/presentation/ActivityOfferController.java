@@ -1,5 +1,8 @@
 package pt.ulisboa.tecnico.softeng.activity.presentation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,16 +39,19 @@ public class ActivityOfferController {
 			model.addAttribute("providers", ActivityInterface.getProviders());
 			return "providers";
 		} else {
-			model.addAttribute("offer", new ActivityOfferData());
 
 			int numOfCancelations = 0;
-			for(ActivityOfferData AOD: activityData.getOffers())
-				for(RestActivityBookingData RABD: AOD.getReservations())
-					if(RABD.getCancellation() != null)
-						numOfCancelations += 1;
+			for(ActivityOfferData AOD: activityData.getOffers()){
+					for(RestActivityBookingData RABD: AOD.getReservations())
+						if(RABD.getCancellation() != null)
+							numOfCancelations += 1;
+				
+				AOD.setAvailableCapacity(AOD.getCapacity() - AOD.getReservations().size() + numOfCancelations);
+				numOfCancelations = 0;
+			}
+				
 			
-			model.addAttribute("numOfCancelations", numOfCancelations);
-
+			model.addAttribute("offer", new ActivityOfferData());
 			model.addAttribute("activity", activityData);
 			return "offers";
 		}
@@ -58,8 +64,18 @@ public class ActivityOfferController {
 				offer.getBegin(), offer.getEnd());
 
 		try {
+			if(offer.getBegin() == null || offer.getEnd() == null)
+				throw new ActivityException();
 			activityInterface.createOffer(codeProvider, codeActivity, offer);
 		} catch (ActivityException e) {
+
+			int numOfCancelations = 0;
+			for(RestActivityBookingData RABD: offer.getReservations())
+				if(RABD.getCancellation() != null)
+					numOfCancelations += 1;
+				
+			offer.setAvailableCapacity(offer.getCapacity() - offer.getReservations().size() + numOfCancelations);
+
 			model.addAttribute("error", "Error: it was not possible to create de offer");
 			model.addAttribute("offer", offer);
 			model.addAttribute("activity", activityInterface.getActivityDataByCode(codeProvider, codeActivity));
