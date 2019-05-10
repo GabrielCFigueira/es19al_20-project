@@ -122,9 +122,7 @@ public class AccountController {
 		try {
 			restAccount.setValue(restAccount.getTempValue()*1000);
 			restAccount.setSourceIban(iban);
-			if (BankInterface.processPayment(restAccount)!= null){
-				throw new BankException();
-			}
+			BankInterface.processPayment(restAccount);
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
 			return "redirect:/banks/" + code + "/clients/" + id + "/accounts/" + iban + "/operations";
