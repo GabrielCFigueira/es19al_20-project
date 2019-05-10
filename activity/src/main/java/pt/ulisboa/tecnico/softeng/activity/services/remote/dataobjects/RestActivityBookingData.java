@@ -131,6 +131,10 @@ public class RestActivityBookingData {
         this.cancellationDate = cancellationDate;
     }
 
+    public double getPriceAsDouble() {
+        return (double) getPrice() / 1000;
+    }
+
     public long getPrice() {
         return this.price;
     }

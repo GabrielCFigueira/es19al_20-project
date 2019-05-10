@@ -39,7 +39,7 @@ Ordene a tabela por ordem crescente da data de término.
 | 171        | ist186461/ist187650     | LivioCosta/DiogoEusebio | https://github.com/tecnico-softeng/es19al_20-project/pull/192 | 09/05/2019         |
 | 203        | ist186461               | LivioCosta              | https://github.com/tecnico-softeng/es19al_20-project/pull/204 | 10/05/2019         |
 | 205        | ist186451               | JoaoPmargaco            | https://github.com/tecnico-softeng/es19al_20-project/pull/206 | 10/05/2019         |
-
+| 203        | ist186461               | LivioCosta              | https://github.com/tecnico-softeng/es19al_20-project/pull/207 | 10/05/2019         |
 
 ### Infrastructure
 
